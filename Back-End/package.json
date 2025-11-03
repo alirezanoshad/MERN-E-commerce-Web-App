@@ -1,0 +1,23 @@
+{
+  "name": "mern-backend",
+  "version": "1.0.0",
+  "description": "full rest API for mern ecommerce ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hadixp",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "config": "^4.1.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-validator": "^7.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "mongoose": "^8.19.2",
+    "mongoose-timestamp": "^0.6.0",
+    "nodemon": "^3.1.10"
+  }
+}
