@@ -15,7 +15,11 @@ router.post('/register',async(req,res)=>{
     // extracting name/email/password from request body
     const userData = _.pick(req.body,["name","email","password"]);
     try {
-        res.send(userData)
+        let user = await User.findOne({email:userData.email});
+        if(user) return res.status(400).json({msg:"User already exists"});
+        user = new User(userData);
+        await user.save();
+        res.status(200).json({msg:"User created successfully"});
     } catch (error) {
         console.log(error);
         res.status(500).send('Server Error');
