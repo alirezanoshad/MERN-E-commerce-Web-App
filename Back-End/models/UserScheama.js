@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     role:{type:String,enum:["customer","admin"],default:"customer"},
 })
 userSchema.plugin(timestamp);
-// bcrypt password
+// bcrypt password middleware
 userSchema.pre("save",async function(next){
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password,salt);
