@@ -1,5 +1,5 @@
-// this file contains user routes
-// this file is imported in index.js
+// this file contains user routes & imported in index.js
+
 // importing express
 const express = require("express");
 // importing user Model
@@ -27,3 +27,11 @@ router.post('/register',async(req,res)=>{
 })
 
 module.exports = router
+
+
+
+
+
+
+
+
