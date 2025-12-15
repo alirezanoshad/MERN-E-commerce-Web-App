@@ -4,7 +4,8 @@ import { Navbar } from "./Navbar";
 
 export const Header = () => {
   return (
-    <header>
+    // border-b represents border bottom(1px by default)
+    <header className="border-b border-gray-200">
       {/* Topbar */}
       <Topbar />
       {/* Navbar */}
