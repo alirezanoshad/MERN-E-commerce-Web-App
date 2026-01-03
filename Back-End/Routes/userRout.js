@@ -32,7 +32,18 @@ router.post('/register',async(req,res)=>{
 // @access Public
 router.post('/login',async(req,res)=>{
     const loginedUser = _.pick(req.body,["email","password"]);
-    
+    try {
+        // finding user by Email
+        // first creating a user variable to store the users data
+        let user = await User.findOne({email:loginedUser.email});
+        // if user not found
+        if(!user) return res.status(400).json({msg:"User not found"});
+        // matching password
+        const isMatch = await User.matchPassword(loginedUser.password);
+        if(!isMatch) return res.status(400).json({msg:"Invalid Password"});
+    } catch (error) {
+        
+    }
 })
 
 module.exports = router
