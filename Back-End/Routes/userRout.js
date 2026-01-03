@@ -26,6 +26,15 @@ router.post('/register',async(req,res)=>{
     }
 })
 
+
+// @route POST/api/users/login
+// @desc Authenticate user
+// @access Public
+router.post('/login',async(req,res)=>{
+    const loginedUser = _.pick(req.body,["email","password"]);
+    
+})
+
 module.exports = router
 
 
