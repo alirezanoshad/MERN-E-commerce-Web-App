@@ -79,6 +79,11 @@ router.post('/login',async(req,res)=>{
     }
 })
 
+// @route GET/api/users/profile
+// @desc GET logged-in user's profile (Protected Route)
+// @access Private
+
+
 module.exports = router
 
 
