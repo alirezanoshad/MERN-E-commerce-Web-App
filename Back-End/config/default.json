@@ -1,6 +1,7 @@
 {
     "server":{
         "port": 5000,
-        "database": "mongodb://127.0.0.1:27017/MernShop"
+        "database": "mongodb://127.0.0.1:27017/MernShop",
+        "JWT_SECRET": "asd8121eijf97asy71298312fjijiahd"
     }
 }

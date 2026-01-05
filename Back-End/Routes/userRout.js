@@ -1,5 +1,6 @@
 // this file contains user routes & imported in index.js
-
+// importing config
+const config = require("config");
 // importing express
 const express = require("express");
 // importing user Model
@@ -19,7 +20,21 @@ router.post('/register',async(req,res)=>{
         if(user) return res.status(400).json({msg:"User already exists"});
         user = new User(userData);
         await user.save();
-        res.status(200).json({msg:"User created successfully"});
+        // create JWT payload
+        const payload = {user:{id:user._id,role:user.role}};
+        // sign JWT
+        jwt.sign(payload,config.get("server.JWT_SECRET"),{expiresIn:"1d"},(err,token)=>{
+            if(err) throw err;
+            res.status(200).json({
+                user:{
+                    id:user._id,
+                    name:user.name,
+                    email:user.email,
+                    role:user.role
+                },
+                token
+            });
+        })
     } catch (error) {
         console.log(error);
         res.status(500).send('Server Error');
@@ -39,10 +54,28 @@ router.post('/login',async(req,res)=>{
         // if user not found
         if(!user) return res.status(400).json({msg:"User not found"});
         // matching password
-        const isMatch = await User.matchPassword(loginedUser.password);
+        const isMatch = await user.matchPassword(loginedUser.password);
         if(!isMatch) return res.status(400).json({msg:"Invalid Password"});
-    } catch (error) {
+        //create JWT payload
+        const payload = {user:{id:user._id,role:user.role}};
+        // sign JWT
+        jwt.sign(payload,config.get("server.JWT_SECRET"),{expiresIn:"1d"},(err,token)=>{
+            if(err) throw err;
+            res.json({
+                user:{
+                    id:user._id,
+                    name:user.name,
+                    email:user.email,
+                    role:user.role
+                },
+                token
+            })
+        })
         
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Server Error');
     }
 })
 
