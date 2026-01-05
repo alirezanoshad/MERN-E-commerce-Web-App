@@ -9,6 +9,8 @@ const User = require("../models/UserScheama");
 const jwt = require("jsonwebtoken");
 // importing lodash
 const _ = require("lodash");
+// importing protect middleware
+const protect = require('../middleware/authMiddleware')
 // creating router
 const router = express.Router();
 // @route POST /api/users/register
@@ -82,6 +84,9 @@ router.post('/login',async(req,res)=>{
 // @route GET/api/users/profile
 // @desc GET logged-in user's profile (Protected Route)
 // @access Private
+router.get('/profile',protect,async(req,res)=>{
+    res.json(req.user)
+})
 
 
 module.exports = router
