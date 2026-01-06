@@ -6,7 +6,7 @@ const User = require('../models/UserScheama');
 // importing config
 const config = require('config')
 // Middleware to protect routes
-async function protect(req,resizeBy,next){
+async function protect(req,res,next){
     let token;
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         try {
@@ -16,7 +16,7 @@ async function protect(req,resizeBy,next){
             next();
         } catch (error) {
             console.error('Token verification failed',error);
-            resizeBy.status(401).json({msg:'Not authorized,token failed'})
+            res.status(401).json({msg:'Not authorized,token failed'})
         }
     } else{
         res.status(401).json({msg:'no token provided'})
