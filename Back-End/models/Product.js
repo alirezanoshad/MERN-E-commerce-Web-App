@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema({
     category:{type:String,required:true},
     brand:{type:String},
     sizes:{type:[String],required:true},
-    color:{type:[String],required:true},
+    colors:{type:[String],required:true},
     collections:{type:String,required:true},
     material:{type:String},
     gender:{type:String,enum:["men","women","unisex"]},
