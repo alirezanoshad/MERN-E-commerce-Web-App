@@ -32,7 +32,6 @@ const productSchema = new mongoose.Schema({
     dimensions:{length:Number,width:Number,height:Number},
     weight:Number,
 });
-productSchema.plugin(timestamp);
 
 // exporting the modle
 module.exports = mongoose.model("Product",productSchema);

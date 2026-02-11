@@ -7,6 +7,7 @@ const cors = require("cors");
 const config = require("config");
 // importing routes
 const userRoute = require("./Routes/userRout");
+const productRoute = require("./Routes/productRouts");
 // importing database connection
 const connectDB = require("./config/DB");
 const app = express();
@@ -19,6 +20,7 @@ connectDB();
 
 // API Routes
 app.use("/api/users", userRoute);
+app.use("/api/product",productRoute);
 
 // creating web server
 app.listen(config.get("server.port"), () => {

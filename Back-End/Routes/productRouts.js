@@ -4,13 +4,13 @@ const Product = require('../models/Product');
 // also the protect middleware
 const protect = require('../middleware/authMiddleware');
 // new Rout
-const router = express.Router();
+const prodRouter = express.Router();
 
 // @route POST /api/products
 // @desc create new product in DB
 // @access private/Admin
 
-router.post('/',protect,async (req,res)=>{
+prodRouter.post('/',protect,async (req,res)=>{
     try {
         // getting product data from req.body
         const {
@@ -33,8 +33,38 @@ router.post('/',protect,async (req,res)=>{
             dimensions,
             weight,
             sku
-        } = req.body
+        } = req.body;
+        // putting new data in product const
+        const product = new Product({name,
+            description,
+            price,
+            discountPrice,
+            countInStock,
+            category,
+            brand,
+            sizes,
+            colors,
+            collections,
+            material,
+            gender,
+            images,
+            isFeatured,
+            isPublished,
+            tags,
+            dimensions,
+            weight,
+            sku,
+            user:req.user._id // refer to the admin user who created the product
+        });
+
+        // saving product in DB
+        const createdProduct = await product.save();
+        res.status(201).json(createdProduct);
     } catch (error) {
-        
+        console.log(error);
+        res.status(500).send('Server Error');
+
     }
 })
+
+module.exports = prodRouter;

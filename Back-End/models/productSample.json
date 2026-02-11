@@ -1,0 +1,34 @@
+{
+    "name":"Classic Jacket",
+    "description":"A very warm jacket good for winter",
+    "price":"59.99",
+    "discountPrice":"49.99",
+    "countInStock":"200",
+    "category":"Apparel",
+    "brand":"Nike",
+    "sizes":["XL","L","M","S","XS"],
+    "colors":["Black","Blue"],
+    "collections":"Winter Collection",
+    "material":"Denim",
+    "gender":"unisex",
+    "images":[
+        {
+            "url":"https://www.google.com/imgres?q=black%20jacket&imgurl=https%3A%2F%2Fthursdayboots.com%2Fcdn%2Fshop%2Ffiles%2F1024x1024-Men-UnionBomberJacket-Black-091925-1_1024x1024.jpg%3Fv%3D1759347665&imgrefurl=https%3A%2F%2Fthursdayboots.com%2Fproducts%2Fmens-union-bomber-jacket-black%3Fsrsltid%3DAfmBOopfIEz8xH1HcOeMsFdtaF1jWsiwIU0F01B-UznQTqx_3cIcGyBn&docid=Ui_MI4zOdExnjM&tbnid=L4-GQO7yHR9bIM&vet=12ahUKEwjG-uHYsNKSAxXdd0EAHWovCJgQnPAOegQIHBAB..i&w=1024&h=1024&hcb=2&ved=2ahUKEwjG-uHYsNKSAxXdd0EAHWovCJgQnPAOegQIHBAB",
+            "altText":"Black Jacket"
+        },
+        {
+            "url":"https://www.google.com/imgres?q=blue%20jacket&imgurl=https%3A%2F%2Fthursdayboots.com%2Fcdn%2Fshop%2Ffiles%2F1024x1024-Mens-MechanicJacket-Navy-101024-1_1024x1024.jpg%3Fv%3D1729272720&imgrefurl=https%3A%2F%2Fvirgielowee.nl%2F%3Fu%3D26948519081640&docid=XI7njjzczQRL2M&tbnid=-KSzZkcNM1k-lM&vet=12ahUKEwirm-mxsdKSAxVQXEEAHXHmAHwQnPAOegUIhgEQAQ..i&w=1024&h=1024&hcb=2&ved=2ahUKEwirm-mxsdKSAxVQXEEAHXHmAHwQnPAOegUIhgEQAQ",
+            "altText":"Blue Jacket"
+        }
+    ],
+    "isFeatured":"true",
+    "isPublished":"true",
+    "tags":["denim","jacket","casual","winter"],
+    "dimensions":{
+        "length":12,
+        "width":8,
+        "height":1
+    },
+    "weight":1.5,
+    "sku":"CLTH12345"
+}
