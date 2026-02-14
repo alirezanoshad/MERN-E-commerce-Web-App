@@ -6,7 +6,7 @@ const User = require('../models/UserScheama');
 // importing config
 const config = require('config')
 // Middleware to protect routes
-async function protect(req,res,next){
+const protect = async(req,res,next)=>{
     let token;
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         try {
@@ -23,4 +23,13 @@ async function protect(req,res,next){
     }
 }
 
-module.exports = protect
+// this middleware check is the user is admin
+const admin = (req,res,next)=>{
+    if(req.user && req.user.role ==="admin"){
+        next();
+    }else{
+        res.status(404).json({message:"User is not admin"});
+    }
+}
+
+module.exports = {protect,admin}

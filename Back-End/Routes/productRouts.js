@@ -2,7 +2,9 @@
 const express = require('express');
 const Product = require('../models/Product');
 // also the protect middleware
-const protect = require('../middleware/authMiddleware');
+const {protect,admin} = require('../middleware/authMiddleware');
+
+
 // new Rout
 const prodRouter = express.Router();
 
@@ -10,7 +12,10 @@ const prodRouter = express.Router();
 // @desc create new product in DB
 // @access private/Admin
 
-prodRouter.post('/',protect,async (req,res)=>{
+prodRouter.post('/',
+    protect,
+    admin,
+    async (req,res)=>{
     try {
         // getting product data from req.body
         const {
