@@ -111,4 +111,22 @@ prodRouter.put('/:id',protect,admin,async(req,res)=>{
     }
 })
 
+// deleting a product
+// @route DELETE/api/products/:id
+// @desc delete a product from DB by ID
+// access private/admin
+prodRouter.delete("/:id",protect,admin,async(req,res)=>{
+    try {
+        // find the product using id 
+        const existedProduct = await Product.findOneAndDelete({_id:req.params.id});
+        if(!existedProduct){
+            res.status(403).json({msg:'product does not found'})
+        }
+        res.json({msg:'product removed',prod:existedProduct})
+    } catch (error) {
+        console.log(error);
+        res.send('server error')
+    }
+})
+
 module.exports = prodRouter;
