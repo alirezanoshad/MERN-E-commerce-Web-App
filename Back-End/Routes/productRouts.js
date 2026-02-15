@@ -3,7 +3,8 @@ const express = require('express');
 const Product = require('../models/Product');
 // also the protect middleware
 const {protect,admin} = require('../middleware/authMiddleware');
-
+// lodash
+const _ = require('lodash');
 
 // new Rout
 const prodRouter = express.Router();
@@ -69,6 +70,44 @@ prodRouter.post('/',
         console.log(error);
         res.status(500).send('Server Error');
 
+    }
+})
+
+// updating a product
+// @route PUT/api/product/:id
+// @desc updating an existing product by its ID
+// access private /admin
+prodRouter.put('/:id',protect,admin,async(req,res)=>{
+    try {
+        const updatedProd = _.pick(req.body,['name',
+            'description',
+            'price',
+            'discountPrice',
+            'countInStock',
+            'category',
+            'brand',
+            'sizes',
+            'colors',
+            'collections',
+            'material',
+            'gender',
+            'images',
+            'isFeatured',
+            'isPublished',
+            'tags',
+            'dimensions',
+            'weight',
+            'sku']);
+        // find product using ID
+        const existedProduct = await Product.findOneAndUpdate({_id:req.params.id},updatedProd,{new:true});
+        if(!existedProduct){
+            res.status(404).json({msg:'product does not exists'});
+        }
+        res.json(existedProduct);
+       
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("server error");
     }
 })
 
