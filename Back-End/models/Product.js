@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
     colors:{type:[String],required:true},
     collections:{type:String,required:true},
     material:{type:String},
-    gender:{type:String,enum:["men","women","unisex"]},
+    gender:{type:String,enum:["Men","Women","Unisex"]},
     images:[{
         url:{type:String,required:true},
         altText:{type:String}

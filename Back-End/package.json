@@ -4,7 +4,8 @@
   "description": "full rest API for mern ecommerce ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed":"node seeder.js"
   },
   "author": "hadixp",
   "license": "ISC",
@@ -12,6 +13,7 @@
     "bcrypt": "^6.0.0",
     "config": "^4.1.1",
     "cors": "^2.8.5",
+    "dotenv": "^17.3.1",
     "express": "^5.1.0",
     "express-validator": "^7.3.0",
     "jsonwebtoken": "^9.0.2",
