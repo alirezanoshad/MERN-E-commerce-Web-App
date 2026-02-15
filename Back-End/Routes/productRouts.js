@@ -127,6 +127,19 @@ prodRouter.delete("/:id",protect,admin,async(req,res)=>{
         console.log(error);
         res.send('server error')
     }
+});
+
+// @route GET /api/products
+// @desc Get all products with optional query and filters
+// access public
+prodRouter.get('/',async(req,res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
 })
+
+
 
 module.exports = prodRouter;
