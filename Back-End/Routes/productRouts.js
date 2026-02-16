@@ -212,7 +212,12 @@ prodRouter.get('/:id',async (req,res)=>{
         console.log(error);
         res.status(500).send('server error')
     }
-})
+});
+
+// @route GET /api/product/similar/:id
+// @desc retrieve similar products based on the current products gender and category
+// @access public
+
 
 
 
