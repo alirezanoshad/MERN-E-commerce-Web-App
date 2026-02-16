@@ -194,6 +194,24 @@ prodRouter.get('/',async(req,res)=>{
         console.log(error);
         res.status(500).send('server error');
     }
+});
+
+// @route GET /api/products/:id
+// @desc get a single product by its ID
+// @access public
+
+prodRouter.get('/:id',async (req,res)=>{
+    try {
+        const existedProduct = await Product.findById(req.params.id);
+        if(existedProduct){
+            res.json(existedProduct);
+        }else{
+            res.status(404).json({msg:'product not found'});
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('server error')
+    }
 })
 
 
