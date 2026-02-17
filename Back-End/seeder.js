@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 // importing Product and User models
 const Product = require('./models/Product');
 const User = require('./models/UserScheama');
+const Cart = require('./models/cart');
 // now importing products file 
 const defProducts = require('./data/products');
 // config
@@ -19,6 +20,7 @@ const seedData = async()=>{
         // clear existing data
         await Product.deleteMany();
         await User.deleteMany();
+        await Cart.deleteMany();
 
         // create a default admin user
         const createdAdmin = User.create({
