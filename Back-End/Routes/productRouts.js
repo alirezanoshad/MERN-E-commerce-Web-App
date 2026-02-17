@@ -217,7 +217,20 @@ prodRouter.get('/:id',async (req,res)=>{
 // @route GET /api/product/similar/:id
 // @desc retrieve similar products based on the current products gender and category
 // @access public
-
+prodRouter.get('/similar/:id',async(req,res)=>{
+    // extracting id from params
+    const {id} = req.params
+    try {
+        // finding product
+        const product = await Product.findById(id);
+        if(!product){
+            // we use return to prevent other codes to run
+            return res.status(404).json({msg:'product not found'});
+        }
+    } catch (error) {
+        
+    }
+})
 
 
 
