@@ -213,6 +213,21 @@ prodRouter.get('/best-seller',async(req,res)=>{
         console.log(error);
         res.status(500).send("Server Error");
     }
+});
+
+
+// @route GET /api/product/new-arrivals
+// desc retrieve latest 8 products based on creation date
+// access public
+prodRouter.get('/new-arrivals',async(req,res)=>{
+    try {
+        // fetch lastest 8 products from DB
+        const newArrivals = await Product.find().sort({createdAt:-1}).limit(8);
+        res.json(newArrivals);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Server Error")
+    }
 })
 
 // @route GET /api/products/:id

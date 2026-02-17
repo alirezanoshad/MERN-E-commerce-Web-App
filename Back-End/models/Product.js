@@ -2,6 +2,7 @@
 // importing mongoose
 const mongoose = require("mongoose");
 // defining ProductSchema
+const timestamp = require('mongoose-timestamp');
 const productSchema = new mongoose.Schema({
     name:{type:String,required:true,trim:true},
     description:{type:String,required:true,trim:true},
@@ -32,6 +33,6 @@ const productSchema = new mongoose.Schema({
     dimensions:{length:Number,width:Number,height:Number},
     weight:Number,
 });
-
+productSchema.plugin(timestamp);
 // exporting the modle
 module.exports = mongoose.model("Product",productSchema);
