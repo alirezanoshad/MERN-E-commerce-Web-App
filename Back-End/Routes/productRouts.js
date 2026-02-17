@@ -196,6 +196,25 @@ prodRouter.get('/',async(req,res)=>{
     }
 });
 
+
+
+// @route GET /api/product/best-seller
+// @desc show the products with highest rating
+// access public
+prodRouter.get('/best-seller',async(req,res)=>{
+    try {
+        const bestSeller = await Product.findOne().sort({rating:-1});
+        if(bestSeller){
+            res.json(bestSeller);
+        }else{
+            res.status(404).json({msg:'no best seller found'});
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Server Error");
+    }
+})
+
 // @route GET /api/products/:id
 // @desc get a single product by its ID
 // @access public
@@ -239,7 +258,9 @@ prodRouter.get('/similar/:id',async(req,res)=>{
         console.log(error);
         res.status(500).send('Server Error');
     }
-})
+});
+
+
 
 
 
