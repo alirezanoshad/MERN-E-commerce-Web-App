@@ -227,8 +227,17 @@ prodRouter.get('/similar/:id',async(req,res)=>{
             // we use return to prevent other codes to run
             return res.status(404).json({msg:'product not found'});
         }
+        // now finding similar products and we dont want to show the same product in others that are silimar to it
+        const similarProducts = await Product.find({
+            _id:{$ne:id}, //exclude the current product ID
+            gender:product.gender,
+            category:product.category
+        }).limit(4);
+        res.json(similarProducts);
+
     } catch (error) {
-        
+        console.log(error);
+        res.status(500).send('Server Error');
     }
 })
 
