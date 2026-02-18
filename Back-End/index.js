@@ -8,6 +8,7 @@ const config = require("config");
 // importing routes
 const userRoute = require("./Routes/userRout");
 const productRoute = require("./Routes/productRouts");
+const cartRouter = require("./Routes/cartRouts");
 // importing database connection
 const connectDB = require("./config/DB");
 const app = express();
@@ -21,6 +22,7 @@ connectDB();
 // API Routes
 app.use("/api/users", userRoute);
 app.use("/api/product",productRoute);
+app.use("/api/cart",cartRouter);
 
 // creating web server
 app.listen(config.get("server.port"), () => {
