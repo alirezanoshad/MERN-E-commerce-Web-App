@@ -88,5 +88,47 @@ cartRouter.post('/',async(req,res)=>{
     }
 })
 
+// @route PUT /api/cart
+// @desc update product quantity in the cart for a guest or logged-in user
+// @access public
+cartRouter.put('/',async(req,res)=>{
+    const cartData = _.pick(req.body,['productID','quantity','size','color','userID','guestID'])
+    try {
+        let cart = await getCart(cartData.userID,cartData.guestID);
+        if(!cart) return res.status(404).json({msg:'cart not found'});
+        // finding product index
+        const productIndex = cart.products.findIndex(
+            (p)=>
+                p.productID.toString() === cartData.productID &&
+                p.size === cartData.size &&
+                p.color === cartData.color
+        );
+
+        if(productIndex > -1){
+            // update quantiry
+            if(cartData.quantity > 0){
+                cart.products[productIndex].quantity = cartData.quantity;
+            }else{
+                // remove the product if quantity is 0
+                cart.products.splice(productIndex,1);
+            }
+
+            // update the total price
+            cart.totalPrice = cart.products.reduce(
+                (acc,item) => acc + item.price * item.quantity,0
+            );
+
+            // save the cart
+            await cart.save();
+            return res.status(200).json(cart);
+        }else{
+            return res.status(404).json({msg:'product not found in cart'});
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Server Error")
+    }
+})
+
 
 module.exports = cartRouter
