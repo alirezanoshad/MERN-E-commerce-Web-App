@@ -6,6 +6,7 @@
   font-style: normal;
 }
 
+/* @theme => Creating General Customization Color */
 @theme {
   --color-rabbit-red: #ea2e0e;
 }

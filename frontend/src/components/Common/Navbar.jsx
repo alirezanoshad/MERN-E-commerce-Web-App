@@ -8,6 +8,7 @@ import {
 import { SearchBar } from "./SearchBar";
 import { CartDrawer } from "../Layout/CartDrawer";
 
+// Navbar component includes 3 senctions: leftSide-logo, centerSide-navigation links, rightSide-icons.
 export const Navbar = () => {
   // to Open and Close CartDrawer (Stateful Variable )
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -20,67 +21,71 @@ export const Navbar = () => {
   return (
     <>
       <nav className="container mx-auto flex items-center justify-between py-4 px-6">
-        {/* leftsSide-logo */}
+        {/* leftSide-logo */}
         <div>
-          <Link to="/" className="text-2xl fonr-medium">
+          <Link to="/" className="text-2xl font-medium">
             Rabbit
           </Link>
         </div>
-        {/* CenterSide - Navigation Links */}
+        {/* CenterSide - Navigation Links(4 links) */}
         <div className="hidden md:flex space-x-6">
           <Link
             to="#"
-            className="tetxt-gray-700 hover:text-black text size-sm font-medium uppercase"
+            className="text-gray-700 hover:text-black text-sm size-sm font-medium uppercase"
           >
             men
           </Link>
           <Link
             to="#"
-            className="tetxt-gray-700 hover:text-black text size-sm font-medium uppercase"
+            className="text-gray-700 hover:text-black text-sm size-sm font-medium uppercase"
           >
             women
           </Link>
           <Link
             to="#"
-            className="tetxt-gray-700 hover:text-black text size-sm font-medium uppercase"
+            className="text-gray-700 hover:text-black text-sm size-sm font-medium uppercase"
           >
             Top Wear
           </Link>
           <Link
             to="#"
-            className="tetxt-gray-700 hover:text-black text size-sm font-medium uppercase"
+            className="text-gray-700 hover:text-black text-sm size-sm font-medium uppercase"
           >
             Bottom Wear
           </Link>
         </div>
         {/* RightSide - Icons */}
         <div className="flex items-center space-x-4">
-          {/* First Icon - userIcon */}
+          {/* userIcon */}
           <Link to="/profile" className="hover:text-black">
             <HiOutlineUser className="h-6 w-6 text-gray-700" />
           </Link>
-          {/* Second Icon - ShoppingBagIcon  */}
+
+          {/* ShoppingBagIcon  */}
           <button
             onClick={toggleCartDrawer}
-            className="relative hover:text-black"
+            className="relative hover:text-black cursor-pointer"
           >
             <HiOutlineShoppingBag className="h-6 w-6 text-gray-700" />
-            {/* => span to show items count in cart */}
+            {/* span tag - Displaying items count in cart */}
             <span className="absolute -top-1 bg-rabbit-red text-white text-xs rounded-full px-2 py-0.5">
               4
             </span>
           </button>
-          {/* Third Icon -SearchBar */}
-          <div className="overflow-hidden cursor-pointer">
+
+          {/* SearchBar component - Returns the content based on its if statement */}
+          <div className="overflow-hidden">
             <SearchBar />
           </div>
-          {/* Humbuger Icon - only for mobile devices */}
+
+          {/* Humbuger Icon - only Displays on mobile devices */}
           <button className="md:hidden">
             <HiBars3BottomRight className="h-6 w-6 text-gray-700 " />
           </button>
         </div>
       </nav>
-      {/* CartDrawer Component - Outside of the nav tag */}
+
+      {/* CartDrawer Component(Outside of the nav tag) */}
       <CartDrawer drawerOpen={drawerOpen} toggleCartDrawer={toggleCartDrawer} />
     </>
   );
