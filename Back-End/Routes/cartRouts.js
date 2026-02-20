@@ -128,6 +128,41 @@ cartRouter.put('/',async(req,res)=>{
         console.log(error);
         res.status(500).send("Server Error")
     }
+});
+
+
+// @route DELETE /api/cart
+// @desc remove a product from a cart
+// @access public
+cartRouter.delete('/',async(req,res)=>{
+    // getting cart data
+    const cartData = _.pick(req.body,['productID','userID','guestID','color','size']);
+    // try catch block
+    try {
+        // finding cart
+        let cart = await getCart(cartData.userID,cartData.guestID);
+        if(!cart) return res.status(404).json({msg:'product not found in cart'});
+        // getting product index
+        const productIndex = cart.products.findIndex(
+            (p)=> p.productID.toString() === cartData.productID &&
+            p.size === cartData.size &&
+            p.color === cartData.color
+        );
+        // if find this product remove it with splice method
+        if(productIndex > -1){
+            cart.products.splice(productIndex,1);
+            // also update the total price
+            cart.totalPrice = cart.products.reduce((acc,item)=> acc + item.price * item.quantity,0);
+            // save the cart
+            await cart.save();
+            return res.status(200).json(cart);
+        }else{
+            return res.status(404).json({msg:'product not found in the cart'})
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Server Error");
+    }
 })
 
 
