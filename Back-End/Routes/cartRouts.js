@@ -163,6 +163,28 @@ cartRouter.delete('/',async(req,res)=>{
         console.log(error);
         res.status(500).send("Server Error");
     }
+});
+
+
+// @route GET/api/cart
+// @desc get get logged-in users or guest users cart to display
+// @accedd public
+cartRouter.get('/',async(req,res)=>{
+    // getting guest or user ID from query
+    const loggedOrGuest = _.pick(req.query,['userID','guestID'])
+    try {
+        // get cart
+        const cart = await getCart(loggedOrGuest.userID,loggedOrGuest.guestID);
+        // if cart exist response with information
+        if(cart){
+            res.json(cart);
+        }else{
+            res.status(404).json({msg:'cart not found'});
+        }
+    } catch (error) {
+    console.log(error);
+    res.status(500).send('Server Error');
+}
 })
 
 
