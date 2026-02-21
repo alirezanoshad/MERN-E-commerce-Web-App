@@ -11,7 +11,7 @@ import { CartDrawer } from "../Layout/CartDrawer";
 // Navbar component includes 3 senctions: leftSide-logo, centerSide-navigation links, rightSide-icons.
 export const Navbar = () => {
   // drawerOpen variable - storing drawer's statement
-  const [drawerOpen, setDrawerOpen] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   // function to change drawer's statement
   const toggleCartDrawer = () => {
