@@ -10,14 +10,16 @@ import { CartDrawer } from "../Layout/CartDrawer";
 
 // Navbar component includes 3 senctions: leftSide-logo, centerSide-navigation links, rightSide-icons.
 export const Navbar = () => {
-  // to Open and Close CartDrawer (Stateful Variable )
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  // to Open and Close CartDrawer (Functional Toggle )
+  // drawerOpen variable - storing drawer's statement
+  const [drawerOpen, setDrawerOpen] = useState(true);
+
+  // function to change drawer's statement
   const toggleCartDrawer = () => {
     setDrawerOpen(!drawerOpen);
-    console.log("CartDrawer Toggled");
+    console.log("Drawer's Statement:", !drawerOpen);
   };
 
+  // Returns the JSX for the Navbar component + cartDrawer component
   return (
     <>
       <nav className="container mx-auto flex items-center justify-between py-4 px-6">

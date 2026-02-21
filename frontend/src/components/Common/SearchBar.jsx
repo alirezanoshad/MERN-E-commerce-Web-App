@@ -1,7 +1,7 @@
 import { useState } from "react";
-// importing searchBar icon
+// import searchBar icon
 import { HiMagnifyingGlass } from "react-icons/hi2";
-// importing closingSearchBar Icon
+// import closingSearchBar Icon
 import { HiMiniXMark } from "react-icons/hi2";
 
 // SearchBar component
@@ -12,16 +12,17 @@ export const SearchBar = () => {
   // isOpen variable - storing the searchBar form's statement(open or close) - set default to false in order to be closed by default
   const [isOpen, setIsOpen] = useState(false);
 
-  function handleSearchToggle() {
+  const handleSearchToggle = () => {
     setIsOpen(!isOpen);
-  }
-  function handleSearch(e) {
+  };
+
+  const handleSearch = (e) => {
     // a js method that stops the default action from happening
     e.preventDefault();
     console.log("Search Term:", searchTerm);
     // to close the form(after searching)
     setIsOpen(false);
-  }
+  };
 
   // Returns a div(with if statement for its css and content)
   return (
@@ -52,7 +53,7 @@ export const SearchBar = () => {
               <HiMagnifyingGlass className="h-6 w-6" />
             </button>
           </div>
-          {/* closingSearchFormIcon - note: we MUST add type="button" to our btn to work out*/}
+          {/* closingSearchFormIcon - NOTE: we MUST add type="button" to our btn to work out*/}
           <button
             type="button"
             className="absolute right-24 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
@@ -62,7 +63,7 @@ export const SearchBar = () => {
           </button>
         </form>
       ) : (
-        // isOpen:false - only Displays searchButton
+        // isOpen:false - only Displays searchIcon
         <button className="cursor-pointer" onClick={() => handleSearchToggle()}>
           <HiMagnifyingGlass className="h-6 w-6" />
         </button>
