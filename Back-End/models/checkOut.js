@@ -12,16 +12,16 @@ const checkOutSchema = new mongoose.Schema({
     user:{type:mongoose.Schema.ObjectId,ref:'User',required:true},
     checkOutItems : [checkOutItemSchema],
     shippingAddress:{
-        address:{type:string,required:true},
-        city:{type:string,required:true},
-        postalCode:{type:string,required:true},
-        country:{type:string,required:true}
+        address:{type:String,required:true},
+        city:{type:String,required:true},
+        postalCode:{type:String,required:true},
+        country:{type:String,required:true}
     },
     paymentMethod:{type:String,required:true},
     totalPrice:{type:Number,required:true},
     isPaid:{type:Boolean,default:false},
     paidAt:{type:Date},
-    paymentStatus:{type:string,default:'pending'},
+    paymentStatus:{type:String,default:'pending'},
     paymentDetails:{type:mongoose.Schema.Types.Mixed}, // cause payment related details (transactions ID,paypal response)
     isFinalized:{type:Boolean,default:false},
     finalizedAt:{type:Date}
