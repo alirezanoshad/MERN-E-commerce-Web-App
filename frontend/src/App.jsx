@@ -1,16 +1,21 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { UserLayout } from "./components/Layout/UserLayout";
+import { Home } from "./pages/Home.jsx";
 
-// Here we have 2 layouts, one for user(UserLayout) and one for admin(AdminLayout).
-// We will use react-router-dom to handle the routing between these layouts.
+// App component - 2 layouts considered: UserLayout & AdminLayout.
+// react-router-dom will be used to handle the routing between layouts.
 export const App = () => {
   return (
+    // URL Routing(react-router-dom)
     <BrowserRouter>
       <Routes>
+        {/* User Layout */}
         <Route path="/" element={<UserLayout />}>
-          {/* User Layout */}
+          <Route index element={<Home />}></Route>
         </Route>
-        <Route>{/* Admin Layout */}</Route>
+
+        {/* Admin Layout */}
+        <Route></Route>
       </Routes>
     </BrowserRouter>
   );
