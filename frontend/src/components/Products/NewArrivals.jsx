@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 // NewArrivals component - displays new arrival products.
 export const NewArrivals = () => {
-  // Reference to scroll container (direct DOM access)
+  // *Reference to scroll container (direct DOM access)
   const scrollRef = useRef(null);
 
   // Controls button enable/disable state
@@ -31,12 +31,6 @@ export const NewArrivals = () => {
     return () => container.removeEventListener("scroll", updateScrollButtons);
   }, []);
 
-  // Button scroll - 300px by every click
-  const scrollFunBtn = (direction) => {
-    const scrollAmount = direction === "left" ? -300 : 300;
-    scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-  };
-
   // Button'statement Update - Determines possibility of right & left srolling
   const updateScrollButtons = () => {
     const container = scrollRef.current;
@@ -50,6 +44,7 @@ export const NewArrivals = () => {
       setCanScrollRight(rightScrollable);
     }
 
+    // Important to understand scroll properties:
     console.log({
       scrollLeft: container.scrollLeft,
       scrollWidth: container.clientWidth,
@@ -58,27 +53,33 @@ export const NewArrivals = () => {
     });
   };
 
+  // Button scroll function - scrollBy method(300px by every click)
+  const scrollFunBtn = (direction) => {
+    const scrollAmount = direction === "left" ? -300 : 300;
+    scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+  };
+
   //// => Functions of mouse drag below:
-  // MouseDown - records starting point of mouse drag
+  // 1-MouseDown - records starting point of mouse drag
   const handleMouseDown = (e) => {
     setIsDragging(true);
     console.log(e);
     setStartX(e.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   };
-  // MouseMove - mouse drag proccess
+  // 2-MouseMove - mouse drag proccess
   const handleMouseMove = (e) => {
     if (!isDragging) return;
     const x = e.pageX - scrollRef.current.offsetLeft;
     const walk = x - startX;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
-  // MouseuUpOrLeave - Stops dargging proccess(when mouse leaves)
+  // 3-MouseUpOrLeave - Stops dargging proccess(when mouse leaves)
   const handleMouseuUpOrLeave = () => {
     setIsDragging(false);
   };
 
-  // Fake product data
+  // Test - fake product data
   const newArrivals = [
     {
       _id: 1,
