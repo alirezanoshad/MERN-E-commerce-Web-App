@@ -23,7 +23,7 @@ export const NewArrivals = () => {
   // adds eventListener on mount => updateScrollButtons function when "scroll" happens.
   useEffect(() => {
     const container = scrollRef.current;
-    console.log(container);
+    // console.log(container);
     if (container) {
       container.addEventListener("scroll", updateScrollButtons);
       updateScrollButtons();
@@ -45,12 +45,12 @@ export const NewArrivals = () => {
     }
 
     // Important to understand scroll properties:
-    console.log({
-      scrollLeft: container.scrollLeft,
-      scrollWidth: container.clientWidth,
-      containerScrollWidth: container.scrollWidth,
-      offsetLeft: container.offsetLeft,
-    });
+    // console.log({
+    //   scrollLeft: container.scrollLeft,
+    //   scrollWidth: container.clientWidth,
+    //   containerScrollWidth: container.scrollWidth,
+    //   offsetLeft: container.offsetLeft,
+    // });
   };
 
   // Button scroll function - scrollBy method(300px by every click)
