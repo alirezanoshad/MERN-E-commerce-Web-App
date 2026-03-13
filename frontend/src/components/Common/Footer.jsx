@@ -8,7 +8,7 @@ import { FiPhoneCall } from "react-icons/fi";
 // Footer component - includes 4 sections and footer's bottom.
 export const Footer = () => {
   return (
-    <footer className="border-t py-12">
+    <footer className="border-t border-gray-300 py-12">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-4 lg:px-0">
         {/* Section1 - Newsletter */}
         <div>
