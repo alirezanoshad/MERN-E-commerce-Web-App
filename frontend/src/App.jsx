@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { UserLayout } from "./components/Layout/UserLayout";
 import { Home } from "./pages/Home.jsx";
+import { Login } from "./pages/Login.jsx";
 // Sonner library - for add to cart notifications
 import { Toaster } from "sonner";
 
@@ -15,6 +16,7 @@ export const App = () => {
         {/* User Layout */}
         <Route path="/" element={<UserLayout />}>
           <Route index element={<Home />}></Route>
+          <Route path="login" element={<Login />}></Route>
         </Route>
 
         {/* Admin Layout */}
