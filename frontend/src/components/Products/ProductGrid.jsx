@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 
-export const ProductGrid = (similarProducts) => {
+export const ProductGrid = (passedProducts) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-      {similarProducts.product.map((product, index) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* {console.log(passedProducts)} */}
+      {passedProducts.products.map((product, index) => (
         //   product card
         <Link key={index} to={`/products/${product._id}`} className="block">
           <div className="bg-white p-4 rounded-lg">

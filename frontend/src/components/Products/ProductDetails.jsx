@@ -11,8 +11,6 @@ import p2 from "../../assets/similarProducts/p2.webp";
 import p3 from "../../assets/similarProducts/p3.webp";
 import p4 from "../../assets/similarProducts/p4.webp";
 
-
-
 // Test product
 const selectedProduct = {
   name: "Stylish Jacket",
@@ -272,7 +270,7 @@ export const ProductDetails = () => {
           <h2 className="text-2xl text-center font-medium mb-4">
             You May Also Like
           </h2>
-          <ProductGrid product={similarProducts} />
+          <ProductGrid products={similarProducts} />
         </div>
       </div>
     </div>
