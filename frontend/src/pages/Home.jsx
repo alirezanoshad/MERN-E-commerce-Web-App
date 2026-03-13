@@ -4,6 +4,8 @@ import { GenderCollectionSection } from "../components/Products/GnederCollection
 import { NewArrivals } from "../components/Products/NewArrivals.jsx";
 import { ProductDetails } from "../components/Products/ProductDetails.jsx";
 import { ProductGrid } from "../components/Products/ProductGrid.jsx";
+import { FeaturedCollection } from "../components/Products/FeaturedCollection.jsx";
+import { FeaturesSection } from "../components/Products/FeaturesSection.jsx";
 
 // Test images
 import wp1 from "../assets/topWearsForWomen/wp1.webp";
@@ -75,16 +77,20 @@ export const Home = () => {
       <GenderCollectionSection />
       <NewArrivals />
 
-      {/* Best Seller */}
+      {/* Best Seller & Similar Products */}
       <h2 className="text-3xl text-center font-bold mb-4">Best Seller</h2>
       <ProductDetails />
 
+      {/* Top Wears For Women section */}
       <div className="container mx-auto">
         <h2 className="text-3xl text-center font-bold mb-4">
           Top Wears For Women
         </h2>
         <ProductGrid products={placeholderProducts} />
       </div>
+
+      <FeaturedCollection />
+      <FeaturesSection />
     </div>
   );
 };
