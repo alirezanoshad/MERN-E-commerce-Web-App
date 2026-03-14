@@ -3,16 +3,24 @@ import loginImg from "../assets/loginPage/loginImg.webp";
 import { Link } from "react-router-dom";
 
 export const Login = () => {
-  // const [name, setName] = useState(null);
-  const [emailEntry, setEmailEntry] = useState(null);
-  const [passwordEntry, setPasswordEntry] = useState(null);
+  const [emailEntry, setEmailEntry] = useState("");
+  const [passwordEntry, setPasswordEntry] = useState("");
+
+  const handleSubmit = (e) => {
+    // Stops on submit reloading
+    e.preventDefault();
+    console.log("User Logined!", { emailEntry, passwordEntry });
+  };
 
   return (
     <div className="flex">
       {/* Left Side */}
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 md:p-12">
         {/* Login Form */}
-        <form className="w-full max-w-md bg-white flex flex-col md:p-12 p-8 border border-gray-300 rounded-lg shadow-sm">
+        <form
+          onSubmit={(e) => handleSubmit(e)}
+          className="w-full max-w-md bg-white flex flex-col md:p-12 p-8 border border-gray-300 rounded-lg shadow-sm"
+        >
           {/* Text Section */}
           <div className="flex justify-center mb-6">
             <h2 className="font-medium text-xl">Rabbit</h2>
@@ -54,7 +62,7 @@ export const Login = () => {
             Sign in
           </button>
 
-          {/* Rigester S */}
+          {/* Rigester Switch */}
           <p className="text-center mt-4 text-sm">
             Don't have an account?{" "}
             {
@@ -72,7 +80,7 @@ export const Login = () => {
           <img
             src={loginImg}
             alt="Login to account"
-            className="h-full w-full object-cover"
+            className="h-[800px] w-full object-cover"
           />
         </div>
       </div>
