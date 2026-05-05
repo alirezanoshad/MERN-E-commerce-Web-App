@@ -29,7 +29,7 @@ export const MyOrders = () => {
         },
       ];
       setOrders(fakeOrders);
-      return
+      return;
     }, 1000);
   }, []);
 
