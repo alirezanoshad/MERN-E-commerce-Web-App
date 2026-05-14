@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { CartDrawer } from "../Layout/CartDrawer";
 import { SearchBar } from "./SearchBar";
-import {NavDrawer} from "./NavDrawer"
+import { NavDrawer } from "./NavDrawer";
 import {
   HiOutlineUser,
   HiOutlineShoppingBag,
@@ -40,7 +40,7 @@ export const Navbar = () => {
         {/* CenterSide - Navigation Links(4 links) */}
         <div className="hidden md:flex space-x-6">
           <Link
-            to="#"
+            to="collections/all"
             className="text-gray-700 hover:text-black text-sm size-sm font-medium uppercase"
           >
             men
@@ -74,7 +74,7 @@ export const Navbar = () => {
           {/* ShoppingBagIcon  */}
           <button
             onClick={toggleCartDrawer}
-            className="relative hover:text-black cursor-pointer"
+            className={`relative hover:text-black ${drawerOpen ? "cursor-auto" : "cursor-pointer"}`}
           >
             <HiOutlineShoppingBag className="h-6 w-6 text-gray-700" />
             {/* span tag - Displaying items count in cart */}
