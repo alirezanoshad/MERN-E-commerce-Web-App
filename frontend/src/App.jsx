@@ -4,6 +4,7 @@ import { Home } from "./pages/Home.jsx";
 import { Login } from "./pages/Login.jsx";
 import { Register } from "./pages/Register.jsx";
 import { Profile } from "./pages/Profile.jsx";
+import { CollectionsPage } from "./pages/CollectionsPage.jsx";
 // Sonner library - for add to cart notifications
 import { Toaster } from "sonner";
 
@@ -21,6 +22,10 @@ export const App = () => {
           <Route path="login" element={<Login />}></Route>
           <Route path="register" element={<Register />}></Route>
           <Route path="profile" element={<Profile />}></Route>
+          <Route
+            path="collections/:collection"
+            element={<CollectionsPage />}
+          ></Route>
         </Route>
 
         {/* Admin Layout */}
