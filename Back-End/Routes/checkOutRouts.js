@@ -61,6 +61,26 @@ checkOutRouter.put('/',protect,async(req,res) => {
         console.log(error);
         res.status(500).json({msg:'server error'});
     }
+});
+
+
+
+// @route POST /api/checkout/:id/finalize
+// @decs finalize checkout and convert to an order after payment confirmation
+// @access Privte
+checkOutRouter.post('/:id/finalize',protect,async(req,res)=>{
+    try {
+        //retrieve checkout
+        const checkout = await CheckOut.findById(req.params.id);
+        if(!checkout){
+            return res.status(404).json({msg:'chechout not found'})
+        }
+        if(checkout.isPaid && checkout.isFinalized){
+            
+        }
+    } catch (error) {
+        
+    }
 })
 
 
