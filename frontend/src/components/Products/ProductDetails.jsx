@@ -92,10 +92,6 @@ export const ProductDetails = () => {
   // mainImgSwitch Function
   const mainImgSwitch = (image) => {
     setMainImg(image);
-    // console.log(`
-    // mainImgSwitch!
-    // mainImg.url: ${mainImg.url}
-    // mainImg.altText: ${mainImg.altText}`);
   };
 
   // => Functions to handle personal details of order

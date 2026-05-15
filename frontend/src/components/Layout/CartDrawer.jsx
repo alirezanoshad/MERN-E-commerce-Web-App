@@ -1,8 +1,15 @@
 import { IoMdClose } from "react-icons/io";
 import { CartContents } from "../Cart/CartContents";
+import { useNavigate } from "react-router-dom";
 
 // CartDrawer component - contains Cart Contents.
 export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
+  // Checkout navigation.
+  const navigate = useNavigate();
+  const handleCheckoutBtn = () => {
+    navigate("/checkout");
+  };
+
   // Returns a div - only Displayed by drawerOpen's statement
   return (
     <div
@@ -25,7 +32,10 @@ export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
 
       {/* bottomSide div - checkout button & note */}
       <div className="p-4 bg-white sticky bottom-0">
-        <button className="w-full bg-black text-white py-3 rounded-lg hove:bg-gray-800 transition">
+        <button
+          onClick={handleCheckoutBtn}
+          className="w-full bg-black text-white py-3 rounded-lg hover:cursor-pointer hover:bg-gray-800 transition-all"
+        >
           Checkout
         </button>
         <p className="text-sm tracking-tighter text-gray-500 mt-2 text-center">
