@@ -5,7 +5,8 @@ const checkOutItemSchema = new mongoose.Schema({
     productID:{type:mongoose.Schema.ObjectId,ref:'Product',required:true},
     name:{type:String,required:true},
     image:{type:String,required:true},
-    price:{type:Number,required:true}
+    price:{type:Number,required:true},
+    quantity:{type:Number,required:true}
 },{_id:false});
 
 const checkOutSchema = new mongoose.Schema({

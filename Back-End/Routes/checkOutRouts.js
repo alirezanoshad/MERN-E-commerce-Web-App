@@ -40,7 +40,7 @@ checkOutRouter.post('/',async(req,res)=>{
 // @route PUT /api/checkout/:id/pay
 // @desc Update checkout to mark as paid after successful payment
 // @access Private
-checkOutRouter.put('/',protect,async(req,res) => {
+checkOutRouter.put('/:id/pay',protect,async(req,res) => {
     const checkOutData = _.pick(req.body,['paymentStatus','paymentDetails']);
     try {
         const checkout = await CheckOut.findById(req.params.id);
@@ -76,10 +76,34 @@ checkOutRouter.post('/:id/finalize',protect,async(req,res)=>{
             return res.status(404).json({msg:'chechout not found'})
         }
         if(checkout.isPaid && checkout.isFinalized){
-            
+            // create the final order base on the checkout details
+            const finalOrder = await Order.create({
+                user:checkout.user,
+                checkOutItems:checkout.checkOutItems,
+                shippingAddress:checkout.shippingAddress,
+                paymentMethod:checkout.paymentMethod,
+                totalPrice:checkout.totalPrice,
+                isPaid:true,
+                paidAt:checkout.paidAt,
+                isDelivered:false,
+                paymentStatus:'paid',
+                paymentDetails:checkout.paymentDetails
+            });
+            // mark the checkout as finalized
+            checkout.isFinalized = true;
+            checkout.finalizedAt = Date.now();
+            await checkout.save();
+            // delete the cart as associated with the user for cleaning up
+            await Cart.findOneAndDelete({user:checkout.user});
+            res.status(201).json(finalOrder);
+        } else if(checkout.isFinalized){
+            res.status(400).json({msg:'checkout already finalized'})
+        } else{
+            res.status(400).json({msg:'checkout is not paid'});
         }
     } catch (error) {
-        
+        console.log(error);
+        res.status(500).json({msg:'server error'});
     }
 })
 
