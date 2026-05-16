@@ -7,6 +7,11 @@ import { Profile } from "./pages/Profile.jsx";
 import { CollectionsPage } from "./pages/CollectionsPage.jsx";
 // Sonner library - for add to cart notifications
 import { Toaster } from "sonner";
+import { ProductDetails } from "./components/Products/ProductDetails.jsx";
+import { Checkout } from "./components/Cart/Checkout.jsx";
+import { OrderConfirmationPage } from "./pages/OrderConfirmationPage.jsx";
+import { OrderDetailsPage } from "./pages/OrderDetailsPage.jsx";
+import { MyOrders } from "./pages/MyOrders.jsx";
 
 // App component - 2 layouts considered: UserLayout & AdminLayout.
 // react-router-dom will be used to handle the routing between layouts.
@@ -26,6 +31,14 @@ export const App = () => {
             path="collections/:collection"
             element={<CollectionsPage />}
           ></Route>
+          <Route path="product/:id" element={<ProductDetails />}></Route>
+          <Route path="checkout" element={<Checkout />}></Route>
+          <Route
+            path="order-confirmation"
+            element={<OrderConfirmationPage />}
+          ></Route>
+          <Route path="order/:id" element={<OrderDetailsPage />}></Route>
+          <Route path="my-orders" element={<MyOrders />}></Route>
         </Route>
 
         {/* Admin Layout */}
