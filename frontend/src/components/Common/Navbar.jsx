@@ -16,7 +16,7 @@ export const Navbar = () => {
   // navDrawerOpen variable - storing navDrawer's statement(Only Mobile devices)
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
 
-  // function to toggle drawer's statement
+  // function to toggle CartDrawer's statement
   const toggleCartDrawer = () => {
     setDrawerOpen(!drawerOpen);
     console.log("Drawer's Statement:", !drawerOpen);
