@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 // Images for MyOrders
 import orderImg1 from "../assets/topWearsForWomen/wp1.webp";
 import orderImg2 from "../assets/topWearsForWomen/wp2.webp";
@@ -6,6 +7,7 @@ import orderImg2 from "../assets/topWearsForWomen/wp2.webp";
 export const MyOrders = () => {
   // Hold the orders
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
 
   // Simulate fetching orders
   useEffect(() => {
@@ -33,8 +35,13 @@ export const MyOrders = () => {
     }, 1000);
   }, []);
 
+  // Navigation to Order Page by ID.
+  const handleRowClick = (orderId) => {
+    navigate(`/order/${orderId}`);
+  };
+
   return (
-    <div className="max-x-7xl mx-auto p-4 sm:p-6">
+    <div className="max-w-7xl mx-auto p-4 sm:p-6">
       <h2 className="text-xl sm:text2xl font-bold mb-6">My Orders</h2>
       <div className="relative shadow-md sm:rounded-lg orverflow-hidden">
         <table className="min-w-full text-left text-gray-500">
@@ -57,6 +64,7 @@ export const MyOrders = () => {
               orders.map((order) => (
                 <tr
                   key={order._id}
+                  onClick={() => handleRowClick(order._id)}
                   className="border-b border-gray-400 hover:border-gray-50 transition-colors duration-300 cursor-pointer"
                 >
                   <td className="py-2 px-4 sm:px-4 sm:py-4">
