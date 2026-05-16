@@ -9,9 +9,10 @@ const config = require("config");
 const userRoute = require("./Routes/userRout");
 const productRoute = require("./Routes/productRouts");
 const cartRouter = require("./Routes/cartRouts");
+const checkOutRouter = require("./Routes/checkOutRouts");
+const orderRouter = require("./Routes/orderRoutes");
 // importing database connection
 const connectDB = require("./config/DB");
-const checkOutRouter = require("./Routes/checkOutRouts");
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -25,6 +26,7 @@ app.use("/api/users", userRoute);
 app.use("/api/product",productRoute);
 app.use("/api/cart",cartRouter);
 app.use('/api/checkOut',checkOutRouter)
+app.use('/api/order',orderRouter);
 
 // creating web server
 app.listen(config.get("server.port"), () => {
