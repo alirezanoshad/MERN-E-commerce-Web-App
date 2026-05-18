@@ -66,6 +66,14 @@ export const Navbar = () => {
         </div>
         {/* RightSide - Icons */}
         <div className="flex items-center space-x-4">
+          {/* Admin Button */}
+          <Link
+            to="/admin"
+            className="block bg-black text-white rounded px-2 py-1 text-sm"
+          >
+            Admin
+          </Link>
+
           {/* userIcon */}
           <Link to="/profile" className="hover:text-black">
             <HiOutlineUser className="h-6 w-6 text-gray-700" />
