@@ -11,6 +11,7 @@ const productRoute = require("./Routes/productRouts");
 const cartRouter = require("./Routes/cartRouts");
 const checkOutRouter = require("./Routes/checkOutRouts");
 const orderRouter = require("./Routes/orderRoutes");
+const uploadRouter = require("./Routes/uploadRoute");
 // importing database connection
 const connectDB = require("./config/DB");
 const app = express();
@@ -27,6 +28,7 @@ app.use("/api/product",productRoute);
 app.use("/api/cart",cartRouter);
 app.use('/api/checkOut',checkOutRouter)
 app.use('/api/order',orderRouter);
+app.use('/api/upload',uploadRouter);
 
 // creating web server
 app.listen(config.get("server.port"), () => {
