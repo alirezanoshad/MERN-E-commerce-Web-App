@@ -2,6 +2,7 @@
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+// import axios from "axios";
 
 // NewArrivals component - displays new arrival products.
 export const NewArrivals = () => {
@@ -20,6 +21,52 @@ export const NewArrivals = () => {
   // Start point of  X-axis scroll - initial = 0
   const [startX, setStartX] = useState(0);
 
+  // // State for API
+  // const [newArrivals, setNewArrivals] = useState();
+  // // NewArrivals API
+  // useEffect(() => {
+  //   const fetchNewArrivals = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "https://localhost:5000/api/product/new-arrivals",
+  //       );
+  //       console.log(response);
+  //       setNewArrivals(response.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+
+  //   fetchNewArrivals();
+  // }, []);
+
+  // State for API
+  const [newArrivals, setNewArrivals] = useState([]);
+
+  // NewArrivals API
+  useEffect(() => {
+    const fetchNewArrivals = async () => {
+      try {
+        const response = await fetch(
+          "https://localhost:5000/api/product/new-arrivals",
+        );
+
+        // بررسی وضعیت پاسخ (status code)
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+        setNewArrivals(data);
+      } catch (error) {
+        console.error("Error fetching new arrivals:", error);
+      }
+    };
+
+    fetchNewArrivals();
+  }, []);
+
   // adds eventListener on mount => updateScrollButtons function when "scroll" happens.
   useEffect(() => {
     const container = scrollRef.current;
@@ -29,7 +76,7 @@ export const NewArrivals = () => {
       updateScrollButtons();
     }
     return () => container.removeEventListener("scroll", updateScrollButtons);
-  }, []);
+  }, [newArrivals]);
 
   // Button'statement Update - Determines possibility of right & left srolling
   const updateScrollButtons = () => {
@@ -79,86 +126,6 @@ export const NewArrivals = () => {
     setIsDragging(false);
   };
 
-  // Test - fake product data
-  const newArrivals = [
-    {
-      _id: 1,
-      name: "Stylish jacket",
-      price: 24.99,
-      images: [
-        {
-          url: "https://picsum.photos/500/500?/random=1",
-          altText: "Stylish jacket",
-        },
-      ],
-    },
-    {
-      _id: 2,
-      name: "Stylish jacket",
-      price: 24.99,
-      images: [
-        {
-          url: "https://picsum.photos/500/500?/random=2",
-          altText: "Stylish jacket",
-        },
-      ],
-    },
-    {
-      _id: 3,
-      name: "Stylish jacket",
-      price: 24.99,
-      images: [
-        {
-          url: "https://picsum.photos/500/500?/random=3",
-          altText: "Stylish jacket",
-        },
-      ],
-    },
-    {
-      _id: 4,
-      name: "Stylish jacket",
-      price: 24.99,
-      images: [
-        {
-          url: "https://picsum.photos/500/500?/random=4",
-          altText: "Stylish jacket",
-        },
-      ],
-    },
-    {
-      _id: 5,
-      name: "Stylish jacket",
-      price: 24.99,
-      images: [
-        {
-          url: "https://picsum.photos/500/500?/random=5",
-          altText: "Stylish jacket",
-        },
-      ],
-    },
-    {
-      _id: 6,
-      name: "Stylish jacket",
-      price: 24.99,
-      images: [
-        {
-          url: "https://picsum.photos/500/500?/random=6",
-          altText: "Stylish jacket",
-        },
-      ],
-    },
-    {
-      _id: 7,
-      name: "Stylish jacket",
-      price: 24.99,
-      images: [
-        {
-          url: "https://picsum.photos/500/500?/random=7",
-          altText: "Stylish jacket",
-        },
-      ],
-    },
-  ];
   // JSX
   return (
     <section className="py-16 px-4 lg:px-0">
