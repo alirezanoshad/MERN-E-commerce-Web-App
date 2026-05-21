@@ -2,7 +2,7 @@
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-// import axios from "axios";
+import axios from "axios";
 
 // NewArrivals component - displays new arrival products.
 export const NewArrivals = () => {
@@ -48,7 +48,7 @@ export const NewArrivals = () => {
   const fetchNewArrivals = async () => {
     try {
       const response = await axios.get(
-        "https://localhost:5000/api/product/new-arrivals"
+        "http://localhost:5000/api/product/new-arrivals"
       );
 
       console.log(response.data);
