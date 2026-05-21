@@ -45,27 +45,21 @@ export const NewArrivals = () => {
 
   // NewArrivals API
   useEffect(() => {
-    const fetchNewArrivals = async () => {
-      try {
-        const response = await fetch(
-          "https://localhost:5000/api/product/new-arrivals",
-        );
+  const fetchNewArrivals = async () => {
+    try {
+      const response = await axios.get(
+        "https://localhost:5000/api/product/new-arrivals"
+      );
 
-        // بررسی وضعیت پاسخ (status code)
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+      console.log(response.data);
+      setNewArrivals(response.data);
+    } catch (error) {
+      console.error("Error fetching new arrivals:", error);
+    }
+  };
 
-        const data = await response.json();
-        console.log(data);
-        setNewArrivals(data);
-      } catch (error) {
-        console.error("Error fetching new arrivals:", error);
-      }
-    };
-
-    fetchNewArrivals();
-  }, []);
+  fetchNewArrivals();
+}, []);
 
   // adds eventListener on mount => updateScrollButtons function when "scroll" happens.
   useEffect(() => {
