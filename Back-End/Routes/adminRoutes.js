@@ -7,7 +7,7 @@ const {protect,admin} = require('../middleware/authMiddleware');
 // @route GET /api/admin/users
 // @desc Get all users (Admin only)
 // @access Private/Admin
-adminRouter.get('/',protect,admin,async(req,res=>{
+adminRouter.get('/',protect,admin,async(req,res)=>{
     try {
         // getting all users
         const users = await User.find({});
@@ -16,7 +16,7 @@ adminRouter.get('/',protect,admin,async(req,res=>{
         console.log(error);
         res.status(500).json({msg:'server error'})
     }
-}));
+});
 
 
 // @route POST /api/admin/users
