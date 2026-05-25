@@ -25,7 +25,10 @@ subscriberRouter.post('/',async(req,res)=>{
         console.log(error);
         res.status(500).json({msg:'server error'})
     }
-})
+});
+
+
+
 
 
 

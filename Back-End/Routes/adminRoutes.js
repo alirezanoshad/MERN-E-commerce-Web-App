@@ -16,7 +16,27 @@ adminRouter.get('/',protect,admin,async(req,res=>{
         console.log(error);
         res.status(500).json({msg:'server error'})
     }
-}))
+}));
+
+
+// @route POST /api/admin/users
+// @desc Add a new user (admin only)
+// @access Private/Admin
+adminRouter.post('/users',protect,admin,async(req,res)=>{
+    // getting new users data from body of the request
+    let userData = _.pick(req.body,["name","email","password","role"]);
+    try {
+        // check if there is a user with same email
+        let user = await User.findOne({email:userData.email});
+        if(user){return res.status(400).json({msg:'user is already exists'})};
+        user = new User(userData);
+        await user.save();
+        res.status(201).json({msg:'user created successfully',user});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg:'server error'})
+    }
+})
 
 
 
