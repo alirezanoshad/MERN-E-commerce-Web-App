@@ -22,7 +22,7 @@ adminRouter.get('/',protect,admin,async(req,res)=>{
 // @route POST /api/admin/users
 // @desc Add a new user (admin only)
 // @access Private/Admin
-adminRouter.post('/users',protect,admin,async(req,res)=>{
+adminRouter.post('/users',admin,async(req,res)=>{
     // getting new users data from body of the request
     let userData = _.pick(req.body,["name","email","password","role"]);
     try {
@@ -36,7 +36,28 @@ adminRouter.post('/users',protect,admin,async(req,res)=>{
         console.log(error);
         res.status(500).json({msg:'server error'})
     }
+});
+
+
+// @route PUT /api/admin/users/:id
+// @desc update user info (admin only) - name, email and role
+// @access Private/admin
+adminRouter.put('/:id',async(req,res)=>{
+    try {
+        // find user by id from params and update
+        const user = await User.findOneAndUpdate({_id:req.params.id},{$set:_.pick(req.body,["name","email","role"])},{new:true});
+        if(!user){
+            return res.status(404).json({msg:'user not found'});
+        }else{
+            res.status(200).json({msg:'user info updated successfully',user});
+        }
+       
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg:'server error'})
+    }
 })
+
 
 
 
