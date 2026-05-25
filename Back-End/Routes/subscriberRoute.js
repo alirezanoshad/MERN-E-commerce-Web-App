@@ -5,7 +5,7 @@ const Subscriber = require('../models/subscriber');
 // @route POST /api/subscribe
 // @desc Handle newsletter subscription
 // @access Public
-subscriberRouter.post('/subscribe',async(req,res)=>{
+subscriberRouter.post('/',async(req,res)=>{
     // getting email from body
     const subsEmail = _.pick(req.body,["email"]);
     // check if email is present
