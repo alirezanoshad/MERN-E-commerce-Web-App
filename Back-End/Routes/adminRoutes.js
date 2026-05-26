@@ -22,7 +22,7 @@ adminRouter.get('/',protect,admin,async(req,res)=>{
 // @route POST /api/admin/users
 // @desc Add a new user (admin only)
 // @access Private/Admin
-adminRouter.post('/users',protect,admin,async(req,res)=>{
+adminRouter.post('/users',async(req,res)=>{
     // getting new users data from body of the request
     let userData = _.pick(req.body,["name","email","password","role"]);
     try {
