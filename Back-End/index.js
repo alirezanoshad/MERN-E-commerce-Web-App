@@ -14,6 +14,8 @@ const orderRouter = require("./Routes/orderRoutes");
 const uploadRouter = require("./Routes/uploadRoute");
 const adminRouter = require("./Routes/adminRoutes");
 const subscriberRouter = require("./Routes/subscriberRoute");
+const adminproductsRouter = require("./Routes/productsAdminRouts");
+const adminOrderRouter = require("./Routes/adminOrderRoutes");
 // importing database connection
 const connectDB = require("./config/DB");
 const app = express();
@@ -32,7 +34,10 @@ app.use('/api/checkOut',checkOutRouter)
 app.use('/api/order',orderRouter);
 app.use('/api/upload',uploadRouter);
 app.use('/api/subscriber',subscriberRouter);
+// admin routes
 app.use('/api/admin',adminRouter);
+app.use('/api/admin/products',adminproductsRouter);
+app.use('/api/admin/orders',adminOrderRouter);
 
 // creating web server
 app.listen(config.get("server.port"), () => {
