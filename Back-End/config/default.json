@@ -1,8 +1,10 @@
 {
     "server":{
         "port": 5000,
-        "database": "mongodb://127.0.0.1:27017/MernShop",
+        "database": "mongodb+srv://hadib2002_db_user:T4f8KUDANZ4P4KtP@cluster0.i9qiw1s.mongodb.net/Mern-Shop?appName=Cluster0",
         "JWT_SECRET": "asd8121eijf97asy71298312fjijiahd",
         "imageUpload-API-Key":"6d207e02198a847aa98d0a2a901485a5"
     }
 }
+
+
