@@ -28,16 +28,21 @@ const initialState = {
 // User Login - Async Thunk Function(Redux Tooolkit)
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async (userData, { rejectWithValue }) => {
+  async (userData) => {
     try {
+      console.log(userData);
       // Checkpoint: send user login data to Server and Wait for result.
-      const response = await axios.post("https://httpstat.us/200", userData);
+      const response = await axios.post(
+        "http://localhost:5000/api/users/login",
+        userData,
+      );
       // If response true, Set User Data In localStorage &
+      console.log(response.data);
       localStorage.setItem("userInfo", JSON.stringify(response.data.user)); //userInfo
       localStorage.setItem("userToken", response.data.token); // userToken
       return response.data.user; // Return the user object from the response.
     } catch (error) {
-      return rejectWithValue(error.response.data); // Will send eror to Redux.
+      return console.log(error.response.data); // Will send eror to Redux.
     }
   },
 );
@@ -45,19 +50,21 @@ export const loginUser = createAsyncThunk(
 // User Register - Async Thunk Function(Redux Tooolkit)
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async (userData, { rejectWithValue }) => {
+  async (userData) => {
     try {
+      console.log(userData);
       // send user login data
       const response = await axios.post(
-        "https://reqres.in/api/login",
+        "http://localhost:5000/api/users/register",
         userData,
       );
 
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));
       localStorage.setItem("userToken", response.data.token);
+      console.log(response.data);
       return response.data.user; // Return the user object from the response.
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return console.log(error.response.data);
     }
   },
 );
