@@ -16,6 +16,7 @@ export const Login = () => {
   const handleSubmit = (e) => {
     // Stops submit reloading
     e.preventDefault();
+    console.log("User Login Requset Sent!(JSX)", { email, password });
     dispach(loginUser({ email, password }));
   };
 
@@ -64,7 +65,7 @@ export const Login = () => {
           {/* Buntton */}
           <button
             type="submit"
-            className="w-full text-white bg-black rounded-lg p-2 font-semibold hover:bg-gray-800 transition"
+            className="w-full cursor-pointer text-white bg-black rounded-lg p-2 font-semibold hover:bg-gray-800 transition"
           >
             Sign in
           </button>
@@ -73,7 +74,7 @@ export const Login = () => {
           <p className="text-center mt-4 text-sm">
             Don't have an account?{" "}
             {
-              <Link to="/register" className="text-blue-500">
+              <Link to="/register" className="text-blue-500 font-semibold">
                 Register
               </Link>
             }

@@ -2,15 +2,24 @@ import { useState } from "react";
 import loginImg from "../assets/loginPage/loginImg.webp";
 import { Link } from "react-router-dom";
 
+// Redux Import
+import { useDispatch } from "react-redux";
+import { registerUser } from "../redux/slices/atuhSlice";
+
+// Register Component
 export const Register = () => {
-  const [nameEntry, setNameEntry] = useState("");
-  const [emailEntry, setEmailEntry] = useState("");
-  const [passwordEntry, setPasswordEntry] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // Redux Dispath
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     // Stops on submit reloading
     e.preventDefault();
-    console.log("User Rigestered!", { nameEntry, emailEntry, passwordEntry });
+    console.log("User Rigester Requset Sent!", { name, email, password });
+    dispatch(registerUser({ name, email, password }));
   };
 
   return (
@@ -36,10 +45,10 @@ export const Register = () => {
             <label className="block text-sm font-semibold mb-2">Name</label>
             <input
               type="text"
-              value={nameEntry}
+              value={name}
               placeholder="Enter your name"
               className="w-full p-2 border border-gray-300 rounded focus:outline-none  "
-              onChange={(e) => setNameEntry(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
 
@@ -48,10 +57,10 @@ export const Register = () => {
             <label className="block text-sm font-semibold mb-2">Email</label>
             <input
               type="email"
-              value={emailEntry}
+              value={email}
               placeholder="Enter your email"
               className="w-full p-2 border border-gray-300 rounded focus:outline-none  "
-              onChange={(e) => setEmailEntry(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -60,10 +69,10 @@ export const Register = () => {
             <label className="block text-sm font-semibold mb-2">Password</label>
             <input
               type="password"
-              value={passwordEntry}
+              value={password}
               placeholder="Enter your password"
               className="w-full p-2 border border-gray-300 rounded focus:outline-none  "
-              onChange={(e) => setPasswordEntry(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -79,8 +88,8 @@ export const Register = () => {
           <p className="text-center mt-4 text-sm">
             Already have an account?{" "}
             {
-              <Link to="/login" className="text-blue-500">
-                Register
+              <Link to="/login" className="text-blue-500 font-semibold">
+                Login
               </Link>
             }
           </p>
@@ -93,7 +102,7 @@ export const Register = () => {
           <img
             src={loginImg}
             alt="Login to account"
-            className="h-[800px] w-full object-cover"
+            className="h-200 w-full object-cover"
           />
         </div>
       </div>
