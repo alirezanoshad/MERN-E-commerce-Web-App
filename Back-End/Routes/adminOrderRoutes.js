@@ -29,7 +29,7 @@ adminOrderRouter.get('/',async(req,res)=>{
 adminOrderRouter.put('/:id',async(req,res)=>{
     try {
         // finding user by its ID
-        const order = await Order.findById(req.params.id);
+        const order = await Order.findById(req.params.id).populate("user","name");
         if(order){
             order.status = req.body.status || order.status;
             order.isDelivered = req.body.status === 'Delivered' ? true : order.isDelivered;
