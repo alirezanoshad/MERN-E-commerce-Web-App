@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     email:{type:String,required:true,unique:true,trim:true},
     password:{type:String,required:true},
     role:{type:String,enum:["customer","admin"],default:"customer"},
+    balance:{type:Number,default:0},
 })
 userSchema.plugin(timestamp);
 // bcrypt password middleware
