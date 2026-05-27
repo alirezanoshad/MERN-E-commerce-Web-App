@@ -28,10 +28,20 @@ adminOrderRouter.get('/',async(req,res)=>{
 // @access Private/Admin
 adminOrderRouter.put('/:id',async(req,res)=>{
     try {
-        // finfing user by its ID
-        const user = await findById(req.params.id);
+        // finding user by its ID
+        const order = await Order.findById(req.params.id);
+        if(order){
+            order.status = req.body.status || order.status;
+            order.isDelivered = req.body.status === 'Delivered' ? true : order.isDelivered;
+            order.deliveredAt = req.body.status === 'Delivered' ? Date.now() : order.deliveredAt;
+            const updatedOrder = await order.save();
+            res.status(200).json(updatedOrder);
+        }else{
+            res.status(404).json({msg:'order not found'})
+        }
     } catch (error) {
-        
+        console.log(error);
+        res.status(500).json({msg:'server error'});
     }
 })
 
