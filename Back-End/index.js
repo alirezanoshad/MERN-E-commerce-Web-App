@@ -16,6 +16,7 @@ const adminRouter = require("./Routes/adminRoutes");
 const subscriberRouter = require("./Routes/subscriberRoute");
 const adminproductsRouter = require("./Routes/productsAdminRouts");
 const adminOrderRouter = require("./Routes/adminOrderRoutes");
+const paymentRouter = require("./Routes/paymentRoute");
 // importing database connection
 const connectDB = require("./config/DB");
 const app = express();
@@ -38,7 +39,8 @@ app.use('/api/subscriber',subscriberRouter);
 app.use('/api/admin',adminRouter);
 app.use('/api/admin/products',adminproductsRouter);
 app.use('/api/admin/orders',adminOrderRouter);
-
+// payment routes
+app.use('/api/payment',paymentRouter);
 // creating web server
 app.listen(config.get("server.port"), () => {
     console.log(`Server is running on port ${config.get("server.port")}`);
