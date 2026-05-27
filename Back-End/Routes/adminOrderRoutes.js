@@ -47,7 +47,24 @@ adminOrderRouter.put('/:id',async(req,res)=>{
 
 
 
-
+// @route DELETE /api/admin/orders/:id
+// @desc delete order (admin only)
+// @access Private/Admin
+adminOrderRouter.delete('/:id',admin,async(req,res)=>{
+    try {
+        // getting order by its ID and deleting it
+        const order = await Order.findById(req.params.id);
+        if(order){
+            await order.deleteOne();
+            res.status(200).json({msg:'order deleted successfully'});
+        }else{
+            res.status(404).json({msg:'order not found'});
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg:'server error'});
+    }
+})
 
 
 
