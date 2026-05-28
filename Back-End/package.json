@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed":"node seeder.js"
+    "seed": "node seeder.js"
   },
   "author": "hadixp",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.16.1",
     "bcrypt": "^6.0.0",
     "config": "^4.1.1",
     "cors": "^2.8.5",
