@@ -11,12 +11,12 @@ const productRoute = require("./Routes/productRouts");
 const cartRouter = require("./Routes/cartRouts");
 const checkOutRouter = require("./Routes/checkOutRouts");
 const orderRouter = require("./Routes/orderRoutes");
-const uploadRouter = require("./Routes/uploadRoute");
 const adminRouter = require("./Routes/adminRoutes");
 const subscriberRouter = require("./Routes/subscriberRoute");
 const adminproductsRouter = require("./Routes/productsAdminRouts");
 const adminOrderRouter = require("./Routes/adminOrderRoutes");
 const paymentRouter = require("./Routes/paymentRoute");
+const uploadRouter = require("./Routes/uploadRout");
 // importing database connection
 const connectDB = require("./config/DB");
 const app = express();
@@ -33,7 +33,6 @@ app.use("/api/product",productRoute);
 app.use("/api/cart",cartRouter);
 app.use('/api/checkOut',checkOutRouter)
 app.use('/api/order',orderRouter);
-app.use('/api/upload',uploadRouter);
 app.use('/api/subscriber',subscriberRouter);
 // admin routes
 app.use('/api/admin',adminRouter);
@@ -41,6 +40,8 @@ app.use('/api/admin/products',adminproductsRouter);
 app.use('/api/admin/orders',adminOrderRouter);
 // payment routes
 app.use('/api/payment',paymentRouter);
+// upload routes
+app.use('/api/upload',uploadRouter);
 // creating web server
 app.listen(config.get("server.port"), () => {
     console.log(`Server is running on port ${config.get("server.port")}`);
