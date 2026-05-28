@@ -4,12 +4,40 @@ const _ = require('lodash');
 const axios = require('axios');
 const config = require("config");
 const Payment = require('../models/payment');
+const User = require('../models/User');
 
 
 // callback api
 paymentRouter.get('/callback',async(req,res)=>{
-    // just a api for callback test
-    console.log('callback');
+    try {
+        if(req.query.status && req.query.status !== 'OK'){
+            return res.json({msg:'payment failed'});
+        }
+        let payment = await Payment.findOne({resNumber:req.query.authority});
+        if(!payment) return res.json({msg:'payment not found'});
+        const paymentData = {
+            merchant_id:config.get('gateway.merchant_id'),
+            amount:payment.amount,
+            authority:req.query.authority
+        }
+        const response = await axios.post(config.get('gateway.sandBoxVerify'),paymentData);
+        if(response.data.code == '100'){
+            let balance = payment.amount;
+            let user = await User.findById(payment.user);
+            if(user.balance){
+                balance += user.balance;
+            }
+            user.balance = balance;
+            payment.payment = true;
+            await user.save();
+            await payment.save();
+            res.json({msg:'payment successful'});
+        }else{
+            res.json({msg:'payment failed'});
+        }
+    } catch (error) {
+        
+    }
 })
 
 

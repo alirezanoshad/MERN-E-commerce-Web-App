@@ -9,7 +9,8 @@
         "merchant_id":"ff458ed3-316f-412e-bd40-6184df8bd2fe",
         "sandBox":"https://sandbox.zarinpal.com/pg/v4/payment/request.json",
         "callBackUrl":"http://localhost:5000/api/payment/callback",
-        "redirectUrl":"https://sandbox.zarinpal.com/pg/StartPay/"
+        "redirectUrl":"https://sandbox.zarinpal.com/pg/StartPay/",
+        "sandBoxVerify":"https://sandbox.zarinpal.com/pg/v4/payment/verify.json"
     },
     "cloudinary":{
         "cloudName":"dsuoqk0r5",
