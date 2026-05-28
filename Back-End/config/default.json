@@ -6,9 +6,10 @@
         "imageUpload-API-Key":"6d207e02198a847aa98d0a2a901485a5"
     },
     "gateway":{
-        "merchentId":"01c142c9-37aa-409b-a124-dafa9ebc195a",
+        "merchant_id":"ff458ed3-316f-412e-bd40-6184df8bd2fe",
         "sandBox":"https://sandbox.zarinpal.com/pg/v4/payment/request.json",
-        "callBackUrl":"http://localhost:5000/api/payment/callback"
+        "callBackUrl":"http://localhost:5000/api/payment/callback",
+        "redirectUrl":"https://sandbox.zarinpal.com/pg/StartPay/"
     }
 }
 
