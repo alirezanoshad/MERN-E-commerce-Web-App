@@ -2,7 +2,7 @@ const express = require('express');
 const paymentRouter = express.Router();
 const _ = require('lodash');
 const axios = require('axios');
-
+const config = require("config");
 
 
 // callback api
@@ -18,12 +18,12 @@ paymentRouter.post('/pay',async(req,res)=>{
         // distracting amount from body
     const amount = _.pick(req.body,["amount"]);
     const paymentData = {
-        merchant_id:'',
+        merchant_id:config.get('gateway.merchentId'),
         amount:amount.amount,
         description:'buy product',
-        callback_url:"http://localhost:5000/api/payment/callback"
+        callback_url:config.get('gateway.callBackUrl')
     };
-    const response = await axios("https://sandbox.zarinpal.com/pg/v4/payment/request.json",paymentData);
+    const response = await axios(config.get('gateway.sandBox'),paymentData);
     console.log(response.data);
 
     } catch (error) {

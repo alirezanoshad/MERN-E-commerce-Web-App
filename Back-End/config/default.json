@@ -4,6 +4,11 @@
         "database": "mongodb://hadib2002_db_user:T4f8KUDANZ4P4KtP@ac-jfzpbmb-shard-00-00.i9qiw1s.mongodb.net:27017,ac-jfzpbmb-shard-00-01.i9qiw1s.mongodb.net:27017,ac-jfzpbmb-shard-00-02.i9qiw1s.mongodb.net:27017/Mern-Shop?ssl=true&replicaSet=atlas-55tzau-shard-0&authSource=admin&appName=Cluster0",
         "JWT_SECRET": "asd8121eijf97asy71298312fjijiahd",
         "imageUpload-API-Key":"6d207e02198a847aa98d0a2a901485a5"
+    },
+    "gateway":{
+        "merchentId":"01c142c9-37aa-409b-a124-dafa9ebc195a",
+        "sandBox":"https://sandbox.zarinpal.com/pg/v4/payment/request.json",
+        "callBackUrl":"http://localhost:5000/api/payment/callback"
     }
 }
 
