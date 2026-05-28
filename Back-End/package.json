@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^1.16.1",
     "bcrypt": "^6.0.0",
+    "cloudinary": "^2.10.0",
     "config": "^4.1.1",
     "cors": "^2.8.5",
     "dotenv": "^17.3.1",
@@ -21,6 +22,8 @@
     "lodash": "^4.17.21",
     "mongoose": "^8.19.2",
     "mongoose-timestamp": "^0.6.0",
-    "nodemon": "^3.1.10"
+    "multer": "^2.1.1",
+    "nodemon": "^3.1.10",
+    "streamifier": "^0.1.1"
   }
 }
