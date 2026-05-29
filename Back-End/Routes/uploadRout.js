@@ -15,7 +15,7 @@ cloudinary.config({
 // multer setup using memory storage
 const storage = multer.memoryStorage();
 const upload = multer({storage:storage});
-uploadRouter.post('/',upload,single('image'),async(req,res)=>{
+uploadRouter.post('/',upload.single('image'),async(req,res)=>{
     try {
         if(!req.file){
             return res.status(400).json({msg:'no file uploaded'});

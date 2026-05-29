@@ -4,7 +4,7 @@ const _ = require('lodash');
 const axios = require('axios');
 const config = require("config");
 const Payment = require('../models/payment');
-const User = require('../models/User');
+const User = require('../models/UserScheama');
 
 
 // callback api
