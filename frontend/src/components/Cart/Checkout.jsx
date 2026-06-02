@@ -1,29 +1,16 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-
-// Sample data
-const cart = {
-  products: [
-    {
-      name: "Stylish jacket",
-      size: "M",
-      color: "Black",
-      price: 120,
-      image: "https://picsum.photos/150/150?/random=1",
-    },
-    {
-      name: "Casual Sneakers",
-      size: "42",
-      color: "White",
-      price: 75,
-      image: "https://picsum.photos/150/150?/random=2",
-    },
-  ],
-  totalPrice: 195123,
-};
+import { useNavigate } from "react-router-dom";
+// Redux
+import { useDispatch, useSelector } from "react-redux";
 
 export const Checkout = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { cart } = useSelector((state) => state.cart);
+  const { user, loading, error } = useSelector((state) => state.auth);
+  console.log(cart);
+  console.log(user);
 
   // storing sure about checkout id
   const [checkoutId, setCheckoutId] = useState();
@@ -49,7 +36,7 @@ export const Checkout = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto py-10 px-6 tracking-tighter">
       {/* Left Section - info form */}
-      <div className="bg-green-50 rounded-lg p-6">
+      <div className="bg-gray-100 rounded-lg p-6">
         <h2 className="text-2xl uppercase mb-6">Checkout</h2>
         <form onSubmit={handleCreateCheckout}>
           <h3 className="text-lg mb-4">Contacet Dateils</h3>
@@ -59,7 +46,7 @@ export const Checkout = () => {
             </label>
             <input
               type="email"
-              value="user@example.com"
+              value={user?.email ? user.email : ""}
               className="w-full p-2 border bg-gray-200 border-gray-300 rounded"
               disabled
             />
@@ -217,8 +204,9 @@ export const Checkout = () => {
           </div>
         </form>
       </div>
+
       {/* Right Section */}
-      <div className="bg-green-50 rounded-lg p-6">
+      <div className="bg-gray-100 rounded-lg p-6">
         <h3 className="text-lg mb-4">Order Summary</h3>
         <div className="border-t py-4 mb-4  border-gray-300">
           {cart.products.map((product, index) => (
@@ -236,6 +224,7 @@ export const Checkout = () => {
                   <h3 className="font-medium">{product.name}</h3>
                   <p className="text-gray-500">Size: {product.size}</p>
                   <p className="text-gray-500">Color: {product.color}</p>
+                  <p className="text-gray-500">Quantity: {product.quantity}</p>
                 </div>
               </div>
               <p className="text-xl">${product.price?.toLocaleString()}</p>
