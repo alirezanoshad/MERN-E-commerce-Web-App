@@ -27,7 +27,7 @@ export const fetchCartProducts = createAsyncThunk(
       console.log(response.data);
       return response.data;
     } catch (error) {
-      return console.log(error);
+      return console.log(error.response.data.msg);
     }
   },
 );
@@ -147,7 +147,6 @@ export const cartSlice = createSlice({
         state.loading = false;
         state.cart = action.payload; // Store in redux store
         saveCartToStorage(action.payload); // Store in localStorage
-        console.log(action.payload);
       })
       .addCase(fetchCartProducts.rejected, (state, action) => {
         state.loading = false;
