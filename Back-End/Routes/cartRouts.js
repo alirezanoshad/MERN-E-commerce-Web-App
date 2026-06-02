@@ -64,7 +64,7 @@ cartRouter.post('/',async(req,res)=>{
             // create new cart fot user or guest
             const newCart = await Cart.create({
                 user: cartData.userID ? cartData.userID : undefined,
-                guestID: cartData.guestID ? cartData.gustID : "guest_" + new Date().getTime(),
+                guestID: cartData.guestID ? cartData.guestID : "guest_" + new Date().getTime(),
                 products:[
                     {
                         productID:cartData.productID,
