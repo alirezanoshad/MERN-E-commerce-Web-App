@@ -14,16 +14,28 @@ export const NavDrawer = ({ navDrawerOpen, toggleNavDrawer }) => {
       <div className="p-4">
         <h2 className="text-xl font-semibold mb-4">Menu</h2>
         <nav className="flex flex-col space-y-4">
-          <Link to="#" className="block text-gray-600 hover:text-black">
+          <Link
+            to="collections/all?gender=Men"
+            className="block text-gray-600 hover:text-black"
+          >
             men
           </Link>
-          <Link to="#" className="block text-gray-600 hover:text-black">
+          <Link
+            to="collections/all?gender=Women"
+            className="block text-gray-600 hover:text-black"
+          >
             woman
           </Link>
-          <Link to="#" className="block text-gray-600 hover:text-black">
+          <Link
+            to="collections/all?cartgory=Top Wear"
+            className="block text-gray-600 hover:text-black"
+          >
             Top Wear
           </Link>
-          <Link to="#" className="block text-gray-600 hover:text-black">
+          <Link
+            to="collections/all?category=Bottom Wear"
+            className="block text-gray-600 hover:text-black"
+          >
             Bottom Wear
           </Link>
         </nav>

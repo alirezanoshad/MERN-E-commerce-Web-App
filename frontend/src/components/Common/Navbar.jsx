@@ -8,13 +8,21 @@ import {
   HiOutlineShoppingBag,
   HiBars3BottomRight,
 } from "react-icons/hi2";
+// Redux Store
+import { useSelector } from "react-redux";
 
-// Navbar component includes 3 senctions: leftSide-logo, centerSide-navigation links, rightSide-icons.
+// Navbar component - includes 3 senctions: leftSide-logo, centerSide-navigation links, rightSide-icons.
 export const Navbar = () => {
   // drawerOpen variable - storing drawer's statement
   const [drawerOpen, setDrawerOpen] = useState(false);
   // navDrawerOpen variable - storing navDrawer's statement(Only Mobile devices)
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
+
+  // Redux
+  const { cart } = useSelector((state) => state.cart);
+  const cartItemCount =
+    cart?.products?.reduce((total, product) => total + product.quantity, 0) ||
+    0;
 
   // function to toggle CartDrawer's statement
   const toggleCartDrawer = () => {
@@ -40,25 +48,25 @@ export const Navbar = () => {
         {/* CenterSide - Navigation Links(4 links) */}
         <div className="hidden md:flex space-x-6">
           <Link
-            to="collections/all"
+            to="collections/all?gender=Men"
             className="text-gray-700 hover:text-black text-sm size-sm font-medium uppercase"
           >
             men
           </Link>
           <Link
-            to="#"
+            to="collections/all?gender=Women"
             className="text-gray-700 hover:text-black text-sm size-sm font-medium uppercase"
           >
             women
           </Link>
           <Link
-            to="#"
+            to="collections/all?category=Top Wear"
             className="text-gray-700 hover:text-black text-sm size-sm font-medium uppercase"
           >
             Top Wear
           </Link>
           <Link
-            to="#"
+            to="collections/all?category=Bottom Wear"
             className="text-gray-700 hover:text-black text-sm size-sm font-medium uppercase"
           >
             Bottom Wear
@@ -86,9 +94,12 @@ export const Navbar = () => {
           >
             <HiOutlineShoppingBag className="h-6 w-6 text-gray-700" />
             {/* span tag - Displaying items count in cart */}
-            <span className="absolute -top-1 bg-rabbit-red text-white text-xs rounded-full px-2 py-0.5">
-              4
-            </span>
+
+            {cartItemCount && cartItemCount > 0 ? (
+              <span className="absolute -top-1 bg-rabbit-red text-white text-xs rounded-full px-2 py-0.5">
+                {cartItemCount}
+              </span>
+            ) : null}
           </button>
 
           {/* SearchBar component - Returns the content based on its if statement */}

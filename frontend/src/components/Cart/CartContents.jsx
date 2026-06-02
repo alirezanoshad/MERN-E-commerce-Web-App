@@ -1,74 +1,134 @@
+// Icon
+import { useEffect } from "react";
 import { RiDeleteBin3Line } from "react-icons/ri";
+// Redux
+import { useDispatch } from "react-redux";
+import { fetchCartProducts } from "../../redux/slices/cartSlice";
+import {
+  updateCartItemQuantity,
+  removeFromCart,
+} from "../../redux/slices/cartSlice";
 
 // CartContents component - contains the products in the cart.
-export const CartContents = () => {
-  // Dummy data for cart products
-  const cartProducts = [
-    {
-      ID: 1,
-      name: "polo shirt",
-      size: "L",
-      color: "Blue",
-      price: 1500,
-      quantity: 1,
-      image: "https://picsum.photos/200?random=1",
-    },
-    {
-      ID: 2,
-      name: "polo jeans",
-      size: "M",
-      color: "Yellow",
-      price: 700,
-      quantity: 1,
-      image: "https://picsum.photos/200/300?random=1",
-    },
-  ];
+export const CartContents = ({ cartProducts, guestId, userId }) => {
+  const dispatch = useDispatch();
 
-  // Returns a div - scrollable area with the products in the cart
+  // FetchCartProducts
+  useEffect(() => {
+    dispatch(fetchCartProducts({ guestID: guestId, userID: userId }));
+  }, [dispatch, userId, guestId]);
+
+  // Hanle adding or substracting to cart
+  const handleAddToCart = ({ quantity, delta, color, size, productID }) => {
+    console.log("handleAddToCart");
+    console.log({ quantity, delta, color, size, productID });
+    // Calculate new quantity
+    const newQuantity = quantity + delta;
+    // Checkpoint quantity amount
+    if (newQuantity >= 1) {
+      dispatch(
+        updateCartItemQuantity({
+          productID,
+          guestID: guestId,
+          userID: userId,
+          color,
+          size,
+          quantity: newQuantity,
+        }),
+      );
+    }
+  };
+
+  // Handle removing a product from cart
+  const handleRemoveFromCart = ({ color, size, productID }) => {
+    console.log("handleRemoveFromCart");
+    dispatch(
+      removeFromCart({
+        productID,
+        guestID: guestId,
+        userID: userId,
+        color,
+        size,
+      }),
+    );
+  };
+
+  // JSX
   return (
+    // Returns a div - scrollable area with the products in the cart
     <div>
-      {cartProducts.map((product) => (
-        // cartProduct div
-        <div
-          key={product.ID}
-          className="flex items-start justify-between py-4 border-b border-gray-200"
-        >
-          <div className="flex items-start">
-            <img
-              src={product.image}
-              alt={product.name}
-              className=" w-20 h-24 object-cover mr-4 rounded"
-            />
+      {cartProducts &&
+        cartProducts?.products?.map((product) => (
+          // cartProduct div
+          <div
+            key={product.productID}
+            className="flex items-start justify-between py-4 border-b border-gray-200"
+          >
+            <div className="flex items-start">
+              <img
+                src={product.image}
+                alt={product.name}
+                className=" w-20 h-24 object-cover mr-4 rounded"
+              />
+              <div>
+                <div>
+                  <h3>{product.name}</h3>
+                  <p className="text-sm text-gray-500">
+                    Size: {product.size} | Color: {product.color}{" "}
+                  </p>
+                </div>
+                <div className="flex items-center mt-2 mr-4">
+                  <button
+                    className="border rounded-full px-2 text-xl font-medium text-gray-500"
+                    type="button"
+                    onClick={() =>
+                      handleAddToCart({
+                        size: product.size,
+                        color: product.color,
+                        productID: product.productID,
+                        quantity: product.quantity,
+                        delta: -1,
+                      })
+                    }
+                  >
+                    -
+                  </button>
+                  <span className="mx-1">{product.quantity}</span>
+                  <button
+                    className="border rounded-full px-2  text-xl font-medium text-gray-500"
+                    type="button"
+                    onClick={() =>
+                      handleAddToCart({
+                        size: product.size,
+                        color: product.color,
+                        productID: product.productID,
+                        quantity: product.quantity,
+                        delta: 1,
+                      })
+                    }
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <p>${product.price}</p>
+              <button
+                onClick={() =>
+                  handleRemoveFromCart({
+                    size: product.size,
+                    color: product.color,
+                    productID: product.productID,
+                  })
+                }
+              >
+                <RiDeleteBin3Line className="h-6 w-6 mt-2 text-red-400" />
+              </button>
+            </div>
           </div>
-          <div>
-            <h3>{product.name}</h3>
-            <p className="text-sm text-gray-500">
-              Size: {product.size} | Color: {product.color}{" "}
-            </p>
-          </div>
-          <div className="flex items-center mt-2 mr-4">
-            <button
-              className="border rounded px-2  text-xl font-medium text-gray-500"
-              type="button"
-            >
-              -
-            </button>
-            <span className="mx-1">{product.quantity}</span>
-            <button
-              className="border rounded px-2  text-xl font-medium text-gray-500"
-              type="button"
-            >
-              +
-            </button>
-          </div>
-          <div className="flex flex-col items-center">
-            <p>${product.price}</p>
-            <button>
-              <RiDeleteBin3Line className="h-6 w-6 mt-2 text-red-400" />
-            </button>
-          </div>
-        </div>
-      ))}
+        ))}
     </div>
   );
 };
