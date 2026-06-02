@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export const Checkout = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
+  // Redux
+  const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
   const { user, loading, error } = useSelector((state) => state.auth);
   console.log(cart);
@@ -26,13 +28,25 @@ export const Checkout = () => {
     phone: "",
   });
 
+  // Ensure cart is not empty
+  useEffect(() => {
+    if (!cart || !cart.products || cart.products.length === 0) {
+      navigate("/");
+    }
+  }, [navigate, cart]);
+
   const handleCreateCheckout = (e) => {
     // to cancel the default event(Page Reload)
     e.preventDefault();
+    if (cart && cart.products.length > 0) {
+      const res = dispatch()
+    }
+
     // change checkout id to fake data to test.
     setCheckoutId(123);
   };
 
+  // JSX
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto py-10 px-6 tracking-tighter">
       {/* Left Section - info form */}
