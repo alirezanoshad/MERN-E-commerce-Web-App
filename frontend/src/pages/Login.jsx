@@ -1,25 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import loginImg from "../assets/loginPage/loginImg.webp";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 //
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // loginUser - AsyncThunk from authSlice.
 import { loginUser } from "../redux/slices/atuhSlice";
+import { mergeCart } from "../redux/slices/cartSlice";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispach = useDispatch();
+
+  //Redux
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user, guestId } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
+
+  // Get redirect parameter and check if it's chekout or something
+  const redirect = new URLSearchParams(location.search).get("redirect") || "/";
+  const isCheckoutRedirect = redirect.includes("checkout");
+
+  // Auto Login - based on localStorage
+  useEffect(() => {
+    console.log(user);
+    // for logged-in users
+    if (user) {
+      console.log(user);
+      if (cart?.products?.length > 0) {
+        // Merge existing and new cart
+        dispatch(mergeCart({ user, guestID: guestId })).then(() => {
+          console.log(isCheckoutRedirect);
+          navigate(isCheckoutRedirect ? "/checkout" : "/");
+        });
+      } else {
+        console.log(`redirect to checkout: ${isCheckoutRedirect}`);
+        navigate(isCheckoutRedirect ? "/checkout" : "/");
+      }
+    }
+  }, [navigate, isCheckoutRedirect, cart, user, guestId, dispatch]);
 
   // Login Submit Function.
   const handleSubmit = (e) => {
     // Stops submit reloading
     e.preventDefault();
     console.log("User Login Requset Sent!(JSX)", { email, password });
-    dispach(loginUser({ email, password }));
+    dispatch(loginUser({ email, password }));
   };
 
+  // JSX
   return (
     <div className="flex">
       {/* Left Side */}
@@ -47,6 +78,7 @@ export const Login = () => {
               placeholder="Enter your email"
               className="w-full p-2 border border-gray-300 rounded focus:outline-none  "
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -59,6 +91,7 @@ export const Login = () => {
               placeholder="Enter your password"
               className="w-full p-2 border border-gray-300 rounded focus:outline-none  "
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
@@ -74,7 +107,10 @@ export const Login = () => {
           <p className="text-center mt-4 text-sm">
             Don't have an account?{" "}
             {
-              <Link to="/register" className="text-blue-500 font-semibold">
+              <Link
+                to={`/register/?redirect=${encodeURIComponent(redirect)}`}
+                className="text-blue-500 font-semibold"
+              >
                 Register
               </Link>
             }

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import loginImg from "../assets/loginPage/loginImg.webp";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // Redux Import
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/slices/atuhSlice";
+import { mergeCart } from "../redux/slices/cartSlice";
 
 // Register Component
 export const Register = () => {
@@ -14,6 +15,33 @@ export const Register = () => {
 
   // Redux Dispath
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user, guestId } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
+
+  // Get redirect parameter and check if it's chekout or something
+  const redirect = new URLSearchParams(location.search).get("redirect") || "/";
+  const isCheckoutRedirect = redirect.includes("checkout");
+
+  // Auto Login - based on localStorage
+  useEffect(() => {
+    console.log(user);
+    // for logged-in users
+    if (user) {
+      console.log(user);
+      if (cart?.products?.length > 0) {
+        // Merge existing and new cart
+        dispatch(mergeCart({ user, guestID: guestId })).then(() => {
+          console.log(isCheckoutRedirect);
+          navigate(isCheckoutRedirect ? "/checkout" : "/");
+        });
+      } else {
+        console.log(`redirect to checkout: ${isCheckoutRedirect}`);
+        navigate(isCheckoutRedirect ? "/checkout" : "/");
+      }
+    }
+  }, [navigate, isCheckoutRedirect, cart, user, guestId, dispatch]);
 
   const handleSubmit = (e) => {
     // Stops on submit reloading
@@ -22,13 +50,14 @@ export const Register = () => {
     dispatch(registerUser({ name, email, password }));
   };
 
+  // JSX
   return (
     <div className="flex">
       {/* Left Side */}
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 md:p-12">
         {/* Login Form */}
         <form
-          onSubmit={(e) => handleSubmit(e)}
+          onSubmit={handleSubmit}
           className="w-full max-w-md bg-white flex flex-col md:p-12 p-8 border border-gray-300 rounded-lg shadow-sm"
         >
           {/* Text Section */}
@@ -49,6 +78,7 @@ export const Register = () => {
               placeholder="Enter your name"
               className="w-full p-2 border border-gray-300 rounded focus:outline-none  "
               onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
 
@@ -61,6 +91,7 @@ export const Register = () => {
               placeholder="Enter your email"
               className="w-full p-2 border border-gray-300 rounded focus:outline-none  "
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -73,6 +104,7 @@ export const Register = () => {
               placeholder="Enter your password"
               className="w-full p-2 border border-gray-300 rounded focus:outline-none  "
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
@@ -86,9 +118,12 @@ export const Register = () => {
 
           {/* Rigester Switch */}
           <p className="text-center mt-4 text-sm">
-            Already have an account?{" "}
+            Already have an account?
             {
-              <Link to="/login" className="text-blue-500 font-semibold">
+              <Link
+                to={`/login?redirect=${encodeURI(redirect)}`}
+                className="text-blue-500 font-semibold"
+              >
                 Login
               </Link>
             }
