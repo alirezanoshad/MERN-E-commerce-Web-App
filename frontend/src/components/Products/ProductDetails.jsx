@@ -173,7 +173,7 @@ export const ProductDetails = ({ productId }) => {
                   {selectedProduct?.colors?.map((color) => (
                     <button
                       key={color}
-                      className={`w-8 h-8 rounded-full  ${selectedColor === color ? "border-black border-4" : "border-gray-200"}`}
+                      className={`w-8 h-8 rounded-full border ${selectedColor === color ? "border-black border-4" : "border-gray-300"}`}
                       style={{
                         backgroundColor: color.toLowerCase(),
                         filter: "brightness(0.9)",

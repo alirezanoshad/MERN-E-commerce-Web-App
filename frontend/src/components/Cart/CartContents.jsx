@@ -79,7 +79,7 @@ export const CartContents = ({ cartProducts, guestId, userId }) => {
                 </div>
                 <div className="flex items-center mt-2 mr-4">
                   <button
-                    className="border rounded-full px-2 text-xl font-medium text-gray-500"
+                    className="border rounded-full px-2 text-xl font-medium text-gray-500 hover:cursor-pointer hover:text-gray-700"
                     type="button"
                     onClick={() =>
                       handleAddToCart({
@@ -93,9 +93,9 @@ export const CartContents = ({ cartProducts, guestId, userId }) => {
                   >
                     -
                   </button>
-                  <span className="mx-1">{product.quantity}</span>
+                  <span className="mx-2">{product.quantity}</span>
                   <button
-                    className="border rounded-full px-2  text-xl font-medium text-gray-500"
+                    className="border rounded-full px-2  text-xl font-medium text-gray-500 hover:cursor-pointer hover:text-gray-700"
                     type="button"
                     onClick={() =>
                       handleAddToCart({
