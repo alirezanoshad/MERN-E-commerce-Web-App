@@ -3,6 +3,13 @@ import { useState } from "react";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 // import closingSearchBar Icon
 import { HiMiniXMark } from "react-icons/hi2";
+// Redux
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  fetchProductsByFilters,
+  setFilters,
+} from "../../redux/slices/productsSlice";
 
 // SearchBar component
 export const SearchBar = () => {
@@ -12,6 +19,10 @@ export const SearchBar = () => {
   // isOpen variable - storing the searchBar form's statement(open or close) - set default to false in order to be closed by default
   const [isOpen, setIsOpen] = useState(false);
 
+  // Redux
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSearchToggle = () => {
     setIsOpen(!isOpen);
   };
@@ -20,7 +31,14 @@ export const SearchBar = () => {
     // a js method that stops the default action from happening
     e.preventDefault();
     console.log("Search Term:", searchTerm);
-    // to close the form(after searching)
+    // Store searchBar state
+    dispatch(setFilters({ search: searchTerm }));
+    // Fetch by searchBar value
+    dispatch(fetchProductsByFilters({ search: searchTerm }));
+    // Nvigate
+    navigate(`/collections/all?search=${searchTerm}`);
+
+    // close the search form(after submit)
     setIsOpen(false);
   };
 
@@ -28,7 +46,7 @@ export const SearchBar = () => {
   return (
     <div
       className={`flex items-center justify-center w-full transition-all duration-300 ${
-        isOpen ? "absolute top-0 left-0 w-full bg-white h-24 z-50" : "w-auto"
+        isOpen ? "absolute top-0 left-0 w-full bg-white h-24 z-50 " : "w-auto"
       }`}
     >
       {isOpen ? (
@@ -48,7 +66,7 @@ export const SearchBar = () => {
             {/* searchIcon - NOTE: we MUST add type="submit" to our btn to work out*/}
             <button
               type="submit"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
+              className="hover:cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
             >
               <HiMagnifyingGlass className="h-6 w-6" />
             </button>
@@ -56,7 +74,7 @@ export const SearchBar = () => {
           {/* closingSearchFormIcon - NOTE: we MUST add type="button" to our btn to work out*/}
           <button
             type="button"
-            className="absolute right-24 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
+            className="hover:cursor-pointer absolute right-24 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-800"
             onClick={() => handleSearchToggle()}
           >
             <HiMiniXMark className="h-6 w-6" />
