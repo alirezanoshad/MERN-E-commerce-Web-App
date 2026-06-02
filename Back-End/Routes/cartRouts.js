@@ -74,7 +74,7 @@ cartRouter.post('/',async(req,res)=>{
                         size:cartData.size,
                         color:cartData.color,
                         quantity:cartData.quantity
-                    },
+                    }
                 ],
                 totalPrice:product.price * cartData.quantity,
             });
