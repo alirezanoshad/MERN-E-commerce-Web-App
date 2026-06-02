@@ -1,32 +1,37 @@
+// React Hooks
 import { useEffect, useRef, useState } from "react";
-
-// Test images
-import wp1 from "../assets/topWearsForWomen/wp1.webp";
-import wp2 from "../assets/topWearsForWomen/wp2.webp";
-import wp3 from "../assets/topWearsForWomen/wp3.webp";
-import wp4 from "../assets/topWearsForWomen/wp4.webp";
-import wp5 from "../assets/topWearsForWomen/wp5.webp";
-import wp6 from "../assets/topWearsForWomen/wp6.webp";
-import wp7 from "../assets/topWearsForWomen/wp7.webp";
-import wp8 from "../assets/topWearsForWomen/wp8.webp";
-
-// Filter Icon
+// Filter Icon.
 import { FaFilter } from "react-icons/fa";
+// Components
 import { FilterSidebar } from "../components/Products/FilterSidebar";
 import { SortOptions } from "../components/Products/SortOptions";
 import { ProductGrid } from "../components/Products/ProductGrid";
+// Redux
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useSearchParams } from "react-router-dom";
+import { fetchProductsByFilters } from "../redux/slices/productsSlice";
 
+// CollectionsPage Component
 export const CollectionsPage = () => {
-  const [products, setProducts] = useState([]);
+  // Sidebar State
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
+  // Redux Store
+  const { products, loading, error } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
+  const { collection } = useParams();
+  // Read URL Params
+  const [searchParams] = useSearchParams();
+  // Convert URL Params into an object
+  const queryParams = Object.fromEntries([...searchParams]);
 
+  // Toggle Sidebar
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
     console.log("toggleSidebar happened");
   };
 
-  // close the sidebar if clicked outside of it
+  // handleClickOutside - Close the sidebar if clicked outside of it
   const handleClickOutside = (e) => {
     // if sidebar is loaded and click is not on sidebar, then close it
     if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
@@ -35,6 +40,13 @@ export const CollectionsPage = () => {
     }
   };
 
+  // Fetch Products By Filters By URL Params
+  useEffect(() => {
+    dispatch(fetchProductsByFilters({ collection, queryParams }));
+    console.log(collection);
+  }, [dispatch, collection, searchParams]);
+
+  // Sidebar event listener
   useEffect(() => {
     // Add event listener for clicks
     document.addEventListener("mousedown", handleClickOutside);
@@ -44,62 +56,7 @@ export const CollectionsPage = () => {
     };
   }, [isSidebarOpen]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      const fetchedProducts = [
-        {
-          _id: 1,
-          name: "High-Waist Skinny Jeans",
-          price: 29.99,
-          images: [{ url: wp1, altText: "" }],
-        },
-        {
-          _id: 2,
-          name: "Flared palazzo pants",
-          price: 29.99,
-          images: [{ url: wp2, altText: "" }],
-        },
-        {
-          _id: 3,
-          name: "Classic Pleated Trousers",
-          price: 29.99,
-          images: [{ url: wp3, altText: "" }],
-        },
-        {
-          _id: 4,
-          name: "Classic Pleated Trousers",
-          price: 29.99,
-          images: [{ url: wp4, altText: "" }],
-        },
-        {
-          _id: 5,
-          name: "Classic Pleated Trousers",
-          price: 29.99,
-          images: [{ url: wp5, altText: "" }],
-        },
-        {
-          _id: 6,
-          name: "Classic Pleated Trousers",
-          price: 29.99,
-          images: [{ url: wp6, altText: "" }],
-        },
-        {
-          _id: 7,
-          name: "Classic Pleated Trousers",
-          price: 29.99,
-          images: [{ url: wp7, altText: "" }],
-        },
-        {
-          _id: 8,
-          name: "Classic Pleated Trousers",
-          price: 29.99,
-          images: [{ url: wp8, altText: "" }],
-        },
-      ];
-      setProducts(fetchedProducts);
-    }, 1000);
-  }, []);
-
+  // JSX
   return (
     <div className="flex flex-col lg:flex-row">
       {/* Mobile Filter Btn */}
@@ -128,7 +85,11 @@ export const CollectionsPage = () => {
         </div>
 
         {/* Product Grid */}
-        <ProductGrid products={products} />
+        <ProductGrid
+          passedProducts={products}
+          loading={loading}
+          error={error}
+        />
       </div>
     </div>
   );
