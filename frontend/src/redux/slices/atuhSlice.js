@@ -1,5 +1,8 @@
 // Authentication Slice - Manages Login and Registeration.
 
+// PopUp Library
+import { toast } from "sonner";
+
 // createSlice - Write states, reducers and actions.
 // createAsyncThunk - Asyncronous API Calls.
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
@@ -25,52 +28,65 @@ const initialState = {
   error: null, // Default
 };
 
-// User Login - Async Thunk Function(Redux Tooolkit)
+// AsyncThunk - User Login
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData) => {
+    // Login popup - before axios Request.
+    const toastLogin = toast.loading("Logining in...");
     try {
-      console.log(userData);
       // Checkpoint: send user login data to Server and Wait for result.
       const response = await axios.post(
         "http://localhost:5000/api/users/login",
         userData,
       );
-      // If response true, Set User Data In localStorage &
-      console.log(response.data);
+      // If response true, Set User Data In localStorage & Display Succes Popup
       localStorage.setItem("userInfo", JSON.stringify(response.data.user)); //userInfo
       localStorage.setItem("userToken", response.data.token); // userToken
+      toast.success("Login Successfully!", { id: toastLogin }); // Success popup
       return response.data.user; // Return the user object from the response.
     } catch (error) {
-      return console.log(error.response.data); // Will send eror to Redux.
+      // Eror Popup
+      toast.error("Login Failed! Try Again", {
+        id: toastLogin,
+      });
+      // Eror clg
+      return console.log(error.response?.data?.msg);
     }
   },
 );
 
-// User Register - Async Thunk Function(Redux Tooolkit)
+// AsyncThunk - User Register
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async (userData) => {
+  async ({ name, email, password }) => {
+    // Register popup
+    const registerUserPopup = "registerPopup";
+    toast.loading("Registering..", { id: registerUserPopup });
     try {
-      console.log(userData);
       // send user login data
       const response = await axios.post(
         "http://localhost:5000/api/users/register",
-        userData,
+        { name, email, password },
       );
-
+      console.log(response.data);
+      // Set localStorage
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));
       localStorage.setItem("userToken", response.data.token);
-      console.log(response.data);
+      toast.success("Register Succesfully!", { id: registerUserPopup });
       return response.data.user; // Return the user object from the response.
     } catch (error) {
-      return console.log(error.response.data);
+      toast.error(`Register Failed! ${error.response.data.msg}`, {
+        id: registerUserPopup,
+      });
+      console.log(error.response.data.msg);
     }
   },
 );
 
-// Slice - is a way to Group together: States & Reducers & Actions
-const authSlice = createSlice({
+// Auth Slice
+// Export, So it can be added to Redux Store.
+export const authSlice = createSlice({
   // Slice name
   name: "auth",
   // initial State
@@ -92,7 +108,7 @@ const authSlice = createSlice({
     },
   },
 
-  // Managing AsyncThunk Promise States.
+  // Managing AsyncThunk Promise States - Login & Register
   extraReducers: (builder) => {
     builder
       //// Login States (Pending, Fulfilled, Rejected)
@@ -102,11 +118,11 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.user = action.payload;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.message;
+        state.error = action.payload.msg;
       })
       //// Register States (Pending, Fulfilled, Rejected)
       .addCase(registerUser.pending, (state) => {
@@ -119,12 +135,10 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.message;
+        state.error = action.payload.msg;
       });
   },
 });
 
 // Export Actions => So we could use them in our Components.
 export const { logout, generateNewGuestId } = authSlice.actions;
-// Export Default The Reducers => So it can be added to Redux Store.
-export default authSlice.reducer;
