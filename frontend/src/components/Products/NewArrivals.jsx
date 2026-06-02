@@ -21,47 +21,26 @@ export const NewArrivals = () => {
   // Start point of  X-axis scroll - initial = 0
   const [startX, setStartX] = useState(0);
 
-  // // State for API
-  // const [newArrivals, setNewArrivals] = useState();
-  // // NewArrivals API
-  // useEffect(() => {
-  //   const fetchNewArrivals = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         "https://localhost:5000/api/product/new-arrivals",
-  //       );
-  //       console.log(response);
-  //       setNewArrivals(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   fetchNewArrivals();
-  // }, []);
-
-  // State for API
+  // NewArrivals Section State
   const [newArrivals, setNewArrivals] = useState([]);
 
-  // NewArrivals API
+  // Fetch Data & Store In State - New Arrivals Section
   useEffect(() => {
-  const fetchNewArrivals = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:5000/api/product/new-arrivals"
-      );
+    const fetchNewArrivals = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/product/new-arrivals",
+        );
+        setNewArrivals(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      console.log(response.data);
-      setNewArrivals(response.data);
-    } catch (error) {
-      console.error("Error fetching new arrivals:", error);
-    }
-  };
+    fetchNewArrivals();
+  }, []);
 
-  fetchNewArrivals();
-}, []);
-
-  // adds eventListener on mount => updateScrollButtons function when "scroll" happens.
+  // adds eventListener(on mount) => updateScrollButtons function when "scroll" happens.
   useEffect(() => {
     const container = scrollRef.current;
     // console.log(container);
@@ -124,7 +103,7 @@ export const NewArrivals = () => {
   return (
     <section className="py-16 px-4 lg:px-0">
       {/* Text section */}
-      <div className="container mx-auto text-cente flex flex-col mb-10">
+      <div className="container mx-auto flex flex-col mb-10">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-950 mb-4">
             Explore New Arrivals
@@ -165,29 +144,30 @@ export const NewArrivals = () => {
             onMouseLeave={handleMouseuUpOrLeave}
           >
             {/* Generating produtc div */}
-            {newArrivals.map((product) => (
-              <div
-                key={product._id}
-                className="relative min-w-full sm:min-w-[50%] lg:min-w-[30%]"
-              >
-                <img
-                  src={product.images[0]?.url}
-                  alt={product.images[0]?.altText}
-                  className="w-full h-[500px] object-cover rounded-lg"
-                  draggable="false"
-                />
-                <div className="absolute bottom-0 right-0 left-0 w-full h-[100px] backdrop-blur-md p-4 rounded-b-lg">
-                  <div className="w-full h-full flex flex-col justify-center">
-                    <Link to={`/product/${product._id}`} className="block">
-                      <h4 className=" text-white font-medium">
-                        {product.name}
-                      </h4>
-                      <p className="text-white mt-1.5">{product.price}</p>
-                    </Link>
+            {newArrivals.length > 0 &&
+              newArrivals.map((product) => (
+                <div
+                  key={product._id}
+                  className="relative min-w-full sm:min-w-[50%] lg:min-w-[30%]"
+                >
+                  <img
+                    src={product.images[0]?.url}
+                    alt={product.images[0]?.altText}
+                    className="w-full h-125 object-cover rounded-lg"
+                    draggable="false"
+                  />
+                  <div className="absolute bottom-0 right-0 left-0 w-full h-25 backdrop-blur-md p-4 rounded-b-lg cursor-pointer">
+                    <div className="w-full h-full flex flex-col justify-center">
+                      <Link to={`/product/${product._id}`} className="block">
+                        <h4 className=" text-white font-medium">
+                          {product.name}
+                        </h4>
+                        <p className="text-white mt-1.5">{product.price}</p>
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
