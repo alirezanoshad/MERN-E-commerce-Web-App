@@ -156,7 +156,7 @@ export const Footer = () => {
       {/* Footer Bottom */}
       <div className="container mx-auto mt-12 px-4 lg:px-0 border-t border-gray-200 pt-6">
         <p className="text-center text-gray-500 text-sm tracking-tighter">
-          © 2025, NOREX. All Rights Reserved.
+          © 2025, Elixp. All Rights Reserved.
         </p>
       </div>
     </footer>

@@ -32,8 +32,8 @@ export const Topbar = () => {
         {/* rightside section */}
         <div className="hidden md:block text-sm">
           {/* phone number as a link */}
-          <a href="tel:+1234567890" className="hover:text-gray-300">
-            +1 (234) 567-890
+          <a href="tel:09363241408" className="hover:text-gray-300">
+            (+98) 936-324-1408
           </a>
         </div>
       </div>
