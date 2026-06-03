@@ -1,15 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addUser,
+  deleteUser,
+  fetchUsers,
+  updateUser,
+} from "../../redux/slices/adminSlice";
+import { useNavigate } from "react-router-dom";
 
+// User Management Component
 export const UserManagement = () => {
-  // Test data
-  const users = [
-    {
-      _id: 41154,
-      name: "alireza",
-      email: "mymail@example.com",
-      role: "admin",
-    },
-  ];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { users, loading, error } = useSelector((state) => state.admin);
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (user && user.role !== "admin") {
+      navigate("/");
+    }
+  }, [navigate, user]);
+
+  useEffect(() => {
+    if (user && user.role === "admin") {
+      dispatch(fetchUsers());
+    }
+  }, [dispatch, user]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -21,13 +37,16 @@ export const UserManagement = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: [e.target.value],
+      [e.target.name]: e.target.value,
     });
   };
 
   const hanleFormSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+
+    dispatch(addUser(formData));
+
     // Reset the form after sumission.
     setFormData({
       name: "",
@@ -37,14 +56,28 @@ export const UserManagement = () => {
     });
   };
 
-  const handleRoleChange = (userId, newRole) => {
-    console.log(userId, newRole);
-    // setFormData(...formData, id: role)
+  const handleRoleChange = (user, newRole) => {
+    console.log({
+      name: user.name,
+      email: user.email,
+      role: newRole,
+      id: user._id,
+    });
+
+    dispatch(
+      updateUser({
+        name: user.name,
+        email: user.email,
+        role: newRole,
+        id: user._id,
+      }),
+    );
   };
 
   const handleDeleteUser = (userId) => {
     console.log(`requested to delete user##${userId}`);
     if (window.confirm(`Are you sure you want to delete user#${userId}`)) {
+      dispatch(deleteUser({ id: userId }));
       console.log(`user#${userId} will be romved.`);
     }
   };
@@ -52,7 +85,8 @@ export const UserManagement = () => {
   return (
     <div className="max-w-7xl mx-auto  p-6">
       <h2 className="text-2xl font-bold mb-6">User Managemen</h2>
-
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
       {/* Add New User Form */}
       <div className="p-6 rounded-lg mb-6">
         <h3 className="text-lg font-bold mb-4">Add New User</h3>
@@ -125,32 +159,34 @@ export const UserManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td className="py-3 px-4">{user.name}</td>
-                <td className="py-3 px-4">{user.email}</td>
-                <td className="py-3 px-4">
-                  {/* {user.role} */}
-                  <select
-                    name="role"
-                    value={user.role}
-                    onChange={(e) => handleRoleChange(user._id, e.target.value)}
-                    className="p-2 border border-gray-300 rounded"
-                  >
-                    <option value="customer">Customer</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </td>
-                <td className="p-4">
-                  <button
-                    onClick={() => handleDeleteUser(user._id)}
-                    className="bg-red-500 py-2 px-4 rounded text-xs text-white hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {users &&
+              users.length > 0 &&
+              users.map((user) => (
+                <tr key={user._id} className="border-b border-gray-200">
+                  <td className="py-3 px-4">{user.name}</td>
+                  <td className="py-3 px-4">{user.email}</td>
+                  <td className="py-3 px-4">
+                    {/* {user.role} */}
+                    <select
+                      name="role"
+                      value={user.role}
+                      onChange={(e) => handleRoleChange(user, e.target.value)}
+                      className="p-2 border border-gray-300 rounded"
+                    >
+                      <option value="customer">Customer</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </td>
+                  <td className="p-4">
+                    <button
+                      onClick={() => handleDeleteUser(user._id)}
+                      className="bg-red-500 py-2 px-4 rounded text-xs text-white hover:bg-red-600"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
