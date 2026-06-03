@@ -30,6 +30,7 @@ import { UserManagement } from "./components/Admin/UserManagement.jsx";
 import { ProductManagement } from "./components/Admin/ProductManagement.jsx";
 import { EditProductPage } from "./components/Admin/EditProductPage.jsx";
 import { OrderManagement } from "./components/Admin/OrderManagement.jsx";
+import { ProtectedRoute } from "./components/Common/ProtectedRoute.jsx";
 
 // App component - Contains 2 Layouts: UserLayout & AdminLayout.
 export const App = () => {
@@ -62,7 +63,14 @@ export const App = () => {
           </Route>
 
           {/* Admin Layout */}
-          <Route path="/admin" element={<AdminLayout />}>
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute role="admin">
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<AdminHomePage />}></Route>
             <Route path="users" element={<UserManagement />}></Route>
             <Route path="products" element={<ProductManagement />}></Route>

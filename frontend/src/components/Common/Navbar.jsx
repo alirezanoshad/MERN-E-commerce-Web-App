@@ -19,6 +19,7 @@ export const Navbar = () => {
   const [navDrawerOpen, setNavDrawerOpen] = useState(false);
 
   // Redux
+  const { user } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
   const cartItemCount =
     cart?.products?.reduce((total, product) => total + product.quantity, 0) ||
@@ -74,13 +75,15 @@ export const Navbar = () => {
         </div>
         {/* RightSide - Icons */}
         <div className="flex items-center space-x-4">
-          {/* Admin Button */}
-          <Link
-            to="/admin"
-            className="block bg-black text-white rounded px-2 py-1 text-sm"
-          >
-            Admin
-          </Link>
+          {/* Admin Button - Displays only if logged user is admin */}
+          {user && user.role === "admin" ? (
+            <Link
+              to="/admin"
+              className="block bg-black text-white rounded px-2 py-1 text-sm"
+            >
+              Admin
+            </Link>
+          ) : null}
 
           {/* userIcon */}
           <Link to="/profile" className="hover:text-black">
