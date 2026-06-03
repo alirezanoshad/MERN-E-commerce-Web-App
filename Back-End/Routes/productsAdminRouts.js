@@ -6,7 +6,7 @@ const {protect,admin} = require('../middleware/authMiddleware');
 
 
 // @route GET /api/admin/products
-// @desc Get add products (admin only)
+// @desc Get all products (admin only)
 // @access Private/Admin
 adminproductsRouter.get('/',async(req,res)=>{
     try {
