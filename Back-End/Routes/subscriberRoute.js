@@ -9,7 +9,7 @@ subscriberRouter.post('/',async(req,res)=>{
     // getting email from body
     const subsEmail = _.pick(req.body,["email"]);
     // check if email is present
-    if(!email) return res.status(400).json({msg:"Email is required"});
+    if(!subsEmail.email) return res.status(400).json({msg:"Email is required"});
     try {
         // check if email is already subscribed
         let subscriber = await Subscriber.findOne({email:subsEmail.email});
