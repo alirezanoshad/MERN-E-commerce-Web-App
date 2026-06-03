@@ -13,7 +13,7 @@ export const GenderCollectionSection = () => {
           <img
             src={womenCollectionImg}
             alt="Women's Collection"
-            className="w-full h-[700px] object-cover"
+            className="w-full h-175 object-cover rounded"
           />
           <div className="absolute bg-white/90 bottom-8 left-8 p-4">
             <h2 className="text-2xl font-bold text-gray-900 mb-3">
@@ -33,7 +33,7 @@ export const GenderCollectionSection = () => {
           <img
             src={menCollectionImg}
             alt="Men's Collection"
-            className="w-full h-[700px] object-cover"
+            className="w-full h-175 object-cover rounded"
           />
           <div className="absolute bg-white/90 bottom-8 left-8 p-4">
             <h2 className="text-2xl font-bold text-gray-900 mb-3">

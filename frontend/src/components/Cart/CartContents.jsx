@@ -116,6 +116,7 @@ export const CartContents = ({ cartProducts, guestId, userId }) => {
             <div className="flex flex-col items-center">
               <p>${product?.price * product?.quantity}</p>
               <button
+                className="cursor-pointer"
                 onClick={() =>
                   handleRemoveFromCart({
                     size: product.size,

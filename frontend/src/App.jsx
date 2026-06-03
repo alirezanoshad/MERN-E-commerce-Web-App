@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // Provider - Redux component
 // => Makes "store" Accessable by every Component(by wrapping the "App" component)
 import { Provider } from "react-redux";
-// Redux store refrence   
+// Redux store refrence
 import store from "./redux/store.js";
 
 // User Layout Imports
