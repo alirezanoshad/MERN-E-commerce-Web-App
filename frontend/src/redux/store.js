@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authSlice } from "./slices/atuhSlice";
 import { productsSlice } from "./slices/productsSlice";
 import { cartSlice } from "./slices/cartSlice";
+import { adminSlice } from "./slices/adminSlice";
 
 // Creating Redux store.
 const store = configureStore({
@@ -11,6 +12,7 @@ const store = configureStore({
     auth: authSlice.reducer,
     products: productsSlice.reducer,
     cart: cartSlice.reducer,
+    admin: adminSlice.reducer,
   },
 });
 // Export Redux Store => to be used All across The Application.
