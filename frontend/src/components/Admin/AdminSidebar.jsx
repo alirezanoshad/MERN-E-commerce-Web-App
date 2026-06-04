@@ -1,5 +1,7 @@
 // Imports
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slices/atuhSlice";
 // icon import
 import {
   FaBoxOpen,
@@ -8,13 +10,21 @@ import {
   FaUser,
   FaSignOutAlt,
 } from "react-icons/fa";
+
+// AdminSidebar Component
 export const AdminSidebar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // hamdleLogout func
   const hamdleLogout = () => {
-    // For now lets just navigate to home page
+    // Logout user
+    dispatch(logout());
+    // Navigate to home
     navigate("/");
   };
 
+  // JSX
   return (
     <div className="p-6">
       <div className="mb-6 ">
@@ -59,7 +69,7 @@ export const AdminSidebar = () => {
           <span>Orders</span>
         </NavLink>
         <NavLink
-          to="/admin/shop"
+          to="/"
           className={({ isActive }) =>
             isActive
               ? "bg-gray-700 hover:bg-gray-700 text-white py-3 px-4 rounded flex items-center space-x-2"
