@@ -1,46 +1,28 @@
 const express = require('express');
 const multer = require('multer');
-const cloudinary = require('cloudinary').v2;
-const streamifier = require('streamifier');
+const axios = require('axios');
 const config = require('config');
+const FormData = require('form-data');
+const upload = multer({
+    storage: multer.memoryStorage()
+});
 const uploadRouter = express.Router();
-//  cloudinary configuration
-cloudinary.config({
-    cloud_name: config.get('cloudinary.cloudName'),
-    api_key: config.get('cloudinary.cloudinaryAPIKey'),
-    api_secret: config.get('cloudinary.apiSecret')
-})
-
-
-// multer setup using memory storage
-const storage = multer.memoryStorage();
-const upload = multer({storage:storage});
+// just a simple api for uploading file
 uploadRouter.post('/',upload.single('image'),async(req,res)=>{
     try {
+        // check if any file sent
         if(!req.file){
-            return res.status(400).json({msg:'no file uploaded'});
+            return res.status(400).json({msg:'no file resieved'});
         }
-        // function to handle the stream upload to cloudinary
-        const streamUpload = (fileBuffer)=>{
-            return new Promise((resolve,reject)=>{
-                const stream = cloudinary.uploader.upload_stream((error,result)=>{
-                    if(result){
-                    resolve(result);
-                    }else{
-                    reject(error);
-                    }
-                })
-                // use streamifier to convert file buffer to a stream
-                streamifier.createReadStream(fileBuffer).pipe(stream);
-            })
-        }
-        // call the streamUpload function
-        const result = await streamUpload(req.file.buffer);
-        // respond with the uploaded image
-        res.json({imageUrl:result.secure_url});
-        
+        const form = new FormData();
+        form.append('key',config.get('server.imageUpload-API-Key'))
+        form.append('format','json');
+        // attach the buffer
+        form.append('source',req.file.buffer,{filename:req.file.originalname,contentType:req.file.mimetype});
+        const response = await axios.post('https://freeimage.host/api/1/upload',form);
+        res.json(response.data.image.image);
     } catch (error) {
-        console.log(error);
+        clonsole.log(error);
         res.status(500).json({msg:'server error'})
     }
 })
