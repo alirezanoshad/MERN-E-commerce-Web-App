@@ -1,15 +1,20 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteProduct,
+  fetchAdminProducts,
+} from "../../redux/slices/adminProductsSlice";
 
 export const ProductManagement = () => {
-  // Test products to display
-  const products = [
-    {
-      _id: 123,
-      name: "jacket polo",
-      price: "120",
-      sku: "Ydc44W2nW",
-    },
-  ];
+  const dispatch = useDispatch();
+  const { products, loading, error } = useSelector(
+    (state) => state.adminProducts,
+  );
+
+  useEffect(() => {
+    dispatch(fetchAdminProducts());
+  }, [dispatch]);
 
   const handleDeleteProduct = (productId, productName) => {
     if (
@@ -17,9 +22,14 @@ export const ProductManagement = () => {
         `Are you sure you want to delete: ${productName} #${productId}`,
       )
     ) {
-      console.log(`item will be deleted: ${productName} #${productId}`);
+      dispatch(deleteProduct({ id: productId }));
     }
   };
+
+  if (loading) return <p className="text-center">loading...</p>;
+  if (error) return <p className="text-center">Error: ${error}</p>;
+
+  // JSX
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <h2 className="text-2xl mb-6 font-bold">Product Management</h2>
@@ -34,11 +44,11 @@ export const ProductManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {products.length > 0 ? (
+            {products && products.length > 0 ? (
               products.map((product) => (
                 <tr
                   key={product}
-                  className="border-b border-gray-300 hover:border-t-gray-50 cursor-pointer"
+                  className="border-b border-gray-300 hover:bg-gray-100 cursor-pointer"
                 >
                   <td className="p-4 font-medium text-gray-900 whitespace-nowrap">
                     {product.name}
