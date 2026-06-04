@@ -20,7 +20,7 @@ uploadRouter.post('/',upload.single('image'),async(req,res)=>{
         // attach the buffer
         form.append('source',req.file.buffer,{filename:req.file.originalname,contentType:req.file.mimetype});
         const response = await axios.post('https://freeimage.host/api/1/upload',form);
-        res.json(response.data.image.image);
+        res.json(response.data.image.image.url);
     } catch (error) {
         clonsole.log(error);
         res.status(500).json({msg:'server error'})
