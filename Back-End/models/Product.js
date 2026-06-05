@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
     metaDescription:{type:String},
     metaKeyWords:{type:String},
     dimensions:{length:Number,width:Number,height:Number},
-    weight:Number,
+    weight:{type:Number},
 });
 productSchema.plugin(timestamp);
 // exporting the modle
