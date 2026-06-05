@@ -98,10 +98,7 @@ export const EditProductPage = () => {
       setProductInfo((prevData) => ({
         ...prevData,
         images: [...prevData.images, { url: data, altText: altTextEntry }],
-      })).then(()=>{
-
-        console.log(productInfo.images);
-      })
+      }));
       setUploading(false);
       setAltTextEntry("");
     } catch (error) {
@@ -371,7 +368,7 @@ export const EditProductPage = () => {
                     <button
                       type="button"
                       onClick={() => handleImgDelete(img._id)}
-                      className="bg-red-100 rounded absolute top-0 right-0 p-2"
+                      className="bg-red-100 hover:cursor-pointer rounded absolute top-0 right-0 p-2"
                     >
                       <TbXboxXFilled className="h-6 w-6  text-red-400" />
                     </button>
