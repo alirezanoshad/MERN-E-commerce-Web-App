@@ -19,6 +19,9 @@ export const ProductDetails = ({ productId }) => {
   const { selectedProduct, similarProducts, loading, error } = useSelector(
     (state) => state.products,
   );
+
+  console.log(selectedProduct);
+
   // Redux State - userInfo
   const { user, guestId } = useSelector((state) => state.auth);
   const userID = user ? user.id : null;
@@ -155,13 +158,24 @@ export const ProductDetails = ({ productId }) => {
               <h2 className="text-2xl md:text-3xl font-semibold mb-2">
                 {selectedProduct?.name}
               </h2>
-              <p className="text-lg text-gray-600 mb-1 line-through">
-                {selectedProduct?.originalPrice &&
-                  `${selectedProduct.originalPrice}`}
-              </p>
-              <p className="text-xl text-gray-500 mb-2">
-                $ {selectedProduct?.price}
-              </p>
+              {selectedProduct?.price && selectedProduct?.discountPrice ? (
+                <div>
+                  <p className="text-lg text-gray-600 mb-1 line-through">
+                    ${selectedProduct.price}
+                  </p>
+                  <p className="text-lg text-gray-800 mb-1 font-medium">
+                    ${selectedProduct.discountPrice}
+                  </p>
+                </div>
+              ) : (
+                <p className="text-lg text-gray-800 mb-1 font-medium">
+                  ${selectedProduct.price}
+                </p>
+              )}
+
+              {/* <p className="text-xl text-gray-500 mb-2">
+                $ {selectedProduct?.discountPrice}
+              </p> */}
               <p className="text-gray-600 mb-4">
                 {selectedProduct?.description}
               </p>
