@@ -21,6 +21,7 @@ export const EditProductPage = () => {
 
   // Image uploading state
   const [uploading, setUploading] = useState(false);
+  const [imgUploadBtnDisable, setImgUploadBtnDisable] = useState(false);
   //  AltText Entry state
   const [altTextEntry, setAltTextEntry] = useState("");
 
@@ -75,6 +76,7 @@ export const EditProductPage = () => {
   };
 
   const handleImgUpload = async (e) => {
+    if (handleAltTextEntry === "") return;
     const file = e.target.files[0];
     console.log(file);
     const formData = new FormData();
@@ -82,6 +84,7 @@ export const EditProductPage = () => {
 
     try {
       setUploading(true);
+      setImgUploadBtnDisable(true);
       console.log(formData);
       // Post - server request
       const { data } = await axios.post(
@@ -99,11 +102,15 @@ export const EditProductPage = () => {
         ...prevData,
         images: [...prevData.images, { url: data, altText: altTextEntry }],
       }));
+      console.log(productInfo);
       setUploading(false);
+      setImgUploadBtnDisable(false);
+
       setAltTextEntry("");
     } catch (error) {
       console.log(error);
       setUploading(false);
+      setImgUploadBtnDisable(false);
     }
   };
 
@@ -177,53 +184,59 @@ export const EditProductPage = () => {
             />
           </div>
           {/* Price */}
-          <div className="mb-6">
-            <label className="block font-semibold mb-2">Price</label>
-            <input
-              type="number"
-              name="price"
-              value={productInfo?.price}
-              onChange={handleFormChange}
-              className="w-full border border-gray-300 rounded-md p-2"
-              required
-            />
+          <div className="flex flex-row justify-between gap-1">
+            <div className="mb-6">
+              <label className="block font-semibold mb-2">Price</label>
+              <input
+                type="number"
+                name="price"
+                value={productInfo?.price}
+                onChange={handleFormChange}
+                className="w-full border border-gray-300 rounded-md p-2"
+                required
+              />
+            </div>
+            {/* discountPrice */}
+            <div className="mb-6">
+              <label className="block font-semibold mb-2">Discount Price</label>
+              <input
+                type="number"
+                name="discountPrice"
+                value={productInfo?.discountPrice}
+                onChange={handleFormChange}
+                className="w-full border border-gray-300 rounded-md p-2"
+                required
+              />
+            </div>
           </div>
-          {/* discountPrice */}
-          <div className="mb-6">
-            <label className="block font-semibold mb-2">Discount Price</label>
-            <input
-              type="number"
-              name="discountPrice"
-              value={productInfo?.discountPrice}
-              onChange={handleFormChange}
-              className="w-full border border-gray-300 rounded-md p-2"
-              required
-            />
+
+          <div className="flex flex-row justify-between gap-1">
+            {/* countInStock */}
+            <div className="mb-6">
+              <label className="block font-semibold mb-2">Quantity</label>
+              <input
+                type="number"
+                name="countInStock"
+                value={productInfo?.countInStock}
+                onChange={handleFormChange}
+                className="w-full border border-gray-300 rounded-md p-2"
+                required
+              />
+            </div>
+            {/* SKU */}
+            <div className="mb-6">
+              <label className="block font-semibold mb-2">SKU</label>
+              <input
+                type="text"
+                name="sku"
+                value={productInfo?.sku}
+                onChange={handleFormChange}
+                className="w-full border border-gray-300 rounded-md p-2"
+                required
+              />
+            </div>
           </div>
-          {/* countInStock */}
-          <div className="mb-6">
-            <label className="block font-semibold mb-2">Quantity</label>
-            <input
-              type="number"
-              name="countInStock"
-              value={productInfo?.countInStock}
-              onChange={handleFormChange}
-              className="w-full border border-gray-300 rounded-md p-2"
-              required
-            />
-          </div>
-          {/* SKU */}
-          <div className="mb-6">
-            <label className="block font-semibold mb-2">SKU</label>
-            <input
-              type="text"
-              name="sku"
-              value={productInfo?.sku}
-              onChange={handleFormChange}
-              className="w-full border border-gray-300 rounded-md p-2"
-              required
-            />
-          </div>
+
           {/* Material */}
           <div className="mb-6">
             <label className="block font-semibold mb-2">Material</label>
@@ -311,28 +324,31 @@ export const EditProductPage = () => {
           {/* Image Upload */}
           <div className="block mb-6">
             <div className="flex flex-row mb-2">
-              <input
-                placeholder="Enter Image AltText"
-                value={altTextEntry}
-                type="text"
-                name="imgAltText"
-                className=" rounded-l-md border focus:outline-none border-gray-300 p-2"
-                onChange={handleAltTextEntry}
-              />
-              <label
-                for="imgUploadID"
-                className="bg-blue-500 px-2 py-2 text-white rounded-r hover:bg-blue-600 cursor-pointer  font-semibold "
-              >
-                Upload Image
-              </label>
-              <input
-                type="file"
-                name="image"
-                onChange={handleImgUpload}
-                className="w-full border p-2"
-                id="imgUploadID"
-                hidden
-              />
+              <div className="block">
+                <input
+                  placeholder="Enter Image AltText"
+                  value={altTextEntry}
+                  type="text"
+                  name="imgAltText"
+                  className="rounded-l-md border focus:outline-none border-gray-300  p-2"
+                  onChange={handleAltTextEntry}
+                />
+                <label
+                  for="imgUploadID"
+                  className={`px-2 py-3 text-white rounded-r text-center font-semibold ${imgUploadBtnDisable? "bg-blue-900 cursor-wait" : "bg-blue-500 cursor-pointer hover:bg-blue-600 "}`}
+                >
+                  Upload Image
+                </label>
+                <input
+                  type="file"
+                  name="image"
+                  onChange={handleImgUpload}
+                  className="w-full border p-2"
+                  id="imgUploadID"
+                  disabled={imgUploadBtnDisable}
+                  hidden
+                />
+              </div>
 
               {uploading && (
                 <div className="pl-3" role="status">
