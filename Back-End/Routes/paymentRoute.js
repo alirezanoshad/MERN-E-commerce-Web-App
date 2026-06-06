@@ -75,6 +75,7 @@ paymentRouter.post('/pay',async(req,res)=>{
 
 // @route POST /api/payment
 paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
+    try {
     const cartInfo = _.pick(req.body,['cartData','shipingAddress']);
     const savedOrder = await Order.create({
         user:req.user._id,
@@ -91,6 +92,23 @@ paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
         description:'buy product',
         callback_url:config.get('gateway.callBackUrl')
     };
+    const response = await axios.post(config.get('gateway.sandBox'),paymentData);
+     if(response.data.code == '100'){
+        // creating new payment
+        const newPayment = new Payment({
+            user:req.user.id,
+            amount:amount,
+            resNumber:response.data.authority
+        })
+        await newPayment.save();
+        // redirecting user
+        res.redirect(config.get(`gateway.redirectUrl ${response.data.authority}`));
+    }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg:'server error'})
+    }
+    
     
 })
 
