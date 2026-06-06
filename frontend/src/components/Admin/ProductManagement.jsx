@@ -32,7 +32,14 @@ export const ProductManagement = () => {
   // JSX
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <h2 className="text-2xl mb-6 font-bold">Product Management</h2>
+      <div className="flex justify-between mb-6">
+        <h2 className="text-2xl  font-bold">Product Management</h2>
+        <Link to="create-product">
+          <button className="py-1 px-2 mr-2  bg-green-500 rounded text-white cursor-pointer hover:bg-green-600">
+            Add New Product
+          </button>
+        </Link>
+      </div>
       <div className="overflow-x-auto shadow-md sm:rounded-lg">
         <table className="min-w-full text-left text-gray-500">
           <thead className="bg-gray-100 text-xs uppercase text-gray-700">
@@ -47,11 +54,11 @@ export const ProductManagement = () => {
             {products && products.length > 0 ? (
               products.map((product) => (
                 <tr
-                  key={product}
+                  key={product._id}
                   className="border-b border-gray-300 hover:bg-gray-100 cursor-pointer"
                 >
                   <td className="p-4 font-medium text-gray-900 whitespace-nowrap">
-                    {product.name}
+                    {product?.name}
                   </td>
                   <td className="p-4">${product.price}</td>
                   <td className="p-4">{product.sku}</td>
