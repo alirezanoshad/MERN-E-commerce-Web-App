@@ -45,6 +45,7 @@ export const ProductManagement = () => {
           <thead className="bg-gray-100 text-xs uppercase text-gray-700">
             <tr>
               <th className="py-3 px-4">name</th>
+              <th className="py-3 px-4">Images</th>
               <th className="py-3 px-4">price</th>
               <th className="py-3 px-4">sku</th>
               <th className="py-3 px-4">actions</th>
@@ -60,6 +61,7 @@ export const ProductManagement = () => {
                   <td className="p-4 font-medium text-gray-900 whitespace-nowrap">
                     {product?.name}
                   </td>
+                  <td className="p-4">{product.images?.length}</td>
                   <td className="p-4">${product.price}</td>
                   <td className="p-4">{product.sku}</td>
                   <td>
