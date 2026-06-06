@@ -31,6 +31,7 @@ import { ProductManagement } from "./components/Admin/ProductManagement.jsx";
 import { EditProductPage } from "./components/Admin/EditProductPage.jsx";
 import { OrderManagement } from "./components/Admin/OrderManagement.jsx";
 import { ProtectedRoute } from "./components/Common/ProtectedRoute.jsx";
+import { CreateProductPage } from "./components/Admin/CreateProductPage.jsx";
 
 // App component - Contains 2 Layouts: UserLayout & AdminLayout.
 export const App = () => {
@@ -77,6 +78,10 @@ export const App = () => {
             <Route
               path="products/:id/edit"
               element={<EditProductPage />}
+            ></Route>
+            <Route
+              path="products/create-product"
+              element={<CreateProductPage />}
             ></Route>
             <Route path="orders" element={<OrderManagement />}></Route>
           </Route>
