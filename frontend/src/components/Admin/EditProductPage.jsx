@@ -62,11 +62,11 @@ export const EditProductPage = () => {
     console.log(productInfo);
   };
 
-  const handleImgDelete = (imgID) => {
-    console.log(imgID);
+  const handleImgDelete = (imgURL) => {
+    console.log(imgURL);
     setProductInfo((prev) => ({
       ...prev,
-      images: prev.images.filter((img) => img._id !== imgID),
+      images: prev.images.filter((img) => img.url !== imgURL),
     }));
   };
 
@@ -367,7 +367,7 @@ export const EditProductPage = () => {
                   >
                     <button
                       type="button"
-                      onClick={() => handleImgDelete(img._id)}
+                      onClick={() => handleImgDelete(img.url)}
                       className="bg-red-100 hover:cursor-pointer rounded absolute top-0 right-0 p-2"
                     >
                       <TbXboxXFilled className="h-6 w-6  text-red-400" />
