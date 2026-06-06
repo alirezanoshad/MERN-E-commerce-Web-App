@@ -119,10 +119,11 @@ export const CreateProductPage = () => {
   // Hnadle Form Submit
   const hanldeProductSubmit = (e) => {
     e.preventDefault();
-    console.log({ productData: productInfo });
-    if (productInfo.images.length > 0) {
+    console.log(productInfo );
+    if (productInfo.images?.length > 0) {
       dispatch(createProduct(productInfo)).then(() => {
         navigate("/admin/products");
+        toast.success("Product Added Successfuly!");
       });
     } else {
       toast.error("Image Needs to be added");

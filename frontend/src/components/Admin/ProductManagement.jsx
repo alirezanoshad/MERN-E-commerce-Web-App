@@ -11,6 +11,7 @@ export const ProductManagement = () => {
   const { products, loading, error } = useSelector(
     (state) => state.adminProducts,
   );
+  console.log(products);
 
   useEffect(() => {
     dispatch(fetchAdminProducts());
@@ -59,11 +60,13 @@ export const ProductManagement = () => {
                   className="border-b border-gray-300 hover:bg-gray-100 cursor-pointer"
                 >
                   <td className="p-4 font-medium text-gray-900 whitespace-nowrap">
-                    {product?.name}
+                    {product?.name || "N/A"}
                   </td>
-                  <td className="p-4">{product.images?.length}</td>
-                  <td className="p-4">${product.price}</td>
-                  <td className="p-4">{product.sku}</td>
+                  <td className="p-4">{product.images?.length || "N/A"}</td>
+                  <td className="p-4">
+                    {product.price ? `$${product.price}` : "N/A"}
+                  </td>
+                  <td className="p-4">{product.sku || "N/A"}</td>
                   <td>
                     <Link
                       className="py-1 px-2 mr-2  bg-yellow-500 rounded text-white cursor-pointer hover:bg-yellow-600"
