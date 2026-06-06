@@ -5,6 +5,8 @@ const axios = require('axios');
 const config = require("config");
 const Payment = require('../models/payment');
 const User = require('../models/UserScheama');
+const Order = require('../models/order');
+const { protect } = require('../middleware/authMiddleware');
 
 
 // callback api
@@ -22,12 +24,9 @@ paymentRouter.get('/callback',async(req,res)=>{
         }
         const response = await axios.post(config.get('gateway.sandBoxVerify'),paymentData);
         if(response.data.code == '100'){
-            let balance = payment.amount;
-            let user = await User.findById(payment.user);
-            if(user.balance){
-                balance += user.balance;
-            }
-            user.balance = balance;
+           
+            let order = await Order.findById(payment.order);
+            order.paymentStatus = 'paid';
             payment.payment = true;
             await user.save();
             await payment.save();
@@ -53,25 +52,45 @@ paymentRouter.post('/pay',async(req,res)=>{
         callback_url:config.get('gateway.callBackUrl')
     };
     const response = await axios.post(config.get('gateway.sandBox'),paymentData);
-    res.status(200).json(response.data);
-    // if(response.data.code == '100'){
+    if(response.data.code == '100'){
         // creating new payment
-        // const newPayment = new Payment({
-        //     user:req.user.id,
-        //     amount:amount.amount,
-        //     resNumber:response.data.authority
-        // })
-        // await newPayment.save();
+        const newPayment = new Payment({
+            user:req.user.id,
+            amount:amount.amount,
+            resNumber:response.data.authority
+        })
+        await newPayment.save();
         // redirecting user
-        // res.redirect(config.get(`gateway.redirectUrl ${response.data.authority}`));
-        // console.log(config.get(`gateway.redirectUrl ${response.data.authority}`));
-    // }
+        res.redirect(config.get(`gateway.redirectUrl ${response.data.authority}`));
+    }
 
     } catch (error) {
         console.log(error);
         res.status(500).json({msg:'server error'})
     }
     
+    
+})
+
+
+// @route POST /api/payment
+paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
+    const cartInfo = _.pick(req.body,['cartData','shipingAddress']);
+    const savedOrder = await Order.create({
+        user:req.user._id,
+        shippingAddress:cartInfo.shipingAddress,
+        orderItems:cartInfo.cartData,
+        totalPrice:cartInfo.cartData.totalPrice,
+        paymentStatus
+    });
+    // pay >>> getting total price
+    const amount = cartInfo.cartData.totalPrice;
+    const paymentData = {
+        merchant_id:config.get('gateway.merchant_id'),
+        amount:amount,
+        description:'buy product',
+        callback_url:config.get('gateway.callBackUrl')
+    };
     
 })
 
