@@ -57,7 +57,9 @@ export const EditProductPage = () => {
       ...prevState,
       [e.target.name]:
         // Array
-        e.target.name === "sizes" || e.target.name === "colors"
+        e.target.name === "sizes" ||
+        e.target.name === "colors" ||
+        e.target.name === "tags"
           ? e.target.value.split(",").map((item) => item.trim())
           : // Boolean
             e.target.name === "isPublished" || e.target.name === "isFeatured"
@@ -318,6 +320,7 @@ export const EditProductPage = () => {
               required
             >
               <option value="Men">Men</option>
+              <option value="Unisex">Unisex</option>
               <option value="Women">Women</option>
             </select>
           </div>
@@ -345,6 +348,20 @@ export const EditProductPage = () => {
               type="text"
               name="colors"
               value={productInfo?.colors?.join(",")}
+              onChange={handleFormChange}
+              className="w-full border border-gray-300 rounded-md p-2"
+              required
+            />
+          </div>
+          {/* Tags */}
+          <div className="mb-6">
+            <label className="block font-semibold mb-2">
+              Tags (comma-separated)
+            </label>
+            <input
+              type="text"
+              name="tags"
+              value={productInfo?.tags?.join(",")}
               onChange={handleFormChange}
               className="w-full border border-gray-300 rounded-md p-2"
               required
