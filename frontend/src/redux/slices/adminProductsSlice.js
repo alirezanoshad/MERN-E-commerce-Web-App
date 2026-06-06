@@ -30,9 +30,10 @@ export const createProduct = createAsyncThunk(
   "adminProducts/createProduct",
   async (productData) => {
     try {
+      console.log(productData);
       // Post - server request
       const response = await axios.post(
-        "http://localhost:5000/api/admin/products",
+        "http://localhost:5000/api/product",
         productData,
         {
           headers: {
@@ -41,6 +42,7 @@ export const createProduct = createAsyncThunk(
         },
       );
 
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -53,6 +55,7 @@ export const updateProduct = createAsyncThunk(
   "adminProducts/updateProduct",
   async ({ id, productData }) => {
     try {
+      console.log({ id, productData });
       // Post - server request
       const response = await axios.put(
         `http://localhost:5000/api/product/${id}`,
@@ -64,6 +67,7 @@ export const updateProduct = createAsyncThunk(
         },
       );
 
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
