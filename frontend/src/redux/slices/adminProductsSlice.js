@@ -28,13 +28,49 @@ export const fetchAdminProducts = createAsyncThunk(
 // Add New Product
 export const createProduct = createAsyncThunk(
   "adminProducts/createProduct",
-  async (productData) => {
+  async ({
+    name,
+    brand,
+    description,
+    price,
+    discountPrice,
+    countInStock,
+    sku,
+    material,
+    collections,
+    category,
+    gender,
+    sizes,
+    colors,
+    tags,
+    images,
+    isPublished,
+    isFeatured,
+  }) => {
     try {
-      console.log(productData);
+      // console.log(productData);
       // Post - server request
       const response = await axios.post(
         "http://localhost:5000/api/product",
-        productData,
+        {
+          name,
+          brand,
+          description,
+          price,
+          discountPrice,
+          countInStock,
+          sku,
+          material,
+          collections,
+          category,
+          gender,
+          sizes,
+          colors,
+          tags,
+          images,
+          isPublished,
+          isFeatured,
+        },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("userToken")}`,

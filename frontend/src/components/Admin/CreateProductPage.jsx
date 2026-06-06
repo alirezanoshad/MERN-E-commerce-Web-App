@@ -117,7 +117,7 @@ export const CreateProductPage = () => {
   const hanldeProductSubmit = (e) => {
     e.preventDefault();
     console.log({ productData: productInfo });
-    dispatch(createProduct({ productData: productInfo })).then(() => {
+    dispatch(createProduct(productInfo)).then(() => {
       navigate("/admin/products");
     });
   };
@@ -441,7 +441,7 @@ export const CreateProductPage = () => {
             type="submit"
             className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 transition-colors cursor-pointer font-bold"
           >
-            Update Product
+            Create Product
           </button>
         </form>
       </div>
