@@ -82,7 +82,7 @@ paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
         shippingAddress:cartInfo.shippingAddress,
         orderItems:cartInfo.cartData,
         totalPrice:cartInfo.cartData.totalPrice,
-        paymentStatus
+        paymentStatus:'pending'
     });
     // pay >>> getting total price
     const amount = cartInfo.cartData.totalPrice;
