@@ -15,30 +15,31 @@ app.use(cors());
 // callback api
 paymentRouter.get('/callback',async(req,res)=>{
     try {
-        if(req.query.status && req.query.status !== 'OK'){
+        if(req.query.Status && req.query.Status !== 'OK'){
             return res.json({msg:'payment failed'});
         }
-        let payment = await Payment.findOne({resNumber:req.query.authority});
+        let payment = await Payment.findOne({resNumber:req.query.Authority});
         if(!payment) return res.json({msg:'payment not found'});
         const paymentData = {
             merchant_id:config.get('gateway.merchant_id'),
             amount:payment.amount,
-            authority:req.query.authority
+            authority:req.query.Authority
         }
         const response = await axios.post(config.get('gateway.sandBoxVerify'),paymentData);
-        if(response.data.code == '100'){
+        if(response.data.data.code === 100){
            
             let order = await Order.findById(payment.order);
             order.paymentStatus = 'paid';
             payment.payment = true;
-            await user.save();
+            await order.save();
             await payment.save();
             res.json({msg:'payment successful'});
         }else{
             res.json({msg:'payment failed'});
         }
     } catch (error) {
-        
+        console.log(error);
+        res.status(500).json({msg:'server error'})
     }
 })
 

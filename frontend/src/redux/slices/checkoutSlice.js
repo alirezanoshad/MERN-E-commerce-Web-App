@@ -17,7 +17,8 @@ export const createCheckout = createAsyncThunk(
           },
         },
       );
-      console.log(response.data);
+      console.log(response.data.authority);
+      window.location.href = `https://sandbox.zarinpal.com/pg/StartPay/${response.data.authority}`;
       return response.data;
     } catch (error) {
       console.log(error);
@@ -46,7 +47,7 @@ export const checkoutSlice = createSlice({
         state.checkout = action.payload;
         console.log(state.checkout);
         console.log(state.checkout.authority);
-        // window.location.href = `https://sandbox.zarinpal.com/pg/StartPay/${state.checkout.authority}`;
+        
       })
       .addCase(createCheckout.rejected, (state, action) => {
         state.loading = false;
