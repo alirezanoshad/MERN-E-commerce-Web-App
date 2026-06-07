@@ -76,10 +76,10 @@ paymentRouter.post('/pay',async(req,res)=>{
 // @route POST /api/payment
 paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
     try {
-    const cartInfo = _.pick(req.body,['cartData','shipingAddress']);
+    const cartInfo = _.pick(req.body,['cartData','shippingAddress']);
     const savedOrder = await Order.create({
         user:req.user._id,
-        shippingAddress:cartInfo.shipingAddress,
+        shippingAddress:cartInfo.shippingAddress,
         orderItems:cartInfo.cartData,
         totalPrice:cartInfo.cartData.totalPrice,
         paymentStatus
