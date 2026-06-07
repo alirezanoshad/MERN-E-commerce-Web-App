@@ -44,6 +44,9 @@ export const checkoutSlice = createSlice({
       .addCase(createCheckout.fulfilled, (state, action) => {
         state.loading = false;
         state.checkout = action.payload;
+        console.log(state.checkout);
+        console.log(state.checkout.authority);
+        // window.location.href = `https://sandbox.zarinpal.com/pg/StartPay/${state.checkout.authority}`;
       })
       .addCase(createCheckout.rejected, (state, action) => {
         state.loading = false;
