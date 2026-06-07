@@ -12,7 +12,9 @@ export const createCheckout = createAsyncThunk(
         "http://localhost:5000/api/payment/paymentAsli",
         { cartData, shippingAddress },
         {
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          Headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
         },
       );
       console.log(response.data);
