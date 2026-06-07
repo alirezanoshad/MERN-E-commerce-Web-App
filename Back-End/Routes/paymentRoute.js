@@ -74,7 +74,7 @@ paymentRouter.post('/pay',async(req,res)=>{
 
 
 // @route POST /api/payment
-paymentRouter.post('/paymentAsli',async(req,res)=>{
+paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
     try {
     const cartInfo = _.pick(req.body,['cartData','shippingAddress']);
     const savedOrder = await Order.create({
