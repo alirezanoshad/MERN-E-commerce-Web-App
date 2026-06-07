@@ -7,6 +7,9 @@ const Payment = require('../models/payment');
 const User = require('../models/UserScheama');
 const Order = require('../models/order');
 const { protect } = require('../middleware/authMiddleware');
+const cors = require("cors");
+const app = express()
+app.use(cors());
 
 
 // callback api
@@ -80,7 +83,7 @@ paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
     const savedOrder = await Order.create({
         user:req.user._id,
         shippingAddress:cartInfo.shippingAddress,
-        orderItems:cartInfo.cartData,
+        orderItems:cartInfo.cartData.products,
         totalPrice:cartInfo.cartData.totalPrice,
         paymentStatus:'pending'
     });
@@ -93,16 +96,17 @@ paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
         callback_url:config.get('gateway.callBackUrl')
     };
     const response = await axios.post(config.get('gateway.sandBox'),paymentData);
-     if(response.data.code == '100'){
+    console.log(response);
+     if(response.data.data.code == 100){
         // creating new payment
-        const newPayment = new Payment({
+        const newPayment = await Payment.create({
             user:req.user.id,
             amount:amount,
-            resNumber:response.data.authority
+            resNumber:response.data.data.authority,
+            order:savedOrder._id
         })
-        await newPayment.save();
         // redirecting user
-        res.redirect(config.get(`gateway.redirectUrl ${response.data.authority}`));
+        res.status(200).json({authority:response.data.data.authority});
     }
     } catch (error) {
         console.log(error);
