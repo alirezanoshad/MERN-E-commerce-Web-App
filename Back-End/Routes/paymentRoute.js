@@ -6,9 +6,10 @@ const config = require("config");
 const Payment = require('../models/payment');
 const User = require('../models/UserScheama');
 const Order = require('../models/order');
+const Cart = require('../models/cart');
 const { protect } = require('../middleware/authMiddleware');
 const cors = require("cors");
-const app = express()
+const app = express();
 app.use(cors());
 
 
@@ -33,47 +34,19 @@ paymentRouter.get('/callback',async(req,res)=>{
             payment.payment = true;
             await order.save();
             await payment.save();
-            res.redirect('http://localhost:5173/order-confirmation');
+            res.redirect(`http://localhost:5173/order-confirmation?orderID=${order._id}`);
         }else{
-            res.redirect('http://localhost:5173/order-confirmation');
+            let order = await Order.findById(payment.order);
+            order.paymentStatus = 'faild';
+            payment.payment = false;
+            await order.save();
+            await payment.save();
+            res.redirect(`http://localhost:5173/order-confirmation?orderID=${order._id}`);
         }
     } catch (error) {
         console.log(error);
         res.status(500).json({msg:'server error'})
     }
-})
-
-
-
-paymentRouter.post('/pay',async(req,res)=>{
-    try {
-        // distracting amount from body
-    const amount = _.pick(req.body,["amount"]);
-    const paymentData = {
-        merchant_id:config.get('gateway.merchant_id'),
-        amount:amount.amount,
-        description:'buy product',
-        callback_url:config.get('gateway.callBackUrl')
-    };
-    const response = await axios.post(config.get('gateway.sandBox'),paymentData);
-    if(response.data.code == '100'){
-        // creating new payment
-        const newPayment = new Payment({
-            user:req.user.id,
-            amount:amount.amount,
-            resNumber:response.data.authority
-        })
-        await newPayment.save();
-        // redirecting user
-        res.redirect(config.get(`gateway.redirectUrl ${response.data.authority}`));
-    }
-
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({msg:'server error'})
-    }
-    
-    
 })
 
 
@@ -105,7 +78,9 @@ paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
             amount:amount,
             resNumber:response.data.data.authority,
             order:savedOrder._id
-        })
+        });
+        // deleting cart
+        await Cart.findOneAndDelete({user:req.user._id});
         // redirecting user
         res.status(200).json({authority:response.data.data.authority});
     }
