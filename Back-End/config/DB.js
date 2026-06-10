@@ -9,7 +9,5 @@ async function connectDB(){
         console.log("Database connection failed", err);
     }
 }
-
 // exporting database connection
 module.exports = connectDB
-    

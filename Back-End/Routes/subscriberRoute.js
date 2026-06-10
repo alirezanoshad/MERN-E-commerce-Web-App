@@ -26,11 +26,4 @@ subscriberRouter.post('/',async(req,res)=>{
         res.status(500).json({msg:'server error'})
     }
 });
-
-
-
-
-
-
-
 module.exports = subscriberRouter

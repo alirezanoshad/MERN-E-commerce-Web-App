@@ -3,10 +3,6 @@ const adminOrderRouter = express.Router();
 const _ = require('lodash');
 const Order = require('../models/order');
 const {protect,admin} = require('../middleware/authMiddleware');
-const { findById } = require('../models/UserScheama');
-
-
-
 // @route GET /api/admin/orders
 // @desc GET all orders (admin only)
 // @access Private/Admin
@@ -20,9 +16,6 @@ adminOrderRouter.get('/',async(req,res)=>{
         res.status(500).json({msg:'server error'});
     }
 })
-
-
-
 // @route PUT /api/admin/orders/:id
 // @desc update order status (admin only)
 // @access Private/Admin
@@ -44,9 +37,6 @@ adminOrderRouter.put('/:id',async(req,res)=>{
         res.status(500).json({msg:'server error'});
     }
 })
-
-
-
 // @route DELETE /api/admin/orders/:id
 // @desc delete order (admin only)
 // @access Private/Admin
@@ -65,10 +55,4 @@ adminOrderRouter.delete('/:id',admin,async(req,res)=>{
         res.status(500).json({msg:'server error'});
     }
 })
-
-
-
-
-
-
 module.exports = adminOrderRouter

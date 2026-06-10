@@ -5,14 +5,11 @@ const Product = require('../models/Product');
 const {protect,admin} = require('../middleware/authMiddleware');
 // lodash
 const _ = require('lodash');
-
 // new Rout
 const prodRouter = express.Router();
-
 // @route POST /api/products
 // @desc create new product in DB
 // @access private/Admin
-
 prodRouter.post('/',
     protect,
     admin,
@@ -62,17 +59,14 @@ prodRouter.post('/',
             sku,
             user:req.user._id // refer to the admin user who created the product
         });
-
         // saving product in DB
         const createdProduct = await product.save();
         res.status(201).json(createdProduct);
     } catch (error) {
         console.log(error);
         res.status(500).send('Server Error');
-
     }
 })
-
 // updating a product
 // @route PUT/api/product/:id
 // @desc updating an existing product by its ID
@@ -110,7 +104,6 @@ prodRouter.put('/:id',protect,admin,async(req,res)=>{
         res.status(500).send("server error");
     }
 })
-
 // deleting a product
 // @route DELETE/api/products/:id
 // @desc delete a product from DB by ID
@@ -128,7 +121,6 @@ prodRouter.delete("/:id",protect,admin,async(req,res)=>{
         res.send('server error')
     }
 });
-
 // @route GET /api/products
 // @desc Get all products with optional query and filters
 // access public
@@ -195,9 +187,6 @@ prodRouter.get('/',async(req,res)=>{
         res.status(500).send('server error');
     }
 });
-
-
-
 // @route GET /api/product/best-seller
 // @desc show the products with highest rating
 // access public
@@ -214,8 +203,6 @@ prodRouter.get('/best-seller',async(req,res)=>{
         res.status(500).send("Server Error");
     }
 });
-
-
 // @route GET /api/product/new-arrivals
 // desc retrieve latest 8 products based on creation date
 // access public
@@ -229,11 +216,9 @@ prodRouter.get('/new-arrivals',async(req,res)=>{
         res.status(500).send("Server Error")
     }
 })
-
 // @route GET /api/products/:id
 // @desc get a single product by its ID
 // @access public
-
 prodRouter.get('/:id',async (req,res)=>{
     try {
         const existedProduct = await Product.findById(req.params.id);
@@ -247,7 +232,6 @@ prodRouter.get('/:id',async (req,res)=>{
         res.status(500).send('server error')
     }
 });
-
 // @route GET /api/product/similar/:id
 // @desc retrieve similar products based on the current products gender and category
 // @access public
@@ -274,9 +258,4 @@ prodRouter.get('/similar/:id',async(req,res)=>{
         res.status(500).send('Server Error');
     }
 });
-
-
-
-
-
 module.exports = prodRouter;

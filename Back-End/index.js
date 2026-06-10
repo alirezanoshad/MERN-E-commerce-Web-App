@@ -9,7 +9,6 @@ const config = require("config");
 const userRoute = require("./Routes/userRout");
 const productRoute = require("./Routes/productRouts");
 const cartRouter = require("./Routes/cartRouts");
-const checkOutRouter = require("./Routes/checkOutRouts");
 const orderRouter = require("./Routes/orderRoutes");
 const adminRouter = require("./Routes/adminRoutes");
 const subscriberRouter = require("./Routes/subscriberRoute");
@@ -18,22 +17,17 @@ const adminOrderRouter = require("./Routes/adminOrderRoutes");
 const paymentRouter = require("./Routes/paymentRoute");
 const uploadRouter = require("./Routes/uploadRout");
 const logger = require("./logs/logger");
-
 // importing database connection
 const connectDB = require("./config/DB");
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-
 // connecting database
 connectDB();
-
 // API Routes
 app.use("/api/users", userRoute);
 app.use("/api/product",productRoute);
 app.use("/api/cart",cartRouter);
-app.use('/api/checkOut',checkOutRouter)
 app.use('/api/order',orderRouter);
 app.use('/api/subscriber',subscriberRouter);
 // admin routes

@@ -9,11 +9,8 @@ const Cart = require('./models/cart');
 const defProducts = require('./data/products');
 // config
 const config = require('config');
-
-
 // connect to mongoDB
 mongoose.connect(config.get("server.database"));
-
 // function to seed data
 const seedData = async()=>{
     try {
@@ -21,7 +18,6 @@ const seedData = async()=>{
         await Product.deleteMany();
         await User.deleteMany();
         await Cart.deleteMany();
-
         // create a default admin user
         const createdAdmin = User.create({
             name:'adminUser',

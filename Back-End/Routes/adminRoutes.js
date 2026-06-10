@@ -17,8 +17,6 @@ adminRouter.get('/',protect,admin,async(req,res)=>{
         res.status(500).json({msg:'server error'})
     }
 });
-
-
 // @route POST /api/admin/users
 // @desc Add a new user (admin only)
 // @access Private/Admin
@@ -37,8 +35,6 @@ adminRouter.post('/users',protect,admin,async(req,res)=>{
         res.status(500).json({msg:'server error'})
     }
 });
-
-
 // @route PUT /api/admin/users/:id
 // @desc update user info (admin only) - name, email and role
 // @access Private/admin
@@ -57,9 +53,6 @@ adminRouter.put('/:id',protect,admin,async(req,res)=>{
         res.status(500).json({msg:'server error'})
     }
 })
-
-
-
 // @route DELETE /api/admin/:id
 // @desc delete user (admin only)
 // @access Private/admin
@@ -79,11 +72,5 @@ adminRouter.delete('/:id',protect,admin,async(req,res)=>{
         res.status(500).json({msg:'server error'})
     }
 })
-
-
-
-
-
-
 module.exports = adminRouter
 

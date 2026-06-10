@@ -4,9 +4,6 @@ const Product = require('../models/Product');
 const {protect} = require('../middleware/authMiddleware');
 const _ = require('lodash');
 const cartRouter = express.Router();
-
-
-
 // helper function to get a cart by userID or guestID
 const getCart = async(userID,guestID)=>{
     if(userID){
@@ -16,7 +13,6 @@ const getCart = async(userID,guestID)=>{
     }
     return null;
 }
-
 // @route POST /api/cart
 // @desc add a product to the cart for a guest or logged in user
 // @access public
@@ -87,7 +83,6 @@ cartRouter.post('/',async(req,res)=>{
         res.status(500).send("Server Error")
     }
 })
-
 // @route PUT /api/cart
 // @desc update product quantity in the cart for a guest or logged-in user
 // @access public
@@ -129,8 +124,6 @@ cartRouter.put('/',async(req,res)=>{
         res.status(500).send("Server Error")
     }
 });
-
-
 // @route DELETE /api/cart
 // @desc remove a product from a cart
 // @access public
@@ -164,8 +157,6 @@ cartRouter.delete('/',async(req,res)=>{
         res.status(500).send("Server Error");
     }
 });
-
-
 // @route GET/api/cart
 // @desc get get logged-in users or guest users cart to display
 // @accedd public
@@ -186,7 +177,6 @@ cartRouter.get('/',async(req,res)=>{
     res.status(500).send('Server Error');
 }
 });
-
 // @route POST /api/cart/merge
 // @desc merge guest cart into user cart on login
 // @access private
@@ -251,6 +241,4 @@ cartRouter.post('/merge',protect,async(req,res)=>{
         res.status(500).send("Server Error")
     }
 })
-
-
 module.exports = cartRouter

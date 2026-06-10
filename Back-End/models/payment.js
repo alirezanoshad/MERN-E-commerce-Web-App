@@ -9,6 +9,4 @@ const paymentSchema = new mongoose.Schema({
     amount:{type:Number,required:true},
     payment:{type:Boolean,default:false}
 });
-
-
 module.exports = mongoose.model("Payment",paymentSchema);

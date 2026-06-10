@@ -41,9 +41,7 @@ router.post('/register',async(req,res)=>{
         console.log(error);
         res.status(500).send('Server Error');
     }
-})
-
-
+});
 // @route POST/api/users/login
 // @desc Authenticate user
 // @access Public
@@ -79,22 +77,11 @@ router.post('/login',async(req,res)=>{
         console.log(error);
         res.status(500).send('Server Error');
     }
-})
-
+});
 // @route GET/api/users/profile
 // @desc GET logged-in user's profile (Protected Route)
 // @access Private
 router.get('/profile',protect,async(req,res)=>{
     res.json(req.user)
-})
-
-
+});
 module.exports = router
-
-
-
-
-
-
-
-

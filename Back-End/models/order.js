@@ -7,9 +7,7 @@ const orderItemSchema = new mongoose.Schema({
     size:String,
     color:String,
     quantity:{type:Number,required:true}
-
 },{_id:false});
-
 const orderSchema = new mongoose.Schema({
     user:{type:mongoose.Schema.ObjectId,ref:'User',required:true},
     orderItems:[orderItemSchema],
@@ -27,7 +25,5 @@ const orderSchema = new mongoose.Schema({
     isDelivered:{type:Boolean,default:false},
     deliveredAt:{type:Date},
     paymentStatus:{type:String,default:'pending'},
-
 },{timestamps:true});
-
 module.exports = mongoose.model('Order',orderSchema);

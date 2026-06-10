@@ -1,7 +1,6 @@
 // logging data using winston logger
 const winston = require('winston');
 const {combine,timestamp,printf} = winston.format;
-
 const logger = winston.createLogger({
     level:'info',
     format: combine(
@@ -13,8 +12,4 @@ const logger = winston.createLogger({
         new winston.transports.File({filename:'logs.log'})
     ]
 })
-
-
-
-
 module.exports = logger

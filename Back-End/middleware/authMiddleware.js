@@ -22,7 +22,6 @@ const protect = async(req,res,next)=>{
         res.status(401).json({msg:'no token provided'})
     }
 }
-
 // this middleware check is the user is admin
 const admin = (req,res,next)=>{
     if(req.user && req.user.role ==="admin"){
@@ -31,5 +30,4 @@ const admin = (req,res,next)=>{
         res.status(404).json({message:"User is not admin"});
     }
 }
-
 module.exports = {protect,admin}

@@ -7,8 +7,6 @@ const Order = require('../models/order');
 const {protect} = require('../middleware/authMiddleware');
 // 4- initialize router 
 const orderRouter = express.Router();
-
-
 // @route GET/api/orders/my-orders
 // @desc get logged in users orders
 // @access Private
@@ -22,8 +20,6 @@ orderRouter.get('/my-orders',protect,async(req,res)=>{
         res.status(500).json({msg:'server error'});
     }
 })
-
-
 // @route GET /api/order/:id
 // @desc users can get order detail by ID
 // @access Private
@@ -40,10 +36,4 @@ orderRouter.get('/:id',protect,async(req,res)=>{
         res.status(500).json({msg:'server error'});
     }
 })
-
-
-
 module.exports = orderRouter
-
-
-

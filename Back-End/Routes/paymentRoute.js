@@ -11,8 +11,6 @@ const { protect } = require('../middleware/authMiddleware');
 const cors = require("cors");
 const app = express();
 app.use(cors());
-
-
 // callback api
 paymentRouter.get('/callback',async(req,res)=>{
     try {
@@ -48,8 +46,6 @@ paymentRouter.get('/callback',async(req,res)=>{
         res.status(500).json({msg:'server error'})
     }
 })
-
-
 // @route POST /api/payment
 paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
     try {
@@ -91,11 +87,4 @@ paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
     
     
 })
-
-
-
-
-
-
-
 module.exports = paymentRouter
