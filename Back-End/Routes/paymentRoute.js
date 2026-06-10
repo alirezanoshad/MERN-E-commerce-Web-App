@@ -26,7 +26,6 @@ paymentRouter.get('/callback',async(req,res)=>{
         }
         const response = await axios.post(config.get('gateway.sandBoxVerify'),paymentData);
         if(response.data.data.code === 100){
-           
             let order = await Order.findById(payment.order);
             order.paymentStatus = 'paid';
             order.resNumber = req.query.Authority;
@@ -68,7 +67,6 @@ paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
         callback_url:config.get('gateway.callBackUrl')
     };
     const response = await axios.post(config.get('gateway.sandBox'),paymentData);
-    console.log(response);
      if(response.data.data.code == 100){
         // creating new payment
         const newPayment = await Payment.create({

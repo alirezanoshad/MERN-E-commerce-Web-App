@@ -25,7 +25,7 @@ router.post('/register',async(req,res)=>{
         // create JWT payload
         const payload = {user:{id:user._id,role:user.role}};
         // sign JWT
-        jwt.sign(payload,config.get("server.JWT_SECRET"),{expiresIn:"1d"},(err,token)=>{
+        jwt.sign(payload,config.get("server.JWT_SECRET"),{expiresIn:"7d"},(err,token)=>{
             if(err) throw err;
             res.status(200).json({
                 user:{
@@ -59,7 +59,7 @@ router.post('/login',async(req,res)=>{
         //create JWT payload
         const payload = {user:{id:user._id,role:user.role}};
         // sign JWT
-        jwt.sign(payload,config.get("server.JWT_SECRET"),{expiresIn:"1d"},(err,token)=>{
+        jwt.sign(payload,config.get("server.JWT_SECRET"),{expiresIn:"7d"},(err,token)=>{
             if(err) throw err;
             res.json({
                 user:{
