@@ -29,6 +29,7 @@ paymentRouter.get('/callback',async(req,res)=>{
            
             let order = await Order.findById(payment.order);
             order.paymentStatus = 'paid';
+            order.resNumber = req.query.Authority;
             payment.payment = true;
             await order.save();
             await payment.save();
@@ -36,6 +37,7 @@ paymentRouter.get('/callback',async(req,res)=>{
         }else{
             let order = await Order.findById(payment.order);
             order.paymentStatus = 'faild';
+            order.resNumber = req.query.Authority;
             payment.payment = false;
             await order.save();
             await payment.save();

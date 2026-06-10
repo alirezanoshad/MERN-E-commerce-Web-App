@@ -25,5 +25,6 @@ const orderSchema = new mongoose.Schema({
     isDelivered:{type:Boolean,default:false},
     deliveredAt:{type:Date},
     paymentStatus:{type:String,default:'pending'},
+    resNumber:{type:String}
 },{timestamps:true});
 module.exports = mongoose.model('Order',orderSchema);
