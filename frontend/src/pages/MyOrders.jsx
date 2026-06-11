@@ -7,7 +7,7 @@ export const MyOrders = ({ orders, loading, error }) => {
 
   // Navigation to Order Page by ID.
   const handleOrderDetailsClick = (orderId) => {
-    navigate(`/order/${orderId}`);
+    navigate(`/my-orders/${orderId}`);
   };
 
   if (loading) return <p>Loading...</p>;
@@ -28,7 +28,7 @@ export const MyOrders = ({ orders, loading, error }) => {
               <th className="py-2 px-4 sm:py-3">Items</th>
               <th className="py-2 px-4 sm:py-3">Price</th>
               <th className="py-2 px-4 sm:py-3">Payment</th>
-              <th className="py-2 px-4 sm:py-3">Delivery</th>
+              <th className="py-2 px-4 sm:py-3">Status</th>
             </tr>
           </thead>
           {/* Table's Body */}
@@ -75,9 +75,9 @@ export const MyOrders = ({ orders, loading, error }) => {
                   </td>
                   <td className="py-2 px-4 sm:px-4 sm:py-4">
                     <span
-                      className={`${order.isDelivered ? "bg-green-100 text-green-700" : " bg-yellow-100 text-yellow-700"} px-2 py-1 rounded-lg text-xs sm:text-sm font-medium`}
+                      className={`${order.status === "Delivered" ? "bg-green-100 text-green-700" : order.status === "Cancelled" ? "bg-red-100 text-red-700" : " bg-yellow-100 text-yellow-700"} px-2 py-1 rounded-lg text-xs sm:text-sm font-medium`}
                     >
-                      {order.isDelivered ? "Delivered" : "Pending"}
+                      {order.status || "Proccessing"}
                     </span>
                   </td>
                 </tr>
