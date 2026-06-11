@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { createCheckout } from "../../redux/slices/checkoutSlice";
 // Icopn - payment method
 import zarinPalLogo from "../../assets/payment/zarinPalLogo.svg";
 
+// Checkout Component
 export const Checkout = () => {
   const navigate = useNavigate();
 
@@ -16,8 +16,6 @@ export const Checkout = () => {
   const { user, loading, error } = useSelector((state) => state.auth);
   console.log(cart);
 
-  // checkoutId State
-  const [checkoutId, setCheckoutId] = useState();
   // storing user informations in state
   const [shippingAddress, setShippingAddress] = useState({
     firstName: "",
@@ -46,89 +44,22 @@ export const Checkout = () => {
         products: cart.products,
         totalPrice: cart.totalPrice,
       };
-      // console.log(cartData);
-      // console.log(shippingAddress);
 
       const res = dispatch(
         createCheckout({
           cartData,
-          shippingAddress
+          shippingAddress,
         }),
       ).then(() => {
         console.log(res);
       });
-
-      // If response contains ID
-      // if (res.payload && res.payload._id) {
-      //   // Then, we set it
-      //   setCheckoutId(res.payload._id); // Set checkoutID if checkout was succesful
-      // }
     }
   };
-
-  // // handlePaymentSuccess
-  // const handlePaymentSuccess = async (details) => {
-  //   try {
-  //     console.log(details);
-  //     // Put - server request
-  //     const response = await axios.put(
-  //       "http://localhost:5000/api/checkout/pay",
-  //       { paymentStatus: "paid", paymentDetails: details },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-  //         },
-  //       },
-  //     );
-
-  //     console.log(response.data);
-  //     console.log(response.status);
-
-  //     if (response.status === 200) {
-  //       await handleFinalizeCheckout(checkoutId); // Finalize check if payment is successful
-  //     } else {
-  //       console.log(error);
-  //     }
-  //     return response.data;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-
-  //   console.log("Payment Successful", details);
-  //   navigate("/order-confirmation");
-  // };
-
-  // const handleFinalizeCheckout = async (checkoutId) => {
-  //   try {
-  //     console.log(checkoutId);
-  //     //
-  //     const response = await axios.post(
-  //       `http://localhost:5000/api/checkout/${checkoutId}/finalize`,
-  //       {},
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-  //         },
-  //       },
-  //     );
-
-  //     console.log(response.data);
-  //     console.log(response.status);
-
-  //     if (response.status === 200) {
-  //       navigate("/order-confirmation");
-  //     } else {
-  //       console.log(error);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   if (loading) return <p className="text-center">Loading...</p>;
   if (error) return <p className="text-center">Error: {error}</p>;
   if (!cart || !cart.products || cart.products.length === 0) {
-    return <p>Your cart is empty...</p>;
+    return <p className="text-center">Your cart is empty...</p>;
   }
 
   // JSX
@@ -227,7 +158,9 @@ export const Checkout = () => {
                 Postal Code
               </label>
               <input
-                type="number"
+                type="tel"
+                minLength="4"
+                maxLength="7"
                 className="w-full p-2 border border-gray-300 rounded"
                 value={shippingAddress.postalCode}
                 onChange={(e) =>
@@ -246,15 +179,15 @@ export const Checkout = () => {
             </label>
             <input
               type="text"
-              className="w-full p-2 border border-gray-300 rounded"
-              value={shippingAddress.country}
+              className="w-full bg-gray-200 p-2 border border-gray-300 rounded"
+              value={"Iran"}
               onChange={(e) =>
                 setShippingAddress({
                   ...shippingAddress,
                   country: e.target.value,
                 })
               }
-              required
+              disabled
             />
           </div>
           <div className="mb-4">
@@ -262,7 +195,9 @@ export const Checkout = () => {
               Phone
             </label>
             <input
-              type="number"
+              type="tel"
+              minLength="11"
+              maxLength="11"
               className="w-full p-2 border border-gray-300 rounded"
               value={shippingAddress.phoneNumber}
               onChange={(e) =>
