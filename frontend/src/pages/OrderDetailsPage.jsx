@@ -1,47 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { fetchSingleOrder } from "../redux/slices/orderSlice";
 
 export const OrderDetailsPage = () => {
   // Providing order id that we pass in URL
   const { id } = useParams();
-  // to hold order details
-  const [orderDetails, setOrderDetails] = useState();
+  const dispatch = useDispatch();
+  const { selectedOrder, loading, error } = useSelector((state) => state.order);
 
-  // Declaring Fake Data Test to work with.
   useEffect(() => {
-    const mockOrderDetails = {
-      _id: id,
-      createdAt: new Date(),
-      isPaid: false,
-      isDelivered: false,
-      paymentMethod: "paypal",
-      shippingMethod: "Standard",
-      shippingAddress: { city: "NYC", country: "USA" },
-      orderItems: [
-        {
-          productId: 1,
-          name: "Husky Jacket",
-          price: 120,
-          quantity: 3,
-          image: "https://picsum.photos/150/150?/random=1",
-        },
-        {
-          productId: 2,
-          name: "Blouse half",
-          price: 230,
-          quantity: 2,
-          image: "https://picsum.photos/150/150?/random=2",
-        },
-      ],
-    };
-    // set the test data to our state
-    setOrderDetails(mockOrderDetails);
-  }, [id]);
+    dispatch(fetchSingleOrder(id));
+  }, [dispatch, id]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: ${error}</p>;
+
+  // JSX
   return (
     <div className="max-w-7xl border border-gray-300 mx-auto p-4 sm:p-6 mt-10 mb-25 rounded">
       <h2 className="text-2xl md:text-3xl font-bold mb-6">Order Derails</h2>
-      {!orderDetails ? (
+      {!selectedOrder ? (
         <p>No Order Details Found</p>
       ) : (
         <div className="p-4 sm:p6 rounded-lg border border-gray-300 mb-6">
@@ -49,22 +29,26 @@ export const OrderDetailsPage = () => {
           <div className="flex flex-col sm:flex-row justify-between mb-8">
             <div>
               <h3 className="text-lg md:text-xl font-semibold">
-                Order ID: #{orderDetails._id}
+                Order ID: #{selectedOrder._id}
               </h3>
-              <p className="text-gray-600">
-                {new Date(orderDetails.createdAt).toLocaleDateString()}
+              <p className="text-gray-600 pt-1">
+                Created At: {selectedOrder.createdAt}
+              </p>
+              <p className="text-gray-600 pt-1">
+                Delivered At:
+                {selectedOrder.deliveredAt ? selectedOrder.deliveredAt : "..."}
               </p>
             </div>
             <div className="flex flex-col items-start sm:items-end mt-4 sm:mt-0 gap-y-1">
               <span
-                className={`${orderDetails.isPaid ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"} px-3 py-1 rounded-full text-sm font-medium mb-2`}
+                className={`${selectedOrder.paymentStatus === "paid" ? "bg-green-100 text-green-700" : " bg-yellow-100 text-yellow-700"} px-2 py-1 rounded-lg text-xs sm:text-sm font-medium`}
               >
-                {orderDetails.isPaid ? "Approved" : "Pending"}
+                {selectedOrder.paymentStatus}
               </span>
               <span
-                className={`${orderDetails.isDelivered ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700"} px-3 py-1 rounded-full text-sm font-medium mb-2`}
+                className={`${selectedOrder.status === "Delivered" ? "bg-green-100 text-green-700" : selectedOrder.status === "Cancelled" ? "bg-red-100 text-red-700" : " bg-yellow-100 text-yellow-700"} px-2 py-1 rounded-lg text-xs sm:text-sm font-medium`}
               >
-                {orderDetails.isDelivered ? "Delivered" : "Pending Delivery"}
+                {selectedOrder.status || "Proccessing"}
               </span>
             </div>
           </div>
@@ -72,15 +56,16 @@ export const OrderDetailsPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 mb-8">
             <div>
               <h4 className="text-lg font-semibold mb-2">Payment Info</h4>
-              <p>Payment Method: {orderDetails.paymentMethod}</p>
-              <p>Status: {orderDetails.isPaid ? "Paid" : "Unpaid"}</p>
-            </div>{" "}
+              <p>Payment Method: ZarinPal</p>
+              <p>res number: ${selectedOrder.totalPrice}</p>
+              <p>res number: {selectedOrder.resNumber}</p>
+            </div>
             <div>
               <h4 className="text-lg font-semibold mb-2">Shipping Info</h4>
-              <p>Shipping Method: {orderDetails.shippingMethod}</p>
+              <p>Shipping Method: {selectedOrder.shippingMethod}</p>
               <p>
-                Address: {orderDetails.shippingAddress.city},{" "}
-                {orderDetails.shippingAddress.country}
+                Address: {selectedOrder.shippingAddress.city},{" "}
+                {selectedOrder.shippingAddress.country}
               </p>
             </div>
           </div>
@@ -91,14 +76,16 @@ export const OrderDetailsPage = () => {
               <thead className="bg-gray-100">
                 <tr>
                   <th className="py-2 px-4 text-left">Name</th>
+                  <th className="py-2 px-4 text-left">color</th>
+                  <th className="py-2 px-4 text-left">size</th>
                   <th className="py-2 pr-4 text-left">Unit Price</th>
                   <th className="py-2 pr-6 text-left">Quantitiy</th>
                   <th className="py-2 px-4 text-left">Total</th>
                 </tr>
               </thead>
               <tbody>
-                {orderDetails.orderItems.map((item) => (
-                  <tr key={item.productId} className="border-b border-gray-300">
+                {selectedOrder.orderItems.map((item) => (
+                  <tr key={item.productID} className="border-b border-gray-300">
                     <td className="py-2 px-4 flex items-center">
                       <img
                         src={item.image}
@@ -106,12 +93,15 @@ export const OrderDetailsPage = () => {
                         className="w-12 h-12 object-cover rounded-lg mr-4"
                       />
                       <Link
-                        to={`/product/${item.productId}`}
+                        to={`/product/${item.productID}`}
                         className="text-blue-500 hover:underline "
                       >
                         {item.name}
                       </Link>
                     </td>
+                    <td className="py-2 px-4">{item.color}</td>
+                    <td className="py-2 px-4">{item.size}</td>
+
                     <td className="py-2 px-4">${item.price}</td>
                     <td className="py-2 pr-4 pl-7">{item.quantity}</td>
                     <td className="py-2 px-4">${item.price * item.quantity}</td>
@@ -122,9 +112,11 @@ export const OrderDetailsPage = () => {
           </div>
 
           {/* Back ro Orders Page Link */}
-          <Link to="/my-orders" className="text-blue-500 hover:underline">
-            Back to My Orders
-          </Link>
+          <div className="mt-5">
+            <Link to="/profile" className="text-blue-500 hover:underline">
+              Back to My Orders
+            </Link>
+          </div>
         </div>
       )}
     </div>
