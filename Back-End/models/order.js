@@ -22,9 +22,9 @@ const orderSchema = new mongoose.Schema({
     },
     totalPrice:{type:Number,required:true},
     paidAt:{type:Date},
-    isDelivered:{type:Boolean,default:false},
     deliveredAt:{type:Date},
-    paymentStatus:{type:String,default:'pending'},
-    resNumber:{type:String}
+    paymentStatus:{type:String,enum:['pending','paid','faild'],default:'pending'},
+    resNumber:{type:String},
+    status:{type:String,enum:['Proccessing','Shipped','Delivered','Cancelled'],default:'Proccessing'}
 },{timestamps:true});
 module.exports = mongoose.model('Order',orderSchema);
