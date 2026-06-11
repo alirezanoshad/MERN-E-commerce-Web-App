@@ -1,23 +1,34 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyOrders } from "./MyOrders";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/atuhSlice";
-import { useEffect } from "react";
 import { clearCart } from "../redux/slices/cartSlice";
+import { fetchOrders } from "../redux/slices/orderSlice";
 
 export const Profile = () => {
   const { user } = useSelector((state) => state.auth);
+  const { orders, loading, error } = useSelector((state) => state.order);
+  console.log(orders);
   console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Chekc user role
   useEffect(() => {
     if (!user) {
       navigate("/login");
     }
   }, [navigate, user]);
+
+  // Fetching orders
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchOrders());
+    }
+  }, [dispatch, user]);
 
   const handleLogout = () => {
     // Logout user
@@ -51,7 +62,7 @@ export const Profile = () => {
 
           {/* Right Section: Orders Table */}
           <div className="w-full md:w-2/3 lg:w-3/4">
-            <MyOrders />
+            <MyOrders orders={orders} loading={loading} error={error} />
           </div>
         </div>
       </div>
