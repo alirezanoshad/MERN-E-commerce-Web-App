@@ -20,8 +20,6 @@ export const ProductDetails = ({ productId }) => {
     (state) => state.products,
   );
 
-  console.log(selectedProduct);
-
   // Redux State - userInfo
   const { user, guestId } = useSelector((state) => state.auth);
   const userID = user ? user.id : null;
@@ -62,7 +60,6 @@ export const ProductDetails = ({ productId }) => {
     setSelectedColor(color);
   };
   const quantityFunc = (action) => {
-    console.log(action);
     if (action === "plus") setQuantity((prev) => prev + 1);
     if (action === "minus" && quantity > 1) setQuantity((prev) => prev - 1);
   };
@@ -71,7 +68,6 @@ export const ProductDetails = ({ productId }) => {
   const addToCartFunc = () => {
     // Checkpoint on size and color
     if (!selectedSize || !selectedColor) {
-      console.log("not selected");
       toast.error("Please select size and color before adding to cart.", {
         duration: 1000,
       });

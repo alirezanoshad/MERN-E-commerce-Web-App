@@ -33,6 +33,7 @@ const checkout = {
   },
 };
 
+// OrderConfirmationPage Component
 export const OrderConfirmationPage = () => {
   // Estimated Delivery func
   const calculatedEstimatedDelivery = (createdAt) => {
@@ -41,6 +42,11 @@ export const OrderConfirmationPage = () => {
     return orderDate.toLocaleDateString();
   };
 
+
+  
+
+
+  // JSX
   return (
     <div className="p-6 max-w-4xl mx-auto bg-white">
       <h1 className="text-4xl font-bold text-center text-emerald-700 mb-8">

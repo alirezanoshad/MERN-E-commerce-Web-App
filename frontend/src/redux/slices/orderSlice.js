@@ -14,7 +14,6 @@ export const fetchOrders = createAsyncThunk("order/fetchOrders", async () => {
       },
     );
 
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -26,7 +25,6 @@ export const fetchSingleOrder = createAsyncThunk(
   "order/fetchSingleOrder",
   async (id) => {
     try {
-      console.log(id);
       // Get - server request
       const response = await axios.get(
         `http://localhost:5000/api/order/${id}`,
@@ -37,7 +35,6 @@ export const fetchSingleOrder = createAsyncThunk(
         },
       );
 
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
