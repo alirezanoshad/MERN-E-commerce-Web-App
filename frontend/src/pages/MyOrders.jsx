@@ -6,7 +6,7 @@ export const MyOrders = ({ orders, loading, error }) => {
   const navigate = useNavigate();
 
   // Navigation to Order Page by ID.
-  const handleRowClick = (orderId) => {
+  const handleOrderDetailsClick = (orderId) => {
     navigate(`/order/${orderId}`);
   };
 
@@ -38,7 +38,7 @@ export const MyOrders = ({ orders, loading, error }) => {
               orders.map((order) => (
                 <tr
                   key={order._id}
-                  onClick={() => handleRowClick(order._id)}
+                  onClick={() => handleOrderDetailsClick(order._id)}
                   className="border-b border-gray-400 hover:border-gray-50 transition-colors duration-300 cursor-pointer"
                 >
                   <td className="py-2 px-4 sm:px-4 sm:py-4">
