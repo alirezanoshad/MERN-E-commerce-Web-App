@@ -1,31 +1,24 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllOrders } from "../../redux/slices/adminOrderSlice";
+import { updateOrderStatus } from "../../redux/slices/adminOrderSlice";
 
 export const OrderManagement = () => {
-  const [orders, setOrders] = useState([
-    {
-      _id: 1234,
-      user: { name: "jogn dige" },
-      totalPrice: "169.43",
-      status: "delivered",
-    },
-    {
-      _id: "dgfewrihip41564",
-      customer: "Admin User",
-      totalPrice: "240",
-      status: "proccessing",
-    },
-    {
-      _id: "dgfewrihip41564",
-      customer: "Admin User",
-      totalPrice: "240",
-      status: "",
-    },
-  ]);
+  const dispatch = useDispatch();
+  const { orders, loading, error } = useSelector((state) => state.adminOrder);
+  console.log(orders);
 
-  const handleStatusChange = (orderId, newStaus) => {
-    console.log(`orderId: ${orderId}, newStatus: ${newStaus}`);
-    // setOrders((prev) => ({...prev, prev[orderId]: newStaus}));
+  useEffect(() => {
+    dispatch(fetchAllOrders());
+  }, [dispatch]);
+
+  const handleStatusChange = (id, status) => {
+    console.log(`orderId: ${id}, newStatus: ${status}`);
+    dispatch(updateOrderStatus({ id, status }));
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error:${error}</p>;
 
   return (
     <div>
@@ -36,24 +29,24 @@ export const OrderManagement = () => {
             <thead className="rounded bg-gray-100 textxs uppercase text-gray-700">
               <tr>
                 <th className="py-3 px-4">order ID</th>
-                <th className="py-3 px-4">Customer</th>
+                <th className="py-3 px-3">Customer</th>
                 <th className="py-3 px-4">Total Price</th>
-                <th className="py-3 px-4">Status</th>
+                <th className="py-3 px-10 ">Status</th>
                 <th className="py-3 px-4">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {orders.length > 0 ? (
+              {orders?.length > 0 ? (
                 orders.map((order) => (
                   <tr
-                    key={order}
+                    key={order._id}
                     className="border-b border-gray-300  hover:bg-gray-50 "
                   >
                     <td className="p-4 font-medium whitespace-nowrap">
                       #{order._id}
                     </td>
                     <td className="p-4  font-medium text-gray-500">
-                      {order.customer}
+                      {order.user.name}
                     </td>
                     <td className="p-4 font-medium text-gray-500">
                       ${order.totalPrice}
