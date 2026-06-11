@@ -17,8 +17,8 @@ export const OrderManagement = () => {
     dispatch(updateOrderStatus({ id, status }));
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error:${error}</p>;
+  if (loading) return <p className="text-center">Loading...</p>;
+  if (error) return <p className="text-center">Error:${error}</p>;
 
   return (
     <div>
@@ -53,22 +53,22 @@ export const OrderManagement = () => {
                     </td>
                     <td className="p-4 font-medium text-gray-500">
                       <select
-                        value={order.status || "proccessing"}
+                        value={order.status || "Proccessing"}
                         onChange={(e) =>
                           handleStatusChange(order._id, e.target.value)
                         }
-                        className="block p-2.5 cursor-pointer  bg-gray-100 rounded border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500"
+                        className={`block ${order.status === "Delivered" ? "bg-green-500 text-white" : "border-gray-300"} ${order.status === "Cancelled" ? "bg-red-500 text-white" : "border-gray-300"}  p-2.5 cursor-pointer  bg-gray-100 rounded border  text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500`}
                       >
-                        <option value="proccessing">Proccessing</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="delivered">Delivered</option>
-                        <option value="cancelled">Cancelled</option>
+                        <option value="Proccessing">Proccessing</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
                       </select>
                     </td>
                     <td className="p-4">
                       <button
                         onClick={() =>
-                          handleStatusChange(order._id, "delivered")
+                          handleStatusChange(order._id, "Delivered")
                         }
                         className="cursor-pointer rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
                       >

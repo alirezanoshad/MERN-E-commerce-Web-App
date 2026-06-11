@@ -56,7 +56,6 @@ export const adminOrderSlice = createSlice({
     // Order List
     orders: [],
     totalOrders: 0,
-    selectedOrder: null,
     loading: false,
     error: null,
   },
@@ -85,7 +84,10 @@ export const adminOrderSlice = createSlice({
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
         state.loading = false;
         console.log(action.payload);
-        state.selectedOrder = action.payload;
+        const index = state.orders.findIndex(
+          (order) => order._id === action.payload._id,
+        );
+        state.orders[index] = action.payload;
       })
       .addCase(updateOrderStatus.rejected, (state, action) => {
         state.loading = false;
