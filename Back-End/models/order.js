@@ -21,7 +21,6 @@ const orderSchema = new mongoose.Schema({
         country:{type:String,required:true}
     },
     totalPrice:{type:Number,required:true},
-    paidAt:{type:Date},
     deliveredAt:{type:Date},
     paymentStatus:{type:String,enum:['pending','paid','faild'],default:'pending'},
     resNumber:{type:String},
