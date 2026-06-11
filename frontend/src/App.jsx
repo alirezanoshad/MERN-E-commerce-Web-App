@@ -59,8 +59,8 @@ export const App = () => {
               path="order-confirmation"
               element={<OrderConfirmationPage />}
             ></Route>
-            <Route path="order/:id" element={<OrderDetailsPage />}></Route>
-            <Route path="my-orders" element={<MyOrders />}></Route>
+            <Route element={<MyOrders />}></Route>
+            <Route path="my-orders/:id" element={<OrderDetailsPage />}></Route>
           </Route>
 
           {/* Admin Layout */}

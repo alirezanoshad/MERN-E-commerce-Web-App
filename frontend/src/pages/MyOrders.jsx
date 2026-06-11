@@ -1,44 +1,17 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// Images for MyOrders
-import orderImg1 from "../assets/topWearsForWomen/wp1.webp";
-import orderImg2 from "../assets/topWearsForWomen/wp2.webp";
 
-export const MyOrders = () => {
-  // Hold the orders
-  const [orders, setOrders] = useState([]);
+// MyOrders Component
+export const MyOrders = ({ orders, loading, error }) => {
+  console.log({ orders, loading, error });
   const navigate = useNavigate();
-
-  // Simulate fetching orders
-  useEffect(() => {
-    setTimeout(() => {
-      const fakeOrders = [
-        {
-          _id: 1288,
-          createdAt: new Date(),
-          shippingAdress: { city: "New York", country: "USA" },
-          orderItems: [{ name: "prduct1", image: orderImg1 }],
-          totalPrice: 100,
-          isPaid: true,
-        },
-        {
-          _id: 15641,
-          createdAt: new Date(),
-          //   shippingAdress: { city: "Melborne", country: "Australia" },
-          orderItems: [{ name: "prduct2", image: orderImg2 }],
-          totalPrice: 169,
-          isPaid: false,
-        },
-      ];
-      setOrders(fakeOrders);
-      return;
-    }, 1000);
-  }, []);
 
   // Navigation to Order Page by ID.
   const handleRowClick = (orderId) => {
     navigate(`/order/${orderId}`);
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error ${error}</p>;
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
@@ -54,13 +27,14 @@ export const MyOrders = () => {
               <th className="py-2 px-4 sm:py-3">Shipping Adress</th>
               <th className="py-2 px-4 sm:py-3">Items</th>
               <th className="py-2 px-4 sm:py-3">Price</th>
-              <th className="py-2 px-4 sm:py-3">Status</th>
+              <th className="py-2 px-4 sm:py-3">Payment</th>
+              <th className="py-2 px-4 sm:py-3">Delivery</th>
             </tr>
           </thead>
           {/* Table's Body */}
           <tbody>
             {/* Order Card */}
-            {orders.length > 0 ? (
+            {orders && orders.length > 0 ? (
               orders.map((order) => (
                 <tr
                   key={order._id}
@@ -94,16 +68,23 @@ export const MyOrders = () => {
                   </td>
                   <td className="py-2 px-4 sm:px-4 sm:py-4">
                     <span
-                      className={`${order.isPaid ? "bg-green-100 text-green-700" : " bg-red-100 text-red-700"} px-2 py-1 rounded-lg text-xs sm:text-sm font-medium`}
+                      className={`${order.paymentStatus === "paid" ? "bg-green-100 text-green-700" : " bg-yellow-100 text-yellow-700"} px-2 py-1 rounded-lg text-xs sm:text-sm font-medium`}
                     >
-                      {order.isPaid ? "Paid" : "Pending"}
+                      {order.paymentStatus}
+                    </span>
+                  </td>
+                  <td className="py-2 px-4 sm:px-4 sm:py-4">
+                    <span
+                      className={`${order.isDelivered ? "bg-green-100 text-green-700" : " bg-yellow-100 text-yellow-700"} px-2 py-1 rounded-lg text-xs sm:text-sm font-medium`}
+                    >
+                      {order.isDelivered ? "Delivered" : "Pending"}
                     </span>
                   </td>
                 </tr>
               ))
             ) : (
-              <tr>
-                <td colSpan={7} className="py-4 px-4 text-center text-gray-500">
+              <tr className="w-full">
+                <td colSpan={8} className="py-4 px-4 text-center text-gray-500">
                   You have no orders
                 </td>
               </tr>
