@@ -6,6 +6,10 @@ import { productsSlice } from "./slices/productsSlice";
 import { cartSlice } from "./slices/cartSlice";
 import { adminSlice } from "./slices/adminSlice";
 import { adminProductsSlice } from "./slices/adminProductsSlice";
+import { themeSlice } from "./slices/theme";
+import { orderSlice } from "./slices/orderSlice";
+import {adminOrderSlice} from "./slices/adminOrderSlice"
+
 // Creating Redux store.
 const store = configureStore({
   reducer: {
@@ -14,6 +18,9 @@ const store = configureStore({
     cart: cartSlice.reducer,
     admin: adminSlice.reducer,
     adminProducts: adminProductsSlice.reducer,
+    order: orderSlice.reducer,
+    adminOrder: adminOrderSlice.reducer,
+    theme: themeSlice.reducer,
   },
 });
 // Export Redux Store => to be used All across The Application.
