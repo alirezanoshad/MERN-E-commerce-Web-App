@@ -19,13 +19,12 @@ adminOrderRouter.get('/',async(req,res)=>{
 // @route PUT /api/admin/orders/:id
 // @desc update order status (admin only)
 // @access Private/Admin
-adminOrderRouter.put('/:id',async(req,res)=>{
+adminOrderRouter.put('/:id',admin,async(req,res)=>{
     try {
         // finding user by its ID
         const order = await Order.findById(req.params.id).populate("user","name");
         if(order){
             order.status = req.body.status || order.status;
-            order.isDelivered = req.body.status === 'Delivered' ? true : order.isDelivered;
             order.deliveredAt = req.body.status === 'Delivered' ? Date.now() : order.deliveredAt;
             const updatedOrder = await order.save();
             res.status(200).json(updatedOrder);
