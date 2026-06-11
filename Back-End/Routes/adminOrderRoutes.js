@@ -6,7 +6,7 @@ const {protect,admin} = require('../middleware/authMiddleware');
 // @route GET /api/admin/orders
 // @desc GET all orders (admin only)
 // @access Private/Admin
-adminOrderRouter.get('/',async(req,res)=>{
+adminOrderRouter.get('/',protect,admin,async(req,res)=>{
     try {
         const orders = await Order.find({}).populate('user','name email');
         res.status(200).json(orders);
@@ -19,7 +19,7 @@ adminOrderRouter.get('/',async(req,res)=>{
 // @route PUT /api/admin/orders/:id
 // @desc update order status (admin only)
 // @access Private/Admin
-adminOrderRouter.put('/:id',admin,async(req,res)=>{
+adminOrderRouter.put('/:id',protect,admin,async(req,res)=>{
     try {
         // finding user by its ID
         const order = await Order.findById(req.params.id).populate("user","name");
@@ -39,7 +39,7 @@ adminOrderRouter.put('/:id',admin,async(req,res)=>{
 // @route DELETE /api/admin/orders/:id
 // @desc delete order (admin only)
 // @access Private/Admin
-adminOrderRouter.delete('/:id',admin,async(req,res)=>{
+adminOrderRouter.delete('/:id',protect,admin,async(req,res)=>{
     try {
         // getting order by its ID and deleting it
         const order = await Order.findById(req.params.id);
