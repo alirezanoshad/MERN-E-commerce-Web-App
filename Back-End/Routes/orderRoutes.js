@@ -5,6 +5,7 @@ const express = require('express');
 const Order = require('../models/order');
 // 3- protect Middleware
 const {protect} = require('../middleware/authMiddleware');
+const {orderProt} = require('../middleware/userOrderMiddleware');
 // 4- initialize router 
 const orderRouter = express.Router();
 // @route GET/api/orders/my-orders
@@ -23,7 +24,7 @@ orderRouter.get('/my-orders',protect,async(req,res)=>{
 // @route GET /api/order/:id
 // @desc users can get order detail by ID
 // @access Private
-orderRouter.get('/:id',protect,async(req,res)=>{
+orderRouter.get('/:id',protect,orderProt,async(req,res)=>{
     try {
         const order = await Order.findById(req.params.id).populate('user','name email');
         if(!order){
