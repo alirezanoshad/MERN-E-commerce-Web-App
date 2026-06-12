@@ -103,10 +103,7 @@ export const Checkout = () => {
               />
             </div>
             <div>
-              <label
-                for="checkoutLastName"
-                className="block text-gray-700"
-              >
+              <label for="checkoutLastName" className="block text-gray-700">
                 Last Name
               </label>
               <input
@@ -195,9 +192,11 @@ export const Checkout = () => {
             />
           </div>
           <div className="mb-4">
-            <label for="checkoutPhone" className="block text-gray-700">Phone</label>
+            <label for="checkoutPhone" className="block text-gray-700">
+              Phone
+            </label>
             <input
-            id="checkoutPhone"
+              id="checkoutPhone"
               type="tel"
               minLength="11"
               maxLength="11"
@@ -264,15 +263,22 @@ export const Checkout = () => {
           <p>${cart.totalPrice?.toLocaleString()}</p>
         </div>
 
+        {cart.originalTotalPrice && cart.originalTotalPrice > 0 && (
+          <div className="flex justify-between items-center text-lg mb-4">
+            <p>Discount:</p>
+            <p>${cart.originalTotalPrice - cart.totalPrice}</p>
+          </div>
+        )}
+
         <div className="flex justify-between items-center text-lg mb-2">
           <p>Shipping:</p>
           <p>Free</p>
         </div>
 
-        {cart.discount && cart.discount > 0 ? (
+        {cart.originalTotalPrice && cart.originalTotalPrice > 0 ? (
           <div>
             <div className="flex line-through justify-end text-lg border-t border-gray-300 pt-4">
-              <p className="">${cart.totalPrice?.toLocaleString()}</p>
+              <p className="">${cart.originalTotalPrice?.toLocaleString()}</p>
             </div>
             <div className="flex justify-between items-center text-lg  border-gray-300">
               <p>Total:</p>

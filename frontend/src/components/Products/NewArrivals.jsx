@@ -63,14 +63,6 @@ export const NewArrivals = () => {
       setCanScrollLeft(leftScroll > 0);
       setCanScrollRight(rightScrollable);
     }
-
-    // Important to understand scroll properties:
-    // console.log({
-    //   scrollLeft: container.scrollLeft,
-    //   scrollWidth: container.clientWidth,
-    //   containerScrollWidth: container.scrollWidth,
-    //   offsetLeft: container.offsetLeft,
-    // });
   };
 
   // Button scroll function - scrollBy method(300px by every click)
@@ -162,7 +154,9 @@ export const NewArrivals = () => {
                         <h4 className=" text-white font-medium">
                           {product.name}
                         </h4>
-                        <p className="text-white mt-1.5">{product.price}</p>
+                        <p className="text-white mt-1.5">
+                          {product.discountPrice}
+                        </p>
                       </Link>
                     </div>
                   </div>
