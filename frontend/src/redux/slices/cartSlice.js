@@ -16,13 +16,19 @@ const saveCartToStorage = (cart) => {
 // Fetch cart for user or guest
 export const fetchCartProducts = createAsyncThunk(
   "cart/FetchCartProducts",
-  async ({ userID, guestID }) => {
+  async ({ guestID, userID }) => {
     try {
-      console.log({ userID, guestID });
+      console.log({ guestID, userID });
       // Get - server request
-      const response = await axios.get("http://localhost:5000/api/cart", {
-        params: { userID, guestID },
-      });
+      const response = await axios.get(
+        "http://localhost:5000/api/cart",
+        { params: { userID, guestID } },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        },
+      );
 
       console.log(response.data);
       return response.data;
@@ -150,7 +156,8 @@ export const cartSlice = createSlice({
       })
       .addCase(fetchCartProducts.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.msg || "Failed to fetch cart";
+        console.log(action.payload);
+        state.error = action.payload || "Failed to fetch cart";
       })
 
       // AddToCart
