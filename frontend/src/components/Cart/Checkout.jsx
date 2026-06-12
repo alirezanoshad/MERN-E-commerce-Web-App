@@ -260,7 +260,12 @@ export const Checkout = () => {
         </div>
         <div className="flex justify-between items-center text-lg mb-4">
           <p>Subtotal:</p>
-          <p>${cart.originalTotalPrice?.toLocaleString()}</p>
+          <p>
+            $
+            {cart.originalTotalPrice  && cart.originalTotalPrice > 0
+              ? cart.originalTotalPrice
+              : cart.totalPrice}
+          </p>
         </div>
 
         {cart.originalTotalPrice && cart.originalTotalPrice > 0 && (
