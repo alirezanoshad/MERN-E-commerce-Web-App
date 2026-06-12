@@ -155,7 +155,7 @@ export const NewArrivals = () => {
                           {product.name}
                         </h4>
                         <p className="text-white mt-1.5">
-                          {product.discountPrice}
+                          ${product.discountPrice}
                         </p>
                       </Link>
                     </div>

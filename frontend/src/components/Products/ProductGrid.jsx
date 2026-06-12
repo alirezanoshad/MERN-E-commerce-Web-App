@@ -29,7 +29,7 @@ export const ProductGrid = ({ passedProducts, loading, error }) => {
               </div>
               <h3 className="text-sm mb-2">{product.name}</h3>
               <span className="text-gray-500 font-medium text-sm tracking-tighter">
-                {product.discountPrice && product.discountPrice > 0
+                ${product.discountPrice && product.discountPrice > 0
                   ? product.discountPrice
                   : product.price}
               </span>
