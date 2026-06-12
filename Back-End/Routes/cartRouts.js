@@ -42,7 +42,8 @@ cartRouter.post('/',async(req,res)=>{
                     productID:cartData.productID,
                     name:product.name,
                     image:product.images[0].url,
-                    price:product.price,
+                    price: product.discountPrice > 0 ? product.discountPrice : product.price,
+                    originalPrice:product.price,
                     size:cartData.size,
                     color:cartData.color,
                     quantity:cartData.quantity
@@ -51,6 +52,10 @@ cartRouter.post('/',async(req,res)=>{
             // recalcualte the total price
             cart.totalPrice = cart.products.reduce(
                 (acc,item)=> acc + item.price * item.quantity,
+                0
+            );
+            cart.originalTotalPrice = cart.products.reduce(
+                (acc, item) => acc + item.originalPrice * item.quantity,
                 0
             );
             // save the cart
@@ -66,13 +71,15 @@ cartRouter.post('/',async(req,res)=>{
                         productID:cartData.productID,
                         name:product.name,
                         image:product.images[0].url,
-                        price:product.price,
+                        price: product.discountPrice > 0 ? product.discountPrice : product.price,
+                        originalPrice:product.price,
                         size:cartData.size,
                         color:cartData.color,
                         quantity:cartData.quantity
                     }
                 ],
                 totalPrice:product.price * cartData.quantity,
+                originalTotalPrice:product.originalPrice * cartData.quantity,
             });
             return res.status(201).json(newCart);
 
