@@ -22,6 +22,7 @@ export const CollectionsPage = () => {
   const { collection } = useParams();
   // Read URL Params
   const [searchParams] = useSearchParams();
+
   // Convert URL Params into an object
   const queryParams = Object.fromEntries([...searchParams]);
 
@@ -42,8 +43,9 @@ export const CollectionsPage = () => {
 
   // Fetch Products By Filters By URL Params
   useEffect(() => {
-    dispatch(fetchProductsByFilters({ collection, queryParams }));
+    dispatch(fetchProductsByFilters({ collection, ...queryParams }));
     console.log(collection);
+    console.log(queryParams);
   }, [dispatch, collection, searchParams]);
 
   // Sidebar event listener
