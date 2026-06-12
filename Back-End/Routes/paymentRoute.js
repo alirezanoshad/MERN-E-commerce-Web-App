@@ -15,7 +15,14 @@ app.use(cors());
 paymentRouter.get('/callback',async(req,res)=>{
     try {
         if(req.query.Status && req.query.Status !== 'OK'){
-            return res.redirect('http://localhost:5173');
+            let payment = await Payment.findOne({resNumber:req.query.Authority});
+            let order = await Order.findById(payment.order);
+            payment.payment = false,
+            order.paymentStatus = 'faild'
+            order.status = 'Cancelled',
+            await order.save();
+            await payment.save();
+            return res.redirect(`http://localhost:5173/order-confirmation?orderID=${order._id}`);
         }
         let payment = await Payment.findOne({resNumber:req.query.Authority});
         if(!payment) return res.json({msg:'payment not found'});
@@ -30,14 +37,6 @@ paymentRouter.get('/callback',async(req,res)=>{
             order.paymentStatus = 'paid';
             order.resNumber = req.query.Authority;
             payment.payment = true;
-            await order.save();
-            await payment.save();
-            res.redirect(`http://localhost:5173/order-confirmation?orderID=${order._id}`);
-        }else{
-            let order = await Order.findById(payment.order);
-            order.paymentStatus = 'faild';
-            order.resNumber = req.query.Authority;
-            payment.payment = false;
             await order.save();
             await payment.save();
             res.redirect(`http://localhost:5173/order-confirmation?orderID=${order._id}`);
