@@ -19,6 +19,7 @@ export const ProductDetails = ({ productId }) => {
   const { selectedProduct, similarProducts, loading, error } = useSelector(
     (state) => state.products,
   );
+  console.log(selectedProduct);
 
   // Redux State - userInfo
   const { user, guestId } = useSelector((state) => state.auth);
@@ -32,23 +33,28 @@ export const ProductDetails = ({ productId }) => {
   const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const productFetchId = productId || id;
+
   useEffect(() => {
+    // Reset seelected info
+    setMainImg(null);
+    setSelectedSize(null);
+    setSelectedColor(null);
+    setQuantity(1);
+
     // Fetch Product by ID
     if (productFetchId) {
-      dispatch(fetchProductDetails(productFetchId));
+      dispatch(fetchProductDetails(productFetchId)).then(() => {});
+
       dispatch(fetchSimilarProducts({ id: productFetchId }));
-
-      // mainImg set
-      if (selectedProduct?.images?.length > 0) {
-        setMainImg(selectedProduct?.images[0]);
-      }
-
-      // Reset seelected info
-      setSelectedSize(null);
-      setSelectedColor(null);
-      setQuantity(1);
     }
   }, [dispatch, productFetchId]);
+
+  useEffect(() => {
+    // mainImg set
+    if (selectedProduct?.images?.length > 0) {
+      setMainImg(selectedProduct?.images[0]);
+    }
+  }, [selectedProduct]);
 
   // mainImgSwitch Function
   const mainImgSwitch = (image) => {
