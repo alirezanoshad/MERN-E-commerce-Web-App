@@ -260,13 +260,13 @@ export const Checkout = () => {
         </div>
         <div className="flex justify-between items-center text-lg mb-4">
           <p>Subtotal:</p>
-          <p>${cart.totalPrice?.toLocaleString()}</p>
+          <p>${cart.originalTotalPrice?.toLocaleString()}</p>
         </div>
 
         {cart.originalTotalPrice && cart.originalTotalPrice > 0 && (
           <div className="flex justify-between items-center text-lg mb-4">
             <p>Discount:</p>
-            <p>${cart.originalTotalPrice - cart.totalPrice}</p>
+            <p>- ${cart.originalTotalPrice - cart.totalPrice}</p>
           </div>
         )}
 
