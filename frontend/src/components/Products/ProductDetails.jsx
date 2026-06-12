@@ -31,21 +31,24 @@ export const ProductDetails = ({ productId }) => {
   const [quantity, setQuantity] = useState(1);
   const [isButtonDisabled, setButtonDisabled] = useState(false);
 
-  // Fetch Product ID
   const productFetchId = productId || id;
   useEffect(() => {
+    // Fetch Product by ID
     if (productFetchId) {
       dispatch(fetchProductDetails(productFetchId));
       dispatch(fetchSimilarProducts({ id: productFetchId }));
+
+      // mainImg set
+      if (selectedProduct?.images?.length > 0) {
+        setMainImg(selectedProduct?.images[0]);
+      }
+
+      // Reset seelected info
+      setSelectedSize(null);
+      setSelectedColor(null);
+      setQuantity(1);
     }
   }, [dispatch, productFetchId]);
-
-  // mainImg set
-  useEffect(() => {
-    if (selectedProduct?.images?.length > 0) {
-      setMainImg(selectedProduct?.images[0]);
-    }
-  }, [selectedProduct]);
 
   // mainImgSwitch Function
   const mainImgSwitch = (image) => {
@@ -89,6 +92,11 @@ export const ProductDetails = ({ productId }) => {
       .then(() => {
         // Dispay success toast after 2 sec.
         toast.success("Product added to cart", { duration: 1000 });
+
+        // Reset seelected info
+        setSelectedSize(null);
+        setSelectedColor(null);
+        setQuantity(1);
       })
       .finally(() => {
         // Enable btn again
