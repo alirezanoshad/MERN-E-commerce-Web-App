@@ -17,9 +17,9 @@ paymentRouter.get('/callback',async(req,res)=>{
         if(req.query.Status && req.query.Status !== 'OK'){
             let payment = await Payment.findOne({resNumber:req.query.Authority});
             let order = await Order.findById(payment.order);
-            payment.payment = false,
-            order.paymentStatus = 'faild'
-            order.status = 'Cancelled',
+            payment.payment = false;
+            order.paymentStatus = 'faild';
+            order.status = 'Cancelled';
             await order.save();
             await payment.save();
             return res.redirect(`http://localhost:5173/order-confirmation?orderID=${order._id}`);
