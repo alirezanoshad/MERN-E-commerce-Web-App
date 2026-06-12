@@ -57,7 +57,7 @@ export const OrderDetailsPage = () => {
             <div>
               <h4 className="text-lg font-semibold mb-2">Payment Info</h4>
               <p>Payment Method: ZarinPal</p>
-              <p>res number: ${selectedOrder.totalPrice}</p>
+              <p>Total Price: ${selectedOrder.totalPrice}</p>
               <p>res number: {selectedOrder.resNumber}</p>
             </div>
             <div>
