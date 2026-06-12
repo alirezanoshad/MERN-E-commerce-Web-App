@@ -9,6 +9,8 @@ import {
 
 // CartContents component - contains the products in the cart.
 export const CartContents = ({ cartProducts, guestId, userId }) => {
+  console.log(cartProducts?.products);
+
   const dispatch = useDispatch();
 
   // Hanle adding or substracting to cart
@@ -107,7 +109,12 @@ export const CartContents = ({ cartProducts, guestId, userId }) => {
             </div>
 
             <div className="flex flex-col items-center">
-              <p>${product?.price * product?.quantity}</p>
+              <p>
+                $
+                {product?.discountPrice
+                  ? product?.discountPrice * product?.quantity
+                  : product?.price * product?.quantity}
+              </p>
               <button
                 className="cursor-pointer"
                 onClick={() =>
