@@ -62,6 +62,7 @@ paymentRouter.post('/paymentAsli',protect,async(req,res)=>{
     const paymentData = {
         merchant_id:config.get('gateway.merchant_id'),
         amount:amount,
+        currency:'IRT',
         description:'buy product',
         callback_url:config.get('gateway.callBackUrl')
     };
