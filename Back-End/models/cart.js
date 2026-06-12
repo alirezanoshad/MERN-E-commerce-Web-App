@@ -16,6 +16,6 @@ const cartSchema = new mongoose.Schema({
     guestID:{type:String},
     products:[cartItemSchema],
     totalPrice:{type:Number,required:true,default:0},
-    originalTotalPrice:{type:Number,required:true,default:0}
+    originalTotalPrice:{type:String,required:true,default:0}
 },{timestamps:true});
 module.exports = mongoose.model('Cart',cartSchema);
