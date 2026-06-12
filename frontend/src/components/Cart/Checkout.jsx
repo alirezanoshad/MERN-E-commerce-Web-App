@@ -23,7 +23,7 @@ export const Checkout = () => {
     address: "",
     city: "",
     postalCode: "",
-    country: "",
+    country: "Iran",
     phoneNumber: "",
   });
 
@@ -181,12 +181,6 @@ export const Checkout = () => {
               type="text"
               className="w-full bg-gray-200 p-2 border border-gray-300 rounded"
               value={"Iran"}
-              onChange={(e) =>
-                setShippingAddress({
-                  ...shippingAddress,
-                  country: e.target.value,
-                })
-              }
               disabled
             />
           </div>
