@@ -23,7 +23,9 @@ export const Footer = () => {
 
           {/* Newsletter form */}
           <form className="flex ">
+            <label for="footerLabel"></label>
             <input
+              id="footerLabel"
               type="email"
               placeholder="Enter your email"
               className="p-3 w-full text-sm border-t border-l border-b border-gray-300 rounded-l-md focus:ring-2 focus:ring-gray-500"

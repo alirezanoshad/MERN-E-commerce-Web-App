@@ -71,10 +71,11 @@ export const Checkout = () => {
         <form onSubmit={handleCreateCheckout}>
           <h3 className="text-lg mb-4">Contacet Dateils</h3>
           <div className="mb-4">
-            <label htmlFor="" className="bloack text-gray-700">
+            <label for="checkoutEmail" className="bloack text-gray-700">
               Email
             </label>
             <input
+              id="checkoutEmail"
               type="email"
               value={user ? user.email : ""}
               className="w-full p-2 border bg-gray-200 border-gray-300 rounded"
@@ -84,10 +85,11 @@ export const Checkout = () => {
           <h3 className="text-lg mb-4">Delivery</h3>
           <div className="mb-4 grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="" className="block text-gray-700">
+              <label for="checkoutFirstName" className="block text-gray-700">
                 First Name
               </label>
               <input
+                id="checkoutFirstName"
                 type="text"
                 className="w-full p-2 border border-gray-300 rounded"
                 value={shippingAddress.firstName}
@@ -101,10 +103,14 @@ export const Checkout = () => {
               />
             </div>
             <div>
-              <label htmlFor="" className="block text-gray-700">
+              <label
+                for="checkoutLastName"
+                className="block text-gray-700"
+              >
                 Last Name
               </label>
               <input
+                id="checkoutLastName"
                 type="text"
                 className="w-full p-2 border border-gray-300 rounded"
                 value={shippingAddress.lastName}
@@ -119,10 +125,11 @@ export const Checkout = () => {
             </div>
           </div>
           <div className="mb-4">
-            <label htmlFor="" className="block text-gray-700">
+            <label for="checkoutAddress" className="block text-gray-700">
               Address
             </label>
             <input
+              id="checkoutAddress"
               type="text"
               className="w-full p-2 border border-gray-300 rounded"
               value={shippingAddress.address}
@@ -137,10 +144,11 @@ export const Checkout = () => {
           </div>
           <div className="mb-4 grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="" className="block text-gray-700">
+              <label for="checkoutCity" className="block text-gray-700">
                 City
               </label>
               <input
+                id="checkoutCity"
                 type="text"
                 className="w-full p-2 border border-gray-300 rounded"
                 value={shippingAddress.city}
@@ -154,10 +162,11 @@ export const Checkout = () => {
               />
             </div>
             <div>
-              <label htmlFor="" className="block text-gray-700">
+              <label for="checkoutPostalCode" className="block text-gray-700">
                 Postal Code
               </label>
               <input
+                id="checkoutPostalCode"
                 type="tel"
                 minLength="4"
                 maxLength="7"
@@ -174,10 +183,11 @@ export const Checkout = () => {
             </div>
           </div>
           <div className="mb-4">
-            <label htmlFor="" className="block text-gray-700">
+            <label for="checkoutCountry" className="block text-gray-700">
               Country
             </label>
             <input
+              id="checkoutCountry"
               type="text"
               className="w-full bg-gray-200 p-2 border border-gray-300 rounded"
               value={"Iran"}
@@ -185,10 +195,9 @@ export const Checkout = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="" className="block text-gray-700">
-              Phone
-            </label>
+            <label for="checkoutPhone" className="block text-gray-700">Phone</label>
             <input
+            id="checkoutPhone"
               type="tel"
               minLength="11"
               maxLength="11"
@@ -254,14 +263,32 @@ export const Checkout = () => {
           <p>Subtotal:</p>
           <p>${cart.totalPrice?.toLocaleString()}</p>
         </div>
+
         <div className="flex justify-between items-center text-lg mb-2">
           <p>Shipping:</p>
           <p>Free</p>
         </div>
-        <div className="flex justify-between items-center text-lg border-t border-gray-300 pt-4">
-          <p>Total:</p>
-          <p>${cart.totalPrice?.toLocaleString()}</p>
-        </div>
+
+        {cart.discount && cart.discount > 0 ? (
+          <div>
+            <div className="flex line-through justify-end text-lg border-t border-gray-300 pt-4">
+              <p className="">${cart.totalPrice?.toLocaleString()}</p>
+            </div>
+            <div className="flex justify-between items-center text-lg  border-gray-300">
+              <p>Total:</p>
+              <p className="font-semibold">
+                ${cart.totalPrice?.toLocaleString()}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="flex justify-between items-center text-lg border-t   border-gray-300 pt-4">
+            <p>Total:</p>
+            <p className="font-semibold">
+              ${cart.totalPrice?.toLocaleString()}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
