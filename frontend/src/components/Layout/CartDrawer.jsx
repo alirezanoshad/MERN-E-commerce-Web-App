@@ -1,7 +1,9 @@
 import { IoMdClose } from "react-icons/io";
 import { CartContents } from "../Cart/CartContents";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchCartProducts } from "../../redux/slices/cartSlice";
 
 // CartDrawer component - contains Cart Contents.
 export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
@@ -11,6 +13,16 @@ export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
   const userId = user ? user.id : null;
   // React Navigation
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // FetchCartProducts
+  useEffect(() => {
+    console.log("cart Trying..");
+    dispatch(
+      fetchCartProducts({ guestID: guestId, userID: userId }),
+    );
+  }, [dispatch, userId, guestId]);
+
   // Checkout navigation.
   const handleCheckoutBtn = () => {
     toggleCartDrawer((prev) => !prev);

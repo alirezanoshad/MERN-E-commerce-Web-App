@@ -1,9 +1,7 @@
 // Icon
-import { useEffect } from "react";
 import { RiDeleteBin3Line } from "react-icons/ri";
 // Redux
 import { useDispatch } from "react-redux";
-import { fetchCartProducts } from "../../redux/slices/cartSlice";
 import {
   updateCartItemQuantity,
   removeFromCart,
@@ -12,11 +10,6 @@ import {
 // CartContents component - contains the products in the cart.
 export const CartContents = ({ cartProducts, guestId, userId }) => {
   const dispatch = useDispatch();
-
-  // FetchCartProducts
-  useEffect(() => {
-    dispatch(fetchCartProducts({ guestID: guestId, userID: userId }));
-  }, [dispatch, userId, guestId]);
 
   // Hanle adding or substracting to cart
   const handleAddToCart = ({ quantity, delta, color, size, productID }) => {
