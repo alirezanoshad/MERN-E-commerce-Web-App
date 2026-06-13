@@ -9,7 +9,7 @@ import { fetchCartProducts } from "../../redux/slices/cartSlice";
 export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
   // Redux store
   const { guestId, user } = useSelector((state) => state.auth);
-  const { cart } = useSelector((state) => state.cart);
+  const { cart, loading, error } = useSelector((state) => state.cart);
   const userId = user ? user.id : null;
   // React Navigation
   const navigate = useNavigate();
@@ -33,6 +33,9 @@ export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
     }
   };
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   // JSX
   return (
     // Returns a div - only Displayed by drawerOpen's statement
@@ -52,14 +55,20 @@ export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
       <div className="grow p-4 overflow-y-auto">
         <h2 className="text-xl font-semibold mb-4">Your Cart</h2>
         {cart && cart?.products?.length > 0 ? (
-          <CartContents cartProducts={cart} guestId={guestId} userId={userId} />
+          <div>
+            <CartContents
+              cartProducts={cart}
+              guestId={guestId}
+              userId={userId}
+            />
+            <div className="p-2 flex justify-between">
+              <span>Total Price:</span>
+              <span>${cart?.totalPrice}</span>
+            </div>
+          </div>
         ) : (
           <p>Your cart is empty.</p>
         )}
-        <div className="p-2 flex justify-between">
-          <span>Total Price:</span>
-          <span>${cart.totalPrice}</span>
-        </div>
       </div>
 
       {/* bottomSide div - checkout button & note */}
