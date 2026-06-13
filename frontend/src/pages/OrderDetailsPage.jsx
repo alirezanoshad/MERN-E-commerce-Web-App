@@ -9,13 +9,13 @@ export const OrderDetailsPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { selectedOrder, loading, error } = useSelector((state) => state.order);
-
+  console.log(selectedOrder);
   useEffect(() => {
     dispatch(fetchSingleOrder(id));
   }, [dispatch, id]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: ${error}</p>;
+  if (loading) return <p className="text-center">Loading...</p>;
+  if (error) return <p className="text-center">Error: ${error}</p>;
 
   // JSX
   return (
@@ -56,17 +56,27 @@ export const OrderDetailsPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8 mb-8">
             <div>
               <h4 className="text-lg font-semibold mb-2">Payment Info</h4>
-              <p>Payment Method: ZarinPal</p>
-              <p>Total Price: ${selectedOrder.totalPrice}</p>
-              <p>res number: {selectedOrder.resNumber}</p>
+              <div className="flex flex-col gap-y-3">
+                <p>Payment Method: ZarinPal</p>
+                <p>Total Price: ${selectedOrder.totalPrice}</p>
+                <p>res number: {selectedOrder.resNumber}</p>
+              </div>
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-2">Shipping Info</h4>
-              <p>Shipping Method: {selectedOrder.shippingMethod}</p>
-              <p>
-                Address: {selectedOrder.shippingAddress.city},{" "}
-                {selectedOrder.shippingAddress.country}
-              </p>
+              <div className="flex flex-col gap-y-3">
+                <p>
+                  Sent to {selectedOrder.shippingAddress.firstName}{" "}
+                  {selectedOrder.shippingAddress.firstName}{" "}
+                </p>
+                <p>
+                  Address: {selectedOrder.shippingAddress.country},
+                  {selectedOrder.shippingAddress.city},
+                  {selectedOrder.shippingAddress.address}
+                </p>
+                <p>Postal Code: {selectedOrder.shippingAddress.postalCode}</p>
+                <p>Phone number: {selectedOrder.shippingAddress.phoneNumber}</p>
+              </div>
             </div>
           </div>
           {/* Product List */}
