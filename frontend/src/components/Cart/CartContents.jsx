@@ -8,7 +8,13 @@ import {
 } from "../../redux/slices/cartSlice";
 
 // CartContents component - contains the products in the cart.
-export const CartContents = ({ cartProducts, guestId, userId }) => {
+export const CartContents = ({
+  cartProducts,
+  loading,
+  error,
+  guestId,
+  userId,
+}) => {
   console.log(cartProducts?.products);
 
   const dispatch = useDispatch();
@@ -47,6 +53,9 @@ export const CartContents = ({ cartProducts, guestId, userId }) => {
       }),
     );
   };
+
+  if (loading) return <p className="text-center">Loading...</p>;
+  if (error) return <p className="text-center">Error: {error}</p>;
 
   // JSX
   return (

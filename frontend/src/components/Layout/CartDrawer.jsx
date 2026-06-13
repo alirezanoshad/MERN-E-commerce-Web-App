@@ -33,8 +33,7 @@ export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+
 
   // JSX
   return (
@@ -58,6 +57,8 @@ export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
           <div>
             <CartContents
               cartProducts={cart}
+              loading={loading}
+              error={error}
               guestId={guestId}
               userId={userId}
             />
