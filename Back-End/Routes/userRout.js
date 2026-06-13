@@ -10,7 +10,7 @@ const jwt = require("jsonwebtoken");
 // importing lodash
 const _ = require("lodash");
 // importing protect middleware
-const {registerValidator,loginValidator} = require('../middleware/userOrderMiddleware');
+const {registerValidator,loginValidator} = require('../middleware/expressValidator');
 const {protect} = require('../middleware/authMiddleware');
 // creating router
 const router = express.Router();
