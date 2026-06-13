@@ -10,11 +10,12 @@ const jwt = require("jsonwebtoken");
 // importing lodash
 const _ = require("lodash");
 // importing protect middleware
+const {registerValidator,loginValidator} = require('../middleware/userOrderMiddleware');
 const {protect} = require('../middleware/authMiddleware');
 // creating router
 const router = express.Router();
 // @route POST /api/users/register
-router.post('/register',async(req,res)=>{
+router.post('/register',registerValidator(),async(req,res)=>{
     // extracting name/email/password from request body
     const userData = _.pick(req.body,["name","email","password"]);
     try {
@@ -45,7 +46,7 @@ router.post('/register',async(req,res)=>{
 // @route POST/api/users/login
 // @desc Authenticate user
 // @access Public
-router.post('/login',async(req,res)=>{
+router.post('/login',loginValidator(),async(req,res)=>{
     const loginedUser = _.pick(req.body,["email","password"]);
     try {
         // finding user by Email
