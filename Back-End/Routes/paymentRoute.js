@@ -22,7 +22,7 @@ paymentRouter.get('/callback',async(req,res)=>{
             order.status = 'Cancelled';
             await order.save();
             await payment.save();
-            return res.redirect(`http://localhost:5173/order-confirmation?orderID=${order._id}`);
+            return res.redirect(`http://localhost:5173/order-confirmation/${order._id}`);
         }
         let payment = await Payment.findOne({resNumber:req.query.Authority});
         if(!payment) return res.json({msg:'payment not found'});
@@ -39,7 +39,7 @@ paymentRouter.get('/callback',async(req,res)=>{
             payment.payment = true;
             await order.save();
             await payment.save();
-            res.redirect(`http://localhost:5173/order-confirmation?orderID=${order._id}`);
+            res.redirect(`http://localhost:5173/order-confirmation/${order._id}`);
         }
     } catch (error) {
         console.log(error);
