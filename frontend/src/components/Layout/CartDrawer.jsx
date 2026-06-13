@@ -18,9 +18,7 @@ export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
   // FetchCartProducts
   useEffect(() => {
     console.log("cart Trying..");
-    dispatch(
-      fetchCartProducts({ guestID: guestId, userID: userId }),
-    );
+    dispatch(fetchCartProducts({ guestID: guestId, userID: userId }));
   }, [dispatch, userId, guestId]);
 
   // Checkout navigation.
@@ -58,6 +56,10 @@ export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
         ) : (
           <p>Your cart is empty.</p>
         )}
+        <div className="p-2 flex justify-between">
+          <span>Total Price:</span>
+          <span>${cart.totalPrice}</span>
+        </div>
       </div>
 
       {/* bottomSide div - checkout button & note */}
