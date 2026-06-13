@@ -56,7 +56,7 @@ export const App = () => {
             <Route path="product/:id" element={<ProductDetails />}></Route>
             <Route path="checkout" element={<Checkout />}></Route>
             <Route
-              path="order-confirmation"
+              path="order-confirmation/:id"
               element={<OrderConfirmationPage />}
             ></Route>
             <Route element={<MyOrders />}></Route>
