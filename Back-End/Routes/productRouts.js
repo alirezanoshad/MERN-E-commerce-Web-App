@@ -5,6 +5,7 @@ const Product = require('../models/Product');
 const {protect,admin} = require('../middleware/authMiddleware');
 // lodash
 const _ = require('lodash');
+const logger = require('../logs/logger');
 // new Rout
 const prodRouter = express.Router();
 // @route POST /api/products
@@ -61,6 +62,7 @@ prodRouter.post('/',
         });
         // saving product in DB
         const createdProduct = await product.save();
+        logger.info(`new product created by ${req.user.name}`)
         res.status(201).json(createdProduct);
     } catch (error) {
         console.log(error);
@@ -94,6 +96,7 @@ prodRouter.put('/:id',protect,admin,async(req,res)=>{
             'sku']);
         // find product using ID
         const existedProduct = await Product.findOneAndUpdate({_id:req.params.id},updatedProd,{new:true});
+        logger.info(`product: ${updatedProd.name} updated by ${req.user.name}`);
         if(!existedProduct){
             res.status(404).json({msg:'product does not exists'});
         }

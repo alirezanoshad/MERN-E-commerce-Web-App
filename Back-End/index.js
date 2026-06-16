@@ -16,7 +16,6 @@ const adminproductsRouter = require("./Routes/productsAdminRouts");
 const adminOrderRouter = require("./Routes/adminOrderRoutes");
 const paymentRouter = require("./Routes/paymentRoute");
 const uploadRouter = require("./Routes/uploadRout");
-const logger = require("./logs/logger");
 // importing database connection
 const connectDB = require("./config/DB");
 const app = express();

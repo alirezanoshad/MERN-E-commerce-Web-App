@@ -1,7 +1,8 @@
 // this file contains user routes & imported in index.js
 // importing config
 const config = require("config");
-const limiter = require('../middleware/rateLimit')
+const limiter = require('../middleware/rateLimit');
+const logger = require("../logs/logger");
 // importing express
 const express = require("express");
 // importing user Model
@@ -29,6 +30,7 @@ router.post('/register',registerValidator(),async(req,res)=>{
         // sign JWT
         jwt.sign(payload,config.get("server.JWT_SECRET"),{expiresIn:"7d"},(err,token)=>{
             if(err) throw err;
+            logger.info(`new user ${user.name} registered`);
             res.status(200).json({
                 user:{
                     id:user._id,
@@ -63,6 +65,7 @@ router.post('/login',limiter,loginValidator(),async(req,res)=>{
         // sign JWT
         jwt.sign(payload,config.get("server.JWT_SECRET"),{expiresIn:"7d"},(err,token)=>{
             if(err) throw err;
+            logger.info(`${user.name} retreived to account`)
             res.json({
                 user:{
                     id:user._id,
