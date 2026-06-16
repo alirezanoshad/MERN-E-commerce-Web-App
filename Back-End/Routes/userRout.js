@@ -1,6 +1,7 @@
 // this file contains user routes & imported in index.js
 // importing config
 const config = require("config");
+const limiter = require('../middleware/rateLimit')
 // importing express
 const express = require("express");
 // importing user Model
@@ -46,7 +47,7 @@ router.post('/register',registerValidator(),async(req,res)=>{
 // @route POST/api/users/login
 // @desc Authenticate user
 // @access Public
-router.post('/login',loginValidator(),async(req,res)=>{
+router.post('/login',limiter,loginValidator(),async(req,res)=>{
     const loginedUser = _.pick(req.body,["email","password"]);
     try {
         // finding user by Email
