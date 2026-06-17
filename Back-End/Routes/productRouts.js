@@ -62,7 +62,7 @@ prodRouter.post('/',
         });
         // saving product in DB
         const createdProduct = await product.save();
-        logger.info(`new product created by ${req.user.name}`)
+        logger.info(`new product (${name}) created by ${req.user.name}`)
         res.status(201).json(createdProduct);
     } catch (error) {
         console.log(error);
@@ -115,6 +115,7 @@ prodRouter.delete("/:id",protect,admin,async(req,res)=>{
     try {
         // find the product using id 
         const existedProduct = await Product.findOneAndDelete({_id:req.params.id});
+        logger.info(`product (${existedProduct.name}) deleted by ${req.user.name}`)
         if(!existedProduct){
             res.status(403).json({msg:'product does not found'})
         }
