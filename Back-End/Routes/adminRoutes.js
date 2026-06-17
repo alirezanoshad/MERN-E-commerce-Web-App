@@ -1,6 +1,7 @@
 // this file is for creating users and managing them by admin
 const express = require('express');
 const adminRouter = express.Router();
+const logger = require("../logs/logger");
 const _ = require('lodash');
 const User = require('../models/UserScheama');
 const {protect,admin} = require('../middleware/authMiddleware');
@@ -29,6 +30,7 @@ adminRouter.post('/users',protect,admin,async(req,res)=>{
         if(user){return res.status(400).json({msg:'user is already exists'})};
         user = new User(userData);
         await user.save();
+        logger.info(`${req.user.name} created new user(${userData.name,userData.email,userData.role})`);
         res.status(201).json({msg:'user created successfully',user});
     } catch (error) {
         console.log(error);
@@ -42,6 +44,7 @@ adminRouter.put('/:id',protect,admin,async(req,res)=>{
     try {
         // find user by id from params and update
         const user = await User.findOneAndUpdate({_id:req.params.id},{$set:_.pick(req.body,["name","email","role"])},{new:true});
+        logger.info(`${req.user.name} updated user's info(${user.name})`);
         if(!user){
             return res.status(404).json({msg:'user not found'});
         }else{
@@ -65,6 +68,7 @@ adminRouter.delete('/:id',protect,admin,async(req,res)=>{
     }else{
         // delete user
         const deletedUser = await user.deleteOne();
+        logger.info(`${req.user.name} deleted user(${user.name})`);
         res.status(200).json({msg:'user deleted successfully',deletedUser});
     }
     } catch (error) {
