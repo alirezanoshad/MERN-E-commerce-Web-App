@@ -8,8 +8,8 @@ const logger = winston.createLogger({
         printf((info)=> `${info.timestamp} ${info.level}: ${info.message}`)
     ),
     transports:[
-        new winston.transports.File({filename:'info.log'}),
-        new winston.transports.File({filename:'error.log'}),
+        new winston.transports.File({filename:'info.log',level:'info'}),
+        new winston.transports.File({filename:'error.log',level:'error'})
     ]
 })
 module.exports = logger
