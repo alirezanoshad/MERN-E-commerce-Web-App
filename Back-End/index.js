@@ -18,6 +18,7 @@ const paymentRouter = require("./Routes/paymentRoute");
 const uploadRouter = require("./Routes/uploadRout");
 // importing database connection
 const connectDB = require("./config/DB");
+const { redisClient, connectRedis } = require('./config/redisClient');
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -37,6 +38,11 @@ app.use('/api/admin/orders',adminOrderRouter);
 app.use('/api/payment',paymentRouter);
 // upload routes
 app.use('/api/upload',uploadRouter);
+// redis start
+(async () => {
+    await connectRedis();
+})();
+//---------------------------------
 // creating web server
 app.listen(config.get("server.port"), () => {
     console.log(`Server is running on port ${config.get("server.port")}`);
