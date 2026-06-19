@@ -5,7 +5,7 @@ const express = require("express");
 const cors = require("cors");
 // config
 const config = require("config");
-// importing routes
+// importing routess
 const userRoute = require("./Routes/userRout");
 const productRoute = require("./Routes/productRouts");
 const cartRouter = require("./Routes/cartRouts");
