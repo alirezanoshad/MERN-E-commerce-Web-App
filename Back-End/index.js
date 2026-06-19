@@ -5,7 +5,7 @@ const express = require("express");
 const cors = require("cors");
 // config
 const config = require("config");
-// importing routess
+// importing routes
 const userRoute = require("./Routes/userRout");
 const productRoute = require("./Routes/productRouts");
 const cartRouter = require("./Routes/cartRouts");
@@ -45,5 +45,5 @@ app.use('/api/upload',uploadRouter);
 //---------------------------------
 // creating web server
 app.listen(config.get("server.port"), () => {
-    console.log(`Server is running on port ${config.get("server.port")}`);
+    console.log(`${config.get('server.name')} is running on port ${config.get("server.port")}`);
 });
