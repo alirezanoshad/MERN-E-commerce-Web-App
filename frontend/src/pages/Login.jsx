@@ -25,18 +25,14 @@ export const Login = () => {
 
   // Auto Login - based on localStorage
   useEffect(() => {
-    console.log(user);
     // for logged-in users
     if (user) {
-      console.log(user);
       if (cart?.products?.length > 0) {
         // Merge existing and new cart
         dispatch(mergeCart({ user, guestID: guestId })).then(() => {
-          console.log(isCheckoutRedirect);
           navigate(isCheckoutRedirect ? "/checkout" : "/");
         });
       } else {
-        console.log(`redirect to checkout: ${isCheckoutRedirect}`);
         navigate(isCheckoutRedirect ? "/checkout" : "/");
       }
     }
@@ -46,7 +42,6 @@ export const Login = () => {
   const handleSubmit = (e) => {
     // Stops submit reloading
     e.preventDefault();
-    console.log("User Login Requset Sent!(JSX)", { email, password });
     dispatch(loginUser({ email, password }));
   };
 

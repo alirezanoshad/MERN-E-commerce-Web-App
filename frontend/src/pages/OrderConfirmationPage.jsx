@@ -5,11 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 export const OrderConfirmationPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
 
   useEffect(() => {
     if (id) {
-      console.log(id);
       // Navigation
       setTimeout(() => {
         navigate(`/my-orders/${id}`);

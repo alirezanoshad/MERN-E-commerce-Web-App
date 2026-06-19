@@ -51,7 +51,7 @@ export const loginUser = createAsyncThunk(
         id: toastLogin,
       });
       // Eror clg
-      return console.log(error.response?.data?.msg);
+      toast.error(error?.response?.data?.msg || "User Login Failed");
     }
   },
 );
@@ -69,7 +69,6 @@ export const registerUser = createAsyncThunk(
         "http://localhost:5000/api/users/register",
         { name, email, password },
       );
-      console.log(response.data);
       // Set localStorage
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));
       localStorage.setItem("userToken", response.data.token);
@@ -79,7 +78,7 @@ export const registerUser = createAsyncThunk(
       toast.error(`Register Failed! ${error.response.data.msg}`, {
         id: registerUserPopup,
       });
-      console.log(error.response.data.msg);
+      toast.error(error?.response?.data?.msg || "User Register Failed");
     }
   },
 );

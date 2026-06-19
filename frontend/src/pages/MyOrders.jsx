@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 // MyOrders Component
 export const MyOrders = ({ orders, loading, error }) => {
-  console.log({ orders, loading, error });
   const navigate = useNavigate();
 
   // Navigation to Order Page by ID.

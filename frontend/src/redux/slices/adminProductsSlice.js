@@ -3,8 +3,9 @@
 //Imports
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "sonner";
 
-// Fetch Users - admin fashboard
+// Fetch admin products
 export const fetchAdminProducts = createAsyncThunk(
   "adminProducts/fetchAdminProducts",
   async () => {
@@ -20,7 +21,7 @@ export const fetchAdminProducts = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "Fetch admin products Failed");
     }
   },
 );
@@ -48,7 +49,6 @@ export const createProduct = createAsyncThunk(
     isFeatured,
   }) => {
     try {
-      // console.log(productData);
       // Post - server request
       const response = await axios.post(
         "http://localhost:5000/api/product",
@@ -78,10 +78,9 @@ export const createProduct = createAsyncThunk(
         },
       );
 
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "Add New Product Failed");
     }
   },
 );
@@ -91,7 +90,6 @@ export const updateProduct = createAsyncThunk(
   "adminProducts/updateProduct",
   async ({ id, productData }) => {
     try {
-      console.log({ id, productData });
       // Post - server request
       const response = await axios.put(
         `http://localhost:5000/api/product/${id}`,
@@ -103,10 +101,9 @@ export const updateProduct = createAsyncThunk(
         },
       );
 
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "Update Product Failed");
     }
   },
 );
@@ -127,7 +124,7 @@ export const deleteProduct = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "Delete Product Failed");
     }
   },
 );

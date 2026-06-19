@@ -44,7 +44,6 @@ export const CreateProductPage = () => {
 
   // Handling form change.
   const handleFormChange = (e) => {
-    console.log(`${e.target.name}:${e.target.value}`);
     // Updating state
     setProductInfo((prevState) => ({
       ...prevState,
@@ -60,11 +59,9 @@ export const CreateProductPage = () => {
             : // Other inputs
               e.target.value,
     }));
-    console.log(productInfo);
   };
 
   const handleImgDelete = (imgURL, imgAltText) => {
-    console.log(imgURL, imgAltText);
     setProductInfo((prev) => ({
       ...prev,
       images: prev.images.filter(
@@ -80,14 +77,12 @@ export const CreateProductPage = () => {
   const handleImgUpload = async (e) => {
     if (handleAltTextEntry === "") return;
     const file = e.target.files[0];
-    console.log(file);
     const formData = new FormData();
     formData.append("image", file);
 
     try {
       setUploading(true);
       setImgUploadBtnDisable(true);
-      console.log(formData);
       // Post - server request
       const { data } = await axios.post(
         "http://localhost:5000/api/upload",
@@ -99,18 +94,16 @@ export const CreateProductPage = () => {
         },
       );
 
-      console.log(data);
       setProductInfo((prevData) => ({
         ...prevData,
         images: [...prevData.images, { url: data, altText: altTextEntry }],
       }));
-      console.log(productInfo);
       setUploading(false);
       setImgUploadBtnDisable(false);
 
       setAltTextEntry("");
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "Failed to upload the img")
       setUploading(false);
       setImgUploadBtnDisable(false);
     }
@@ -119,7 +112,6 @@ export const CreateProductPage = () => {
   // Hnadle Form Submit
   const hanldeProductSubmit = (e) => {
     e.preventDefault();
-    console.log(productInfo );
     if (productInfo.images?.length > 0) {
       dispatch(createProduct(productInfo)).then(() => {
         navigate("/admin/products");

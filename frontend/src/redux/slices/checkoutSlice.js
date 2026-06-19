@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "sonner";
 
 // AsyncThunk - Checkout session
 export const createCheckout = createAsyncThunk(
   "checkout/createCheckout",
   async ({ cartData, shippingAddress }) => {
     try {
-      console.log({ cartData, shippingAddress });
       // Post - server request
       const response = await axios.post(
         "http://localhost:5000/api/payment/paymentAsli",
@@ -17,11 +17,10 @@ export const createCheckout = createAsyncThunk(
           },
         },
       );
-      console.log(response.data.authority);
       window.location.href = `https://sandbox.zarinpal.com/pg/StartPay/${response.data.authority}`;
       return response.data;
     } catch (error) {
-      console.log(error.response.data);
+      toast.error(error?.response?.data?.msg || "Checkout session Failed");
     }
   },
 );
@@ -45,8 +44,6 @@ export const checkoutSlice = createSlice({
       .addCase(createCheckout.fulfilled, (state, action) => {
         state.loading = false;
         state.checkout = action.payload;
-        console.log(state.checkout);
-        console.log(state.checkout.authority);
       })
       .addCase(createCheckout.rejected, (state, action) => {
         state.loading = false;

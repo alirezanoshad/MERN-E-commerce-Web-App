@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "sonner";
 
 // Initial State - Helper funtion to load cartProducts from localStorage
 const loadCartFromStorage = () => {
@@ -18,7 +19,6 @@ export const fetchCartProducts = createAsyncThunk(
   "cart/FetchCartProducts",
   async ({ guestID, userID }) => {
     try {
-      console.log({ guestID, userID });
       // Get - server request
       const response = await axios.get(
         "http://localhost:5000/api/cart",
@@ -30,10 +30,11 @@ export const fetchCartProducts = createAsyncThunk(
         },
       );
 
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      return console.log(error.response.data.msg);
+      toast.error(
+        error?.response?.data?.msg || "Fetch cart for user or guest Failed",
+      );
     }
   },
 );
@@ -43,7 +44,6 @@ export const AddToCart = createAsyncThunk(
   "cart/AddToCart",
   async ({ productID, quantity, size, color, guestID, userID }) => {
     try {
-      console.log({ productID, quantity, size, color, guestID, userID });
       // Post - server request
       const response = await axios.post("http://localhost:5000/api/cart", {
         productID,
@@ -53,11 +53,9 @@ export const AddToCart = createAsyncThunk(
         guestID,
         userID,
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error.response?.data);
-      console.log(error.response?.status);
+      toast.error(error?.response?.data?.msg || "AddToCart Failed");
     }
   },
 );
@@ -78,7 +76,9 @@ export const updateCartItemQuantity = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      return console.log(error);
+      toast.error(
+        error?.response?.data?.msg || "update Cart Item Quantity Failed",
+      );
     }
   },
 );
@@ -88,15 +88,13 @@ export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
   async ({ productID, size, color, guestID, userID }) => {
     try {
-      console.log({ productID, size, color, guestID, userID });
       // Delete - server request
       const response = await axios.delete("http://localhost:5000/api/cart", {
         data: { productID, size, color, guestID, userID },
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "remove From Cart Failed");
     }
   },
 );
@@ -117,10 +115,9 @@ export const mergeCart = createAsyncThunk(
           },
         },
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "mergeCart Failed");
     }
   },
 );
@@ -156,7 +153,6 @@ export const cartSlice = createSlice({
       })
       .addCase(fetchCartProducts.rejected, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         state.error = action.payload || "Failed to fetch cart";
       })
 
@@ -184,7 +180,6 @@ export const cartSlice = createSlice({
         state.loading = false;
         state.cart = action.payload; // Store in redux store
         saveCartToStorage(action.payload); // Store in localStorage
-        console.log(action.payload);
       })
       .addCase(updateCartItemQuantity.rejected, (state, action) => {
         state.loading = false;
@@ -200,7 +195,6 @@ export const cartSlice = createSlice({
         state.loading = false;
         state.cart = action.payload; // Store in redux store
         saveCartToStorage(action.payload); // Store in localStorage
-        console.log(action.payload);
       })
       .addCase(removeFromCart.rejected, (state, action) => {
         state.loading = false;
@@ -215,7 +209,6 @@ export const cartSlice = createSlice({
         state.loading = false;
         state.cart = action.payload; // Store in redux store
         saveCartToStorage(action.payload); // Store in localStorage
-        console.log(action.payload);
       })
       .addCase(mergeCart.rejected, (state, action) => {
         state.loading = false;

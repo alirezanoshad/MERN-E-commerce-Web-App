@@ -14,7 +14,8 @@ export const Checkout = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
   const { user, loading, error } = useSelector((state) => state.auth);
-  console.log(cart);
+
+  const [checkoutBtnDisabled, setCheckoutBtnDisabled] = useState(false);
 
   // storing user informations in state
   const [shippingAddress, setShippingAddress] = useState({
@@ -45,14 +46,13 @@ export const Checkout = () => {
         totalPrice: cart.totalPrice,
       };
 
-      const res = dispatch(
+      dispatch(
         createCheckout({
           cartData,
           shippingAddress,
         }),
-      ).then(() => {
-        console.log(res);
-      });
+      );
+      setCheckoutBtnDisabled(true);
     }
   };
 
@@ -217,6 +217,7 @@ export const Checkout = () => {
               <button
                 type="submit"
                 className="py-4 bg-gray-900 hover:bg-gray-800 hover:cursor-pointer text-white font-medium w-full rounded"
+                checkoutBtnDisabled={checkoutBtnDisabled}
               >
                 <img src={zarinPalLogo} alt="" className="mx-auto" />
               </button>
@@ -262,7 +263,7 @@ export const Checkout = () => {
           <p>Subtotal:</p>
           <p>
             $
-            {cart.originalTotalPrice  && cart.originalTotalPrice > 0
+            {cart.originalTotalPrice && cart.originalTotalPrice > 0
               ? cart.originalTotalPrice
               : cart.totalPrice}
           </p>

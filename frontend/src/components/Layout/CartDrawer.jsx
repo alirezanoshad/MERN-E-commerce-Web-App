@@ -17,7 +17,6 @@ export const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
 
   // FetchCartProducts
   useEffect(() => {
-    console.log("cart Trying..");
     dispatch(fetchCartProducts({ guestID: guestId, userID: userId }));
   }, [dispatch, userId, guestId]);
 

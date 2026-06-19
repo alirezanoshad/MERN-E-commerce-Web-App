@@ -3,6 +3,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
 
 // NewArrivals component - displays new arrival products.
 export const NewArrivals = () => {
@@ -33,7 +34,7 @@ export const NewArrivals = () => {
         );
         setNewArrivals(response.data);
       } catch (error) {
-        console.log(error);
+      toast.error(error?.response?.data?.msg || "Failed to upload the img")
       }
     };
 
@@ -43,7 +44,6 @@ export const NewArrivals = () => {
   // adds eventListener(on mount) => updateScrollButtons function when "scroll" happens.
   useEffect(() => {
     const container = scrollRef.current;
-    // console.log(container);
     if (container) {
       container.addEventListener("scroll", updateScrollButtons);
       updateScrollButtons();
@@ -75,7 +75,6 @@ export const NewArrivals = () => {
   // 1-MouseDown - records starting point of mouse drag
   const handleMouseDown = (e) => {
     setIsDragging(true);
-    console.log(e);
     setStartX(e.pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
   };

@@ -5,7 +5,6 @@ export const SortOptions = () => {
 
   // Handling option change.
   const handleSortChange = (e) => {
-    console.log("Option changed");
     const sortBy = e.target.value;
     // Add sortBy to URL
     searchParams.set("sortBy", sortBy);

@@ -7,6 +7,7 @@ import {
   updateUser,
 } from "../../redux/slices/adminSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 // User Management Component
 export const UserManagement = () => {
@@ -43,8 +44,6 @@ export const UserManagement = () => {
 
   const hanleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-
     dispatch(addUser(formData));
 
     // Reset the form after sumission.
@@ -57,13 +56,6 @@ export const UserManagement = () => {
   };
 
   const handleRoleChange = (user, newRole) => {
-    console.log({
-      name: user.name,
-      email: user.email,
-      role: newRole,
-      id: user._id,
-    });
-
     dispatch(
       updateUser({
         name: user.name,
@@ -75,10 +67,9 @@ export const UserManagement = () => {
   };
 
   const handleDeleteUser = (userId) => {
-    console.log(`requested to delete user##${userId}`);
     if (window.confirm(`Are you sure you want to delete user#${userId}`)) {
       dispatch(deleteUser({ id: userId }));
-      console.log(`user#${userId} will be romved.`);
+      toast.success(`user#${userId} will be romved.`);
     }
   };
 

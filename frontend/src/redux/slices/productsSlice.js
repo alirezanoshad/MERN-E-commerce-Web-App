@@ -3,6 +3,7 @@
 //Imports
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "sonner";
 
 // AsyncThunk - Fetch Products by Filters.
 export const fetchProductsByFilters = createAsyncThunk(
@@ -93,7 +94,7 @@ export const fetchSimilarProducts = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "Similar Products Failed")
     }
   },
 );

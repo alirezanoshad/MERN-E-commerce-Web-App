@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "sonner";
 
 // Fetch orders by userID
 export const fetchOrders = createAsyncThunk("order/fetchOrders", async () => {
@@ -16,7 +17,7 @@ export const fetchOrders = createAsyncThunk("order/fetchOrders", async () => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+      toast.error(error?.response?.data?.msg || "Fetch orders by userID Failed")
   }
 });
 
@@ -37,7 +38,8 @@ export const fetchSingleOrder = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "Fetch single order details by orderID Failed")
+
     }
   },
 );
@@ -63,7 +65,6 @@ export const orderSlice = createSlice({
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         state.orders = action.payload;
       })
       .addCase(fetchOrders.rejected, (state, action) => {
@@ -77,7 +78,6 @@ export const orderSlice = createSlice({
       })
       .addCase(fetchSingleOrder.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         state.selectedOrder = action.payload;
       })
       .addCase(fetchSingleOrder.rejected, (state, action) => {

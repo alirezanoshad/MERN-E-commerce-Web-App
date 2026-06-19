@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/slices/atuhSlice";
 import { mergeCart } from "../redux/slices/cartSlice";
+import { toast } from "sonner";
 
 // Register Component
 export const Register = () => {
@@ -26,18 +27,14 @@ export const Register = () => {
 
   // Auto Login - based on localStorage
   useEffect(() => {
-    console.log(user);
     // for logged-in users
     if (user) {
-      console.log(user);
       if (cart?.products?.length > 0) {
         // Merge existing and new cart
         dispatch(mergeCart({ user, guestID: guestId })).then(() => {
-          console.log(isCheckoutRedirect);
           navigate(isCheckoutRedirect ? "/checkout" : "/");
         });
       } else {
-        console.log(`redirect to checkout: ${isCheckoutRedirect}`);
         navigate(isCheckoutRedirect ? "/checkout" : "/");
       }
     }
@@ -46,7 +43,8 @@ export const Register = () => {
   const handleSubmit = (e) => {
     // Stops on submit reloading
     e.preventDefault();
-    console.log("User Rigester Requset Sent!", { name, email, password });
+
+    toast.success("User Rigester Requset Sent!");
     dispatch(registerUser({ name, email, password }));
   };
 

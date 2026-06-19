@@ -30,7 +30,6 @@ export const SearchBar = () => {
   const handleSearch = (e) => {
     // a js method that stops the default action from happening
     e.preventDefault();
-    console.log("Search Term:", searchTerm);
     // Store searchBar state
     dispatch(setFilters({ search: searchTerm }));
     // Fetch by searchBar value

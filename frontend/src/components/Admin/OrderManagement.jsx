@@ -6,14 +6,12 @@ import { updateOrderStatus } from "../../redux/slices/adminOrderSlice";
 export const OrderManagement = () => {
   const dispatch = useDispatch();
   const { orders, loading, error } = useSelector((state) => state.adminOrder);
-  console.log(orders);
 
   useEffect(() => {
     dispatch(fetchAllOrders());
   }, [dispatch]);
 
   const handleStatusChange = (id, status) => {
-    console.log(`orderId: ${id}, newStatus: ${status}`);
     dispatch(updateOrderStatus({ id, status }));
   };
 

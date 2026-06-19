@@ -9,7 +9,7 @@ export const OrderDetailsPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { selectedOrder, loading, error } = useSelector((state) => state.order);
-  console.log(selectedOrder);
+
   useEffect(() => {
     dispatch(fetchSingleOrder(id));
   }, [dispatch, id]);

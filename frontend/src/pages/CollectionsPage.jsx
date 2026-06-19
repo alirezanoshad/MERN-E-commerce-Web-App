@@ -29,14 +29,12 @@ export const CollectionsPage = () => {
   // Toggle Sidebar
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
-    console.log("toggleSidebar happened");
   };
 
   // handleClickOutside - Close the sidebar if clicked outside of it
   const handleClickOutside = (e) => {
     // if sidebar is loaded and click is not on sidebar, then close it
     if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
-      console.log("handleClickOutside happened");
       setIsSidebarOpen(false);
     }
   };
@@ -44,8 +42,6 @@ export const CollectionsPage = () => {
   // Fetch Products By Filters By URL Params
   useEffect(() => {
     dispatch(fetchProductsByFilters({ collection, ...queryParams }));
-    console.log(collection);
-    console.log(queryParams);
   }, [dispatch, collection, searchParams]);
 
   // Sidebar event listener

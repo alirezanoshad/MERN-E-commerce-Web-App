@@ -28,12 +28,10 @@ export const Navbar = () => {
   // function to toggle CartDrawer's statement
   const toggleCartDrawer = () => {
     setDrawerOpen(!drawerOpen);
-    console.log("Drawer's Statement:", !drawerOpen);
   };
   // function to toggle NavDrawer's statement
   const toggleNavDrawer = () => {
     setNavDrawerOpen(!navDrawerOpen);
-    console.log("NavDrawer's statement:", navDrawerOpen);
   };
 
   // Returns the JSX for the Navbar component + cartDrawer component

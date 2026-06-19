@@ -3,6 +3,7 @@
 // Imports
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "sonner";
 
 // AsyncThunk - Fech users
 export const fetchUsers = createAsyncThunk("admin/fetchUsers", async () => {
@@ -14,10 +15,9 @@ export const fetchUsers = createAsyncThunk("admin/fetchUsers", async () => {
       },
     });
 
-    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
+    toast.error(error?.response?.data?.msg || "Fech users Failed");
   }
 });
 
@@ -37,7 +37,7 @@ export const addUser = createAsyncThunk("admin/addUser", async (userData) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    toast.error(error?.response?.data?.msg || "Add user Failed");
   }
 });
 
@@ -46,7 +46,6 @@ export const updateUser = createAsyncThunk(
   "admin/updateUser",
   async ({ name, email, role, id }) => {
     try {
-      console.log({ name, email, role, id });
       // Put - server request
       const response = await axios.put(
         `http://localhost:5000/api/admin/${id}`,
@@ -58,10 +57,9 @@ export const updateUser = createAsyncThunk(
         },
       );
 
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "Update user info Failed");
     }
   },
 );
@@ -71,7 +69,6 @@ export const deleteUser = createAsyncThunk(
   "admin/deleteUser",
   async ({ id }) => {
     try {
-      console.log(id);
       // Put - server request
       const response = await axios.delete(
         `http://localhost:5000/api/admin/${id}`,
@@ -82,12 +79,9 @@ export const deleteUser = createAsyncThunk(
           },
         },
       );
-
-      console.log(response.data);
-      console.log(`user #${id} got removed!`);
-      return id;
+      return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "User Delete Failed");
     }
   },
 );

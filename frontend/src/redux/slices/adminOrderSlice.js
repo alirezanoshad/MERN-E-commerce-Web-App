@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "sonner";
 
 // Fetch orders
 export const fetchAllOrders = createAsyncThunk(
@@ -16,10 +17,9 @@ export const fetchAllOrders = createAsyncThunk(
         },
       );
 
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error(error?.response?.data?.msg || "Fetch orders Failed");
     }
   },
 );
@@ -29,7 +29,6 @@ export const updateOrderStatus = createAsyncThunk(
   "adminOrder/updateOrderStatus",
   async ({ id, status }) => {
     try {
-      console.log({ id, status });
       // Get - server request
       const response = await axios.put(
         `http://localhost:5000/api/admin/orders/${id}`,
@@ -41,10 +40,9 @@ export const updateOrderStatus = createAsyncThunk(
         },
       );
 
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error.response.data);
+      toast.error(error?.response?.data?.msg || "Update order status Failed");
     }
   },
 );
@@ -69,7 +67,6 @@ export const adminOrderSlice = createSlice({
       })
       .addCase(fetchAllOrders.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         state.orders = action.payload;
       })
       .addCase(fetchAllOrders.rejected, (state, action) => {
@@ -83,7 +80,6 @@ export const adminOrderSlice = createSlice({
       })
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         const index = state.orders.findIndex(
           (order) => order._id === action.payload._id,
         );

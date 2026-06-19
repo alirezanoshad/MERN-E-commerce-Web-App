@@ -15,14 +15,11 @@ export const CartContents = ({
   guestId,
   userId,
 }) => {
-  console.log(cartProducts?.products);
 
   const dispatch = useDispatch();
 
   // Hanle adding or substracting to cart
   const handleAddToCart = ({ quantity, delta, color, size, productID }) => {
-    console.log("handleAddToCart");
-    console.log({ quantity, delta, color, size, productID });
     // Calculate new quantity
     const newQuantity = quantity + delta;
     // Checkpoint quantity amount
@@ -42,7 +39,6 @@ export const CartContents = ({
 
   // Handle removing a product from cart
   const handleRemoveFromCart = ({ color, size, productID }) => {
-    console.log("handleRemoveFromCart");
     dispatch(
       removeFromCart({
         productID,

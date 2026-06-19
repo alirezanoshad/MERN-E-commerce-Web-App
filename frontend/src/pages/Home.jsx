@@ -11,6 +11,7 @@ import axios from "axios";
 // Redux Hooks.
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductsByFilters } from "../redux/slices/productsSlice.js";
+import { toast } from "sonner";
 
 // Home component - includes main contetnts of home page
 export const Home = () => {
@@ -38,7 +39,7 @@ export const Home = () => {
         );
         setBestSellerProduct(response.data);
       } catch (error) {
-        console.log(error);
+      toast.error(error?.response?.data?.msg || "Failed to upload the img")
       }
     };
     fetchBestSeller();

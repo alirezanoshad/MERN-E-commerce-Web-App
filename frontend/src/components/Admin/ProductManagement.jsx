@@ -11,7 +11,6 @@ export const ProductManagement = () => {
   const { products, loading, error } = useSelector(
     (state) => state.adminProducts,
   );
-  console.log(products);
 
   useEffect(() => {
     dispatch(fetchAdminProducts());

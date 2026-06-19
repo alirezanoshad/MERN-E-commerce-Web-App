@@ -19,7 +19,6 @@ export const ProductDetails = ({ productId }) => {
   const { selectedProduct, similarProducts, loading, error } = useSelector(
     (state) => state.products,
   );
-  console.log(selectedProduct);
 
   // Redux State - userInfo
   const { user, guestId } = useSelector((state) => state.auth);

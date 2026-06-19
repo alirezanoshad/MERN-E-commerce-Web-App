@@ -9,7 +9,6 @@ export const AdminLayout = () => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
-    console.log("Sidebar Toggled");
   };
   return (
     <div className="min-h-screen flex flex-col md:flex-row relative">

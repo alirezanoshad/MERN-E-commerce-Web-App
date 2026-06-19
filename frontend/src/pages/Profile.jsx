@@ -11,8 +11,7 @@ import { fetchOrders } from "../redux/slices/orderSlice";
 export const Profile = () => {
   const { user } = useSelector((state) => state.auth);
   const { orders, loading, error } = useSelector((state) => state.order);
-  console.log(orders);
-  console.log(user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
