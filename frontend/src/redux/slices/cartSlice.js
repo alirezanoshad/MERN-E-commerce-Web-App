@@ -31,10 +31,10 @@ export const fetchCartProducts = createAsyncThunk(
       );
 
       return response.data;
-    } catch (error) {
-      toast.error(
-        error?.response?.data?.msg || "Fetch cart for user or guest Failed",
-      );
+    } catch {
+      // toast.error(
+      //   error?.response?.data?.msg
+      // );
     }
   },
 );
@@ -45,14 +45,17 @@ export const AddToCart = createAsyncThunk(
   async ({ productID, quantity, size, color, guestID, userID }) => {
     try {
       // Post - server request
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/cart`, {
-        productID,
-        quantity,
-        size,
-        color,
-        guestID,
-        userID,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/cart`,
+        {
+          productID,
+          quantity,
+          size,
+          color,
+          guestID,
+          userID,
+        },
+      );
       return response.data;
     } catch (error) {
       toast.error(error?.response?.data?.msg || "AddToCart Failed");
