@@ -1,0 +1,12 @@
+{
+    "server":{
+        "name":"app - production",
+        "port": 5000
+    },
+    "gateway":{
+        "sandBox":"https://sandbox.zarinpal.com/pg/v4/payment/request.json",
+        "callBackUrl":"http://elix.ir/api/payment/callback",
+        "redirectUrl":"https://sandbox.zarinpal.com/pg/StartPay/",
+        "sandBoxVerify":"https://sandbox.zarinpal.com/pg/v4/payment/verify.json"
+    }
+}

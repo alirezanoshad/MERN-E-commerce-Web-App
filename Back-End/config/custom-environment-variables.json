@@ -1,0 +1,10 @@
+{
+    "server":{
+        "database": "MERN_mongoDB",
+        "JWT_SECRET": "MERN_JWT",
+        "imageUpload-API-Key":"MERN_imageAPI"
+    },
+    "gateway":{
+        "merchant_id":"MERN_merchantid"
+    }
+}
