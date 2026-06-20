@@ -12,7 +12,7 @@ export const fetchAdminProducts = createAsyncThunk(
     try {
       // Get - server request
       const response = await axios.get(
-        "http://localhost:5000/api/admin/products",
+        `${import.meta.env.VITE_API_URL}/admin/products`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("userToken")}`,
@@ -51,7 +51,7 @@ export const createProduct = createAsyncThunk(
     try {
       // Post - server request
       const response = await axios.post(
-        "http://localhost:5000/api/product",
+        `${import.meta.env.VITE_API_URL}/product`,
         {
           name,
           brand,
@@ -92,7 +92,7 @@ export const updateProduct = createAsyncThunk(
     try {
       // Post - server request
       const response = await axios.put(
-        `http://localhost:5000/api/product/${id}`,
+        `${import.meta.env.VITE_API_URL}/product/${id}`,
         productData,
         {
           headers: {
@@ -115,7 +115,7 @@ export const deleteProduct = createAsyncThunk(
     try {
       // Delete - server request
       const response = await axios.delete(
-        `http://localhost:5000/api/product/${id}`,
+        `${import.meta.env.VITE_API_URL}/product/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("userToken")}`,

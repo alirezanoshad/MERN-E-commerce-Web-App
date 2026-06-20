@@ -9,7 +9,7 @@ import { toast } from "sonner";
 export const fetchUsers = createAsyncThunk("admin/fetchUsers", async () => {
   try {
     // Get - server request
-    const response = await axios.get("http://localhost:5000/api/admin", {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("userToken")}`,
       },
@@ -26,7 +26,7 @@ export const addUser = createAsyncThunk("admin/addUser", async (userData) => {
   try {
     // Post - server request
     const response = await axios.post(
-      "http://localhost:5000/api/admin/users",
+      `${import.meta.env.VITE_API_URL}/admin/users`,
       userData,
       {
         headers: {
@@ -48,7 +48,7 @@ export const updateUser = createAsyncThunk(
     try {
       // Put - server request
       const response = await axios.put(
-        `http://localhost:5000/api/admin/${id}`,
+        `${import.meta.env.VITE_API_URL}/admin/${id}`,
         { name, email, role },
         {
           headers: {
@@ -71,7 +71,7 @@ export const deleteUser = createAsyncThunk(
     try {
       // Put - server request
       const response = await axios.delete(
-        `http://localhost:5000/api/admin/${id}`,
+        `${import.meta.env.VITE_API_URL}/admin/${id}`,
 
         {
           headers: {

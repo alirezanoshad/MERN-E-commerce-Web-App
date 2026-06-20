@@ -9,7 +9,7 @@ export const fetchAllOrders = createAsyncThunk(
     try {
       // Get - server request
       const response = await axios.get(
-        "http://localhost:5000/api/admin/orders",
+        `${import.meta.env.VITE_API_URL}/admin/orders`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("userToken")}`,
@@ -31,7 +31,7 @@ export const updateOrderStatus = createAsyncThunk(
     try {
       // Get - server request
       const response = await axios.put(
-        `http://localhost:5000/api/admin/orders/${id}`,
+        `${import.meta.env.VITE_API_URL}/admin/orders/${id}`,
         { status },
         {
           headers: {

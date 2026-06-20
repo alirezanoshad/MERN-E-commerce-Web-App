@@ -30,11 +30,11 @@ export const NewArrivals = () => {
     const fetchNewArrivals = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/product/new-arrivals",
+          `${import.meta.env.VITE_API_URL}/product/new-arrivals`,
         );
         setNewArrivals(response.data);
       } catch (error) {
-      toast.error(error?.response?.data?.msg || "Failed to upload the img")
+        toast.error(error?.response?.data?.msg || "Failed to upload the img");
       }
     };
 
@@ -89,6 +89,8 @@ export const NewArrivals = () => {
   const handleMouseuUpOrLeave = () => {
     setIsDragging(false);
   };
+
+  console.log(import.meta);
 
   // JSX
   return (

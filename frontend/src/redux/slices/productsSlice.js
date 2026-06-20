@@ -46,7 +46,7 @@ export const fetchProductsByFilters = createAsyncThunk(
       // Get - Server request
       const response = await axios.get(
         // change URLSearchParams Type to String
-        `http://localhost:5000/api/product?${query.toString()}`,
+        `${import.meta.env.VITE_API_URL}/product?${query.toString()}`,
       );
       return response.data;
     } catch (error) {
@@ -60,7 +60,7 @@ export const fetchProductDetails = createAsyncThunk(
   "products/fetchProductDetails",
   async (id) => {
     // Get - Server request
-    const response = await axios.get(`http://localhost:5000/api/product/${id}`);
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/product/${id}`);
     return response.data;
   },
 );
@@ -71,7 +71,7 @@ export const updateProduct = createAsyncThunk(
   async ({ id, productData }) => {
     // Put - Server Request
     const response = await axios.put(
-      `http://localhost:5000/api/product/${id}`,
+      `${import.meta.env.VITE_API_URL}/product/${id}`,
       productData,
       // Admin Authorization Info - Only Admin Can Update Products
       {
@@ -90,7 +90,7 @@ export const fetchSimilarProducts = createAsyncThunk(
   async ({ id }) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/product/similar/${id}`,
+        `${import.meta.env.VITE_API_URL}/product/similar/${id}`,
       );
       return response.data;
     } catch (error) {

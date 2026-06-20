@@ -37,7 +37,7 @@ export const loginUser = createAsyncThunk(
     try {
       // Checkpoint: send user login data to Server and Wait for result.
       const response = await axios.post(
-        "http://localhost:5000/api/users/login",
+        `${import.meta.env.VITE_API_URL}/users/login`,
         userData,
       );
       // If response true, Set User Data In localStorage & Display Succes Popup
@@ -66,7 +66,7 @@ export const registerUser = createAsyncThunk(
     try {
       // send user login data
       const response = await axios.post(
-        "http://localhost:5000/api/users/register",
+        `${import.meta.env.VITE_API_URL}/users/register`,
         { name, email, password },
       );
       // Set localStorage

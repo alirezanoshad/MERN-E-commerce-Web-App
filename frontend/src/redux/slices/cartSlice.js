@@ -21,7 +21,7 @@ export const fetchCartProducts = createAsyncThunk(
     try {
       // Get - server request
       const response = await axios.get(
-        "http://localhost:5000/api/cart",
+        `${import.meta.env.VITE_API_URL}/cart`,
         { params: { userID, guestID } },
         {
           headers: {
@@ -45,7 +45,7 @@ export const AddToCart = createAsyncThunk(
   async ({ productID, quantity, size, color, guestID, userID }) => {
     try {
       // Post - server request
-      const response = await axios.post("http://localhost:5000/api/cart", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/cart`, {
         productID,
         quantity,
         size,
@@ -66,14 +66,17 @@ export const updateCartItemQuantity = createAsyncThunk(
   async ({ productID, quantity, size, color, guestID, userID }) => {
     try {
       // Put - server request
-      const response = await axios.put("http://localhost:5000/api/cart", {
-        productID,
-        quantity,
-        size,
-        color,
-        guestID,
-        userID,
-      });
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}/api/cart`,
+        {
+          productID,
+          quantity,
+          size,
+          color,
+          guestID,
+          userID,
+        },
+      );
       return response.data;
     } catch (error) {
       toast.error(
@@ -89,9 +92,12 @@ export const removeFromCart = createAsyncThunk(
   async ({ productID, size, color, guestID, userID }) => {
     try {
       // Delete - server request
-      const response = await axios.delete("http://localhost:5000/api/cart", {
-        data: { productID, size, color, guestID, userID },
-      });
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/cart`,
+        {
+          data: { productID, size, color, guestID, userID },
+        },
+      );
       return response.data;
     } catch (error) {
       toast.error(error?.response?.data?.msg || "remove From Cart Failed");
@@ -106,7 +112,7 @@ export const mergeCart = createAsyncThunk(
     try {
       // Post - server request
       const response = await axios.post(
-        "http://localhost:5000/api/cart/merge",
+        `${import.meta.env.VITE_API_URL}/cart/merge`,
         { guestID, user },
         // Atuhorization
         {

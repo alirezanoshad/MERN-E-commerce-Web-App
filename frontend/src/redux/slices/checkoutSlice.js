@@ -9,7 +9,7 @@ export const createCheckout = createAsyncThunk(
     try {
       // Post - server request
       const response = await axios.post(
-        "http://localhost:5000/api/payment/paymentAsli",
+        `${import.meta.env.VITE_API_URL}/payment/paymentAsli`,
         { cartData, shippingAddress },
         {
           headers: {

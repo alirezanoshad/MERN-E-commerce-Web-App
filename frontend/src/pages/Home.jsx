@@ -35,7 +35,7 @@ export const Home = () => {
     const fetchBestSeller = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/product/best-seller",
+          `${import.meta.env.VITE_API_URL}/product/best-seller`,
         );
         setBestSellerProduct(response.data);
       } catch (error) {

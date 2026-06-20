@@ -7,7 +7,7 @@ export const fetchOrders = createAsyncThunk("order/fetchOrders", async () => {
   try {
     // Get - server request
     const response = await axios.get(
-      "http://localhost:5000/api/order/my-orders",
+      `${import.meta.env.VITE_API_URL}/order/my-orders`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
@@ -17,7 +17,7 @@ export const fetchOrders = createAsyncThunk("order/fetchOrders", async () => {
 
     return response.data;
   } catch (error) {
-      toast.error(error?.response?.data?.msg || "Fetch orders by userID Failed")
+    toast.error(error?.response?.data?.msg || "Fetch orders by userID Failed");
   }
 });
 
@@ -28,7 +28,7 @@ export const fetchSingleOrder = createAsyncThunk(
     try {
       // Get - server request
       const response = await axios.get(
-        `http://localhost:5000/api/order/${id}`,
+        `${import.meta.env.VITE_API_URL}/order/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("userToken")}`,
@@ -38,8 +38,10 @@ export const fetchSingleOrder = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      toast.error(error?.response?.data?.msg || "Fetch single order details by orderID Failed")
-
+      toast.error(
+        error?.response?.data?.msg ||
+          "Fetch single order details by orderID Failed",
+      );
     }
   },
 );
