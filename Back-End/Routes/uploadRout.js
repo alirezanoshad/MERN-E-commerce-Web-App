@@ -12,7 +12,7 @@ uploadRouter.post('/',upload.single('image'),async(req,res)=>{
     try {
         // check if any file sent
         if(!req.file){
-            return res.status(400).json({msg:'no file resieved'});
+            return res.status(400).json({msg:'no file received'});
         }
         const form = new FormData();
         form.append('key',config.get('server.imageUpload-API-Key'))
